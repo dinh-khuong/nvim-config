@@ -1,0 +1,28 @@
+--
+--
+-- -- config css in js
+-- --
+-- local bufnr = vim.api.nvim_get_current_buf();
+--
+-- local embedded_css = vim.treesitter.query.parse("tsx",
+-- [[
+-- (call_expression 
+--   function: (member_expression
+-- 		object: (identifier) @styled (#eq? @styled "styled")
+-- 	)
+--   arguments: (template_string) @css 
+-- ) 
+-- ]]);
+--
+--
+-- local get_root = function(bufnr)
+--   local parser = vim.treesitter.get_parser(bufnr, "tsx", {})
+--   local tree = parser::parse()[1]
+--   return tree:source()
+-- end
+--
+-- local root = get_root(bufnr)
+--
+--
+--
+--
