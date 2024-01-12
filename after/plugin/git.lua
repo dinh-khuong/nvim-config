@@ -17,7 +17,7 @@ nnmap("<leader>gS", telescope.git_status, "[S]atus");
 
 -- merge thing
 
-nnmap("<leader>gM", "<cmd>Gvdiffsplit!<cr>", "[S]atus");
+nnmap("<leader>gm", "<cmd>Gvdiffsplit!<cr>", "[M]erge current file");
 -- config git signs
 require('gitsigns').setup {
   signs                        = {
