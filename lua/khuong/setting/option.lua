@@ -41,8 +41,8 @@ vim.opt.shiftwidth = 4
 vim.o.scrolloff = 12
 
 vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function ()
-    vim.cmd("silent !__add_old_dir__ .")
+  callback = function()
+    vim.cmd("silent !append-old-project .")
   end
 })
 
@@ -54,4 +54,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
-

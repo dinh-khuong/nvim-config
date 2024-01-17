@@ -242,13 +242,13 @@ local plugins = {
     config = function()
     end,
   },
-  {
-    'LhKipp/nvim-nu',
-    build = ':TSInstall nu',
-    config = function()
-      require 'nu'.setup {}
-    end,
-  },
+  -- {
+  --   'LhKipp/nvim-nu',
+  --   build = ':TSInstall nu',
+  --   config = function()
+  --     require 'nu'.setup {}
+  --   end,
+  -- },
   {
     'rust-lang/rust.vim',
   },
