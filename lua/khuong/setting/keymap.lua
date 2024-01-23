@@ -27,10 +27,12 @@ vim.keymap.set({'n', 'v'}, '<leader>d', '"-d')
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
+
 vim.keymap.set("n", "f", "lf")
 vim.keymap.set("n", "F", "hF")
 vim.keymap.set("n", "t", "lt")
 vim.keymap.set("n", "T", "lT")
+
 
 vim.keymap.set('n', '<leader>cf', function ()
   vim.cmd("silent ! xdg-open . &");
