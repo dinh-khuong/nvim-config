@@ -86,7 +86,6 @@ vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagno
 vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
 
-
 vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[F]ind [H]elp' })
 vim.keymap.set('n', '<leader>fj', builtin.jumplist, { desc = '[F]ind [J]ump list' })
 vim.keymap.set('n', '<leader>fTh', function ()

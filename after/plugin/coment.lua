@@ -2,7 +2,8 @@ require("Comment").setup {
   padding = true,
 
   sticky = true,
-
+  -- ignore = nil,
+  -- extra = nil,
   toggler = {
     line = '<leader>/',
     block = '<leader>bc'
@@ -18,6 +19,6 @@ require("Comment").setup {
     extra = true,
   },
 
-  pre_hook = nil,
-  post_hook = nil,
+  -- pre_hook = nil,
+  -- post_hook = nil,
 }
