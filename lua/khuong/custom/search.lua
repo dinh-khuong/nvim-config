@@ -10,38 +10,31 @@ function sPrevious()
 	end
 end
 
-
-
 vim.keymap.set("n", "<C-n>", "<cmd>lua sNext()<cr>zz")
 vim.keymap.set("n", "<C-p>", "<cmd>lua sPrevious()<cr>zz")
 
-vim.opt.gp = "rg -ne "
+vim.opt.gp = "rg -ne"
 vim.opt.hidden = true
 
 vim.api.nvim_create_user_command("Grep", function(opts)
-		vim.cmd("silent grep '" .. opts.fargs[1] .. "'") -- ..  " `find . -not -path \'*/\\.*\'`")
-	end,
-	{
-		nargs = 1,
-	})
+	vim.cmd("silent grep '" .. opts.fargs[1] .. "'") -- ..  " `find . -not -path \'*/\\.*\'`")
+end, {
+	nargs = 1,
+})
 
 vim.api.nvim_create_user_command("VimGrep", function(opts)
-		vim.cmd.vimgrep(opts.fargs[1] .. " `git ls-files`")
+	vim.cmd.vimgrep(opts.fargs[1] .. " `git ls-files`")
 	-- ..  " `find . -not -path \'*/\\.*\'`")
-	end,
-	{
-		nargs = 1,
-	})
+end, {
+	nargs = 1,
+})
 
--- vim.api.nvim_create_user_command("Argdo", function(opts)
--- 	-- print("if &modifiable | silent! " .. opts.fargs[1] .. " | up | endif")
--- 	-- vim.cmd.argdo("silent " .. opts.fargs[1] .. " | up")
--- 	vim.cmd("silent! argdo if &modifiable | " .. opts.fargs[1] .. " | endif")
--- end, {
--- 		nargs = 1,
--- 	})
+vim.api.nvim_create_user_command("Argdo", function(opts)
+	vim.cmd("silent! argdo if &ma | " .. opts.fargs[1] .. " | endif")
+end, {
+	nargs = 1,
+})
 
--- khuong12345
 vim.keymap.set("n", "<leader>s", function()
 	local input = vim.fn.input "Git Search: "
 	vim.cmd("Grep " .. input) -- .. " `git ls-files`")

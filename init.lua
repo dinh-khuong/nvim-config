@@ -1,5 +1,6 @@
 --[[
-===================================================================== ==================== READ THIS BEFORE CONTINUING ====================
+=====================================================================
+==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
 
 Kickstart.nvim is *not* a distribution.
@@ -63,15 +64,15 @@ local plugins = {
     'tpope/vim-fugitive',
     lazy = false,
   },
-  {
-    'tpope/vim-rhubarb',
-    lazy = false,
-  },
+  -- {
+  --   'tpope/vim-rhubarb',
+  --   lazy = false,
+  -- },
   -- detect tabstop and shiftwidth automatically
-  {
-    'tpope/vim-sleuth',
-    lazy = false,
-  },
+  -- {
+  --   'tpope/vim-sleuth',
+  --   lazy = false,
+  -- },
   -- note: this is where your plugins related to lsp can be installed.nmac427/guess-indent.nvim
   --  the configuration is done below. search for lspconfig to find it below.
   {
@@ -205,10 +206,10 @@ local plugins = {
       require('nvim-treesitter').setup()
     end
   },
-
   {
     'simrat39/rust-tools.nvim',
-    version = "*"
+    version = "*",
+	lazy = true,
   },
   {
     'akinsho/bufferline.nvim',
@@ -250,8 +251,9 @@ local plugins = {
   },
   {
     'nvim-treesitter/playground',
+    lazy = false,
   },
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} }
+  -- { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} }
   -- note: next step on your neovim journey: add/configure additional "plugins" for kickstart
   --       these are some example plugins that i've included in the kickstart repository.
   --       uncomment any of the lines below to enable them.
@@ -274,8 +276,8 @@ require('lazy').setup(plugins, {
     lazy = false,
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
-    version = false, -- always use the latest git commit
-    -- version = "*", -- try installing the latest stable version for plugins that support semver
+    -- version = false, -- always use the latest git commit
+    version = "*", -- try installing the latest stable version for plugins that support semver
   },
   checker = {
     enabled = true,

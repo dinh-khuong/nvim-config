@@ -10,5 +10,5 @@ vim.api.nvim_create_autocmd("VimEnter", {
   end
 })
 
-require("ibl").setup({})
+-- require("ibl").setup({})
 
