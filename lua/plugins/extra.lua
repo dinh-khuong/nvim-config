@@ -1,11 +1,4 @@
 return {
-	'mbbill/undotree',
-	'kshenoy/vim-signature',
-	{
-		'tpope/vim-fugitive',
-		lazy = false,
-		cmd = "Git",
-	},
 	{
 		'tpope/vim-rhubarb',
 		lazy = false,

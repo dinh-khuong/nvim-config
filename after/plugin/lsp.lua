@@ -1,8 +1,9 @@
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-require('mason').setup() require('mason-lspconfig').setup()
+require('mason').setup()
+require('mason-lspconfig').setup()
 
-  -- require("lspconfig.server_configurations.hydra_lsp")
+-- require("lspconfig.server_configurations.hydra_lsp")
 local builtin = require('telescope.builtin');
 
 local on_attach = function(_, bufnr)
@@ -10,7 +11,7 @@ local on_attach = function(_, bufnr)
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
   --
-  -- In this case, we create a function that lets us more easily define mappings specific for LSP related items. It sets the mode, buffer and description for us each time. 
+  -- In this case, we create a function that lets us more easily define mappings specific for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -34,7 +35,7 @@ local on_attach = function(_, bufnr)
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
   nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
-  nmap('<leader>lws', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>lw', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
   -- Lesser used LSP functionality
   -- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   -- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
@@ -44,27 +45,12 @@ local on_attach = function(_, bufnr)
   end, '[W]orkspace [L]ist Folders')
 
   nmap('<leader>lr', vim.lsp.buf.rename, 'Rename references')
-
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
 end
 -- document existing key chains
-require('which-key').register {
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  -- ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
-  -- ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  -- ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-  ['<leader>f'] = { name = '[F]ind', _ = 'which_key_ignore' },
-  ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
-  ['<leader>bs'] = { name = '[B]uffer [S]ort', _ = 'which_key_ignore' },
-  ['<leader>l'] = { name = '[L]sp', _ = 'which_key_ignore' },
-  ['<leader>lw'] = { name = '[L]sp [W]orkpace', _ = 'which_key_ignore' },
-  ['<leader>lc'] = { name = '[L]sp [C]ode', _ = 'which_key_ignore' },
-  -- ['g'] = { name = '[G]oto', _ = 'which_key_ignore' },
-}
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
@@ -79,7 +65,7 @@ require('which-key').register {
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 
-local util = require("lspconfig.util")
+-- local util = require("lspconfig.util")
 
 local servers = {
   -- clangd = {},
@@ -138,29 +124,29 @@ mason_lspconfig.setup_handlers {
 
 -- mason_lspconfig.get_installed_servers
 
-local nvim_lsp = require'lspconfig'
+local nvim_lsp = require 'lspconfig'
 
 nvim_lsp.rust_analyzer.setup({
-    filetypes = "rust",
-    -- root_dir = util.root_pattern("Cargo.toml"),
-    settings= {
-        ["rust-analyzer"] = {
-            imports = {
-                granularity = {
-                    group = "module",
-                },
-                prefix = "self",
-            },
-            cargo = {
-                buildScripts = {
-                    enable = true,
-                },
-            },
-            procMacro = {
-                enable = true
-            },
-        }
+  filetypes = "rust",
+  -- root_dir = util.root_pattern("Cargo.toml"),
+  settings = {
+    ["rust-analyzer"] = {
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
+      },
+      cargo = {
+        buildScripts = {
+          enable = true,
+        },
+      },
+      procMacro = {
+        enable = true
+      },
     }
+  }
 })
 
 
