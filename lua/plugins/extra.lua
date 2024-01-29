@@ -4,10 +4,10 @@ return {
 		lazy = false,
 		cmd = "GBrowse",
 	},
-	-- detect tabstop and shiftwidth automatically
-	{
-		'tpope/vim-sleuth',
-		lazy = false,
-		enabled = true,
-	},
+	-- -- detect tabstop and shiftwidth automatically
+	-- {
+	-- 	'tpope/vim-sleuth',
+	-- 	lazy = false,
+	-- 	enabled = true,
+	-- },
 }
