@@ -4,18 +4,28 @@ return {
     'navarasu/onedark.nvim',
     lazy = false,
   },
-
   {
     -- set lualine as statusline
     'nvim-lualine/lualine.nvim',
     lazy = false,
+    priority = 1000,
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- see `:help lualine.txt`
     opts = {
       options = {
-        icons_enabled = false,
+        icons_enabled = true,
         component_separators = '|',
         section_separators = '',
       },
+      sections = {
+        lualine_a = {'mode'},
+        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_c = {'filename'},
+        lualine_x = {'encoding', 'fileformat', 'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+      },
+      inactive_sections = {},
     },
   },
 
@@ -32,6 +42,7 @@ return {
   {
     'folke/tokyonight.nvim',
     lazy = false,
+    priority = 1000,
     config = function()
       vim.cmd.colorscheme 'tokyonight'
     end,

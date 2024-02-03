@@ -1,12 +1,16 @@
 function sNext()
 	if not pcall(vim.cmd.cnext) then
-		vim.cmd.cfirst()
+		if not pcall(vim.cmd.cfirst) then
+			print("not found")
+		end
 	end
 end
 
 function sPrevious()
 	if not pcall(vim.cmd.cprevious) then
-		vim.cmd.clast()
+		if not pcall(vim.cmd.clast) then
+			print("not found")
+		end
 	end
 end
 

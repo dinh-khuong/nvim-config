@@ -18,6 +18,7 @@ return {
       },
     },
     lazy = false,
+    priority = 500,
     config = function()
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
@@ -89,6 +90,7 @@ return {
       vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = 'Find registers' })
       -- You can pass additional configuration to telescope to change theme, layout, etc.
 
+      vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffer' })
       -- vim.keymap.set('n', '<leader>ft',
       --   function()
       --    require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -106,10 +108,9 @@ return {
 
       vim.keymap.set('n', '<leader>fc', ':CurrentGrepGitRoot<cr>', { desc = '[F]ind current [W]ord in Git' })
       vim.keymap.set('n', '<leader>fC', builtin.grep_string, { desc = '[F]ind current [W]ord' })
-      vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffer' })
 
       vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
-      vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
+      -- vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
 
       vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[F]ind [H]elp' })
