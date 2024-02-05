@@ -48,8 +48,7 @@ return {
         end
 
         -- Find the Git root directory from the current file's path
-        local git_root = vim.fn.systemlist("git -C " .. vim.fn.escape(current_dir, " ") .. " rev-parse --show-toplevel")
-            [1]
+        local git_root = vim.fn.systemlist("git -C " .. vim.fn.escape(current_dir, " ") .. " rev-parse --show-toplevel")[1]
         -- local git_root = vim.fn.systemlist("git -C . rev-parse --show-toplevel")[1]
         if vim.v.shell_error ~= 0 then
           print("Not a git repository. Searching on current working directory")
@@ -100,7 +99,11 @@ return {
       --  end, { desc = ' ]][/] Fuzzily search in current buffer' })
 
 
-      vim.keymap.set('n', '<leader>ff', builtin.git_files, { desc = '[F]ind [G]it [F]iles' })
+      vim.keymap.set('n', '<leader>ff', function ()
+        if not pcall(builtin.git_files) then
+          builtin.find_files()
+        end
+      end, { desc = '[F]ind [G]it [F]iles' })
       vim.keymap.set('n', '<leader>fF', builtin.find_files, { desc = '[F]ind [F]iles' })
 
       vim.keymap.set('n', '<leader>fw', ':LiveGrepGitRoot<cr>', { desc = '[F]ind by [G]rep on Git Root' })
