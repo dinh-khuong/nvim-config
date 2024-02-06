@@ -80,10 +80,22 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 function Color()
-	-- vim.api.nvim_set_hl_ns(1)
-	vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-	vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+	vim.api.nvim_set_hl(0, "Normal", {
+		bg = "none",
+		blend = 10,
+	})
+	-- vim.api.nvim_set_hl(0, "NormalNC", {
+	-- 	bg = "none",
+	-- 	strikethrough = true,
+	-- 	blend = 10,
+	-- })
+	vim.api.nvim_set_hl(0, "NormalFloat", {
+		bg = "none",
+		blend = 10,
+	})
 end
+
+-- Color()
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
