@@ -10,7 +10,7 @@ return {
 
 			-- useful status updates for lsp
 			-- note: `opts = {}` is the same as calling `require('fidget').setup({})`
-			{ 'j-hui/fidget.nvim', opts = {} }, -- additional lua configuration, makes nvim stuff amazing!
+			-- { 'j-hui/fidget.nvim', opts = {} }, -- additional lua configuration, makes nvim stuff amazing!
 			'folke/neodev.nvim',
 		},
 		config = function()
@@ -64,43 +64,38 @@ return {
 					vim.lsp.buf.format()
 				end, { desc = 'Format current buffer with LSP' })
 			end
-			-- document existing key chains
-
-			-- mason-lspconfig requires that these setup functions are called in this order
-			-- before setting up the servers.
-
-
-			-- Enable the following language servers
-			--  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
-			--
-			--  Add any additional override configuration in the following tables. They will be passed to
-			--  the `settings` field of the server config. You must look up that documentation yourself.
-			--
-			--  If you want to override the default filetypes that your language server will attach to you can
-			--  define the property 'filetypes' to the map in question.
-
 			-- local util = require("lspconfig.util")
 
 			local servers = {
 				-- clangd = {},
 				-- gopls = {},
 				-- pyright = {},
-				-- rust_analyzer = {
-				--   root_dir = util.root_pattern("Cargo.toml"),
-				--   rust = {
-				--     workspace = { checkThirdParty = false },
-				--     telemetry = { enable = false },
-				--   },
-				-- },
+				rust_analyzer = {
+					filetypes = "rust",
+					settings = {
+						["rust-analyzer"] = {
+							imports = {
+								granularity = {
+									group = "module",
+								},
+								prefix = "self",
+							},
+							cargo = {
+								buildScripts = {
+									enable = true,
+								},
+							},
+							procMacro = {
+								enable = true
+							},
+						}
+					}
+				},
 				tsserver = {},
-				-- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
 				lua_ls = {
 					Lua = {
 						workspace = { checkThirdParty = false },
 						telemetry = { enable = false },
-						-- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-						-- diagnostics = { disable = { 'missing-fields' } },
 					},
 				},
 			}
@@ -131,38 +126,30 @@ return {
 				end,
 			}
 
-			-- mason_lspconfig.setup(
-			--   -- ensure_installed = ['rust_analyzer'],
-			--   ensure_installed=['rust_analyzer'],
+			-- local nvim_lsp = require 'lspconfig'
+
+			-- nvim_lsp.rust_analyzer.setup({
+			-- 	filetypes = "rust",
+			-- 	settings = {
+			-- 		["rust-analyzer"] = {
+			-- 			imports = {
+			-- 				granularity = {
+			-- 					group = "module",
+			-- 				},
+			-- 				prefix = "self",
+			-- 			},
+			-- 			cargo = {
+			-- 				buildScripts = {
+			-- 					enable = true,
+			-- 				},
+			-- 			},
+			-- 			procMacro = {
+			-- 				enable = true
+			-- 			},
+			-- 		}
+			-- 	}
 			-- })
-
-			-- mason_lspconfig.get_installed_servers
-
-			local nvim_lsp = require 'lspconfig'
-
-			nvim_lsp.rust_analyzer.setup({
-				filetypes = "rust",
-				-- root_dir = util.root_pattern("Cargo.toml"),
-				settings = {
-					["rust-analyzer"] = {
-						imports = {
-							granularity = {
-								group = "module",
-							},
-							prefix = "self",
-						},
-						cargo = {
-							buildScripts = {
-								enable = true,
-							},
-						},
-						procMacro = {
-							enable = true
-						},
-					}
-				}
-			})
-
+			--
 			-- Diagnostic keymaps
 			vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 			vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
