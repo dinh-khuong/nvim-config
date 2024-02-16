@@ -7,10 +7,9 @@
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		vim.cmd("silent !append-old-project .")
+		vim.cmd("silent !old -a .")
 	end
 })
-
 
 -- fix ident
 local Four_Space_Ident = {

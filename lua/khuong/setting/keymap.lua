@@ -33,7 +33,7 @@ vim.keymap.set("n", "<A-k>", "<cmd>move .--<cr>=")
 vim.keymap.set("v", "<A-k>", ":move '<-2<cr>gv=gv")
 vim.keymap.set("v", "<A-j>", ":move '>+1<cr>gv=gv")
 
-vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
+vim.keymap.set("t", "<C-l>", "<C-\\><C-n>")
 
 vim.keymap.set('n', '<leader>cf', function()
   vim.cmd("silent ! xdg-open . &");

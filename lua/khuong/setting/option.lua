@@ -30,6 +30,7 @@ vim.o.completeopt = 'menuone,noselect'
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 vim.o.rnu = true
+vim.opt.shiftwidth = 2
 
 vim.o.scrolloff = 12
 
