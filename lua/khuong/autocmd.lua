@@ -7,7 +7,7 @@
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		vim.cmd("silent !old -a .")
+		vim.cmd("silent !old-append .")
 	end
 })
 
