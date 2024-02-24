@@ -10,8 +10,8 @@ return {
   config = function()
     require("bufferline").setup {
       options = {
-        mode = 'tabs',
-        -- mode = 'buffers',
+        -- mode = 'tabs',
+        mode = 'buffers',
       }
     }
 
