@@ -1,3 +1,5 @@
+require("khuong.helper")
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -6,7 +8,6 @@ vim.g.maplocalleader = ' '
 -- -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
 
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
@@ -27,14 +28,19 @@ vim.keymap.set("n", "F", "hF")
 vim.keymap.set("n", "t", "lt")
 vim.keymap.set("n", "T", "lT")
 
-vim.keymap.set("n", "<A-j>", "<cmd>move .+<cr>")
-vim.keymap.set("n", "<A-k>", "<cmd>move .--<cr>=")
+vim.keymap.set("n", "<A-j>", ":move .+<cr>==")
+vim.keymap.set("n", "<A-k>", ":move .--<cr>==")
 
 vim.keymap.set("v", "<A-k>", ":move '<-2<cr>gv=gv")
 vim.keymap.set("v", "<A-j>", ":move '>+1<cr>gv=gv")
 
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n>")
 
-vim.keymap.set('n', '<leader>cf', function()
-  vim.cmd("silent ! xdg-open . &");
-end, { desc = "Open in files manager" });
+vim.keymap.set('n', '<leader>gx', function()
+  vim.cmd.norm("\"vyiW")
+
+  local path = RealPath(vim.fn.getreg("v"))
+
+	os.execute("xdg-open " .. path)
+end, { desc = "Open default app" });
+

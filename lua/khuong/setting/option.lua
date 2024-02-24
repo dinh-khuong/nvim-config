@@ -34,7 +34,7 @@ vim.opt.shiftwidth = 2
 
 vim.o.scrolloff = 12
 
-
+vim.g.netrw_browsex_viewer = "xdg-open"
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 	end

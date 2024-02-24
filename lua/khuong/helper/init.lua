@@ -19,4 +19,37 @@ function Find_git_root()
 	end
 	return git_root
 end
+---@param path string
+---@return string[]
+local readPath = function(path) -- turn path into easy to parse array
+	local cells = {}
+	for cell in string.gmatch(path, "[^/]+") do
+		table.insert(cells, cell)
+	end
+
+	return cells
+end
+
+---@param arg string
+---@return string
+function RealPath(arg)
+	local currentPath
+	if string.sub(arg, 1, 1) == '/' then
+		currentPath = "/" -- path is in root directory
+	else
+		currentPath = vim.fn.expand("%:p:h")
+		assert(currentPath ~= nil, "currnet dir not found")
+	end
+
+	local currentCells = readPath(currentPath);
+	for cell in string.gmatch(arg, "[^/]+") do
+		if cell == ".." then
+			table.remove(currentCells) -- remove last element
+		elseif cell ~= "." then
+			table.insert(currentCells, cell)
+		end
+	end
+
+	return "/" .. table.concat(currentCells, "/")
+end
 

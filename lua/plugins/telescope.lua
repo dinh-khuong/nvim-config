@@ -7,15 +7,15 @@ return {
     -- branch = "master",
     dependencies = {
       'nvim-lua/plenary.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        -- note: if you are having trouble with this installation,
-        --       refer to the readme for telescope-fzf-native for more instructions.
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
+      -- {
+      --   'nvim-telescope/telescope-fzf-native.nvim',
+      --   -- note: if you are having trouble with this installation,
+      --   --       refer to the readme for telescope-fzf-native for more instructions.
+      --   build = 'make',
+      --   cond = function()
+      --     return vim.fn.executable 'make' == 1
+      --   end,
+      -- },
     },
     lazy = false,
     priority = 500,
