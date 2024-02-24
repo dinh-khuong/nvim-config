@@ -37,10 +37,13 @@ vim.keymap.set("v", "<A-j>", ":move '>+1<cr>gv=gv")
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n>")
 
 vim.keymap.set('n', '<leader>gx', function()
-  vim.cmd.norm("\"vyiW")
+	vim.cmd.norm("\"vyiW")
 
-  local path = RealPath(vim.fn.getreg("v"))
+	local path = RealPath(vim.fn.getreg("v"))
 
+	-- local file = io.open(path)
+	-- if file then
+	-- 	file:close()
 	os.execute("xdg-open " .. path)
+	-- end
 end, { desc = "Open default app" });
-
