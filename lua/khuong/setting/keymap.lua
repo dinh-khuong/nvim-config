@@ -1,19 +1,18 @@
-require("khuong.helper")
+-- require("khuong.helper")
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
--- -- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
+-- Remap for dealing with word wrap
+-- vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+-- vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+--
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
-
 vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y')
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"-d')
 
@@ -37,13 +36,16 @@ vim.keymap.set("v", "<A-j>", ":move '>+1<cr>gv=gv")
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n>")
 
 vim.keymap.set('n', '<leader>gx', function()
-	vim.cmd.norm("\"vyiW")
+	local arg = vim.fn.expand("<cWORD>")
 
-	local path = RealPath(vim.fn.getreg("v"))
+	if string.sub(arg, -1) == "@" then  -- check symbolic link
+		arg = string.sub(arg, 1, -2)
+	end
 
-	-- local file = io.open(path)
-	-- if file then
-	-- 	file:close()
-	os.execute("xdg-open " .. path)
-	-- end
+	local path = RealPath(arg)
+	local file = io.open(path)
+	if file then
+		file:close()
+		os.execute("xdg-open \'" .. path .. "\'")
+	end
 end, { desc = "Open default app" });

@@ -118,9 +118,7 @@ return {
 
       vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fj', builtin.jumplist, { desc = '[F]ind [J]ump list' })
-      vim.keymap.set('n', '<leader>fTh', function()
-        vim.cmd.colorscheme(builtin.colorscheme())
-      end, { desc = '[F]ind [T]heme' })
+      vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = '[F]ind [M]arks list' })
 
       -- local pickers = require('telescope.pickers')
       -- local finders = require('telescope.finders')

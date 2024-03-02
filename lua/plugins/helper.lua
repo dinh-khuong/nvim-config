@@ -1,18 +1,15 @@
 return {
   {
     'mbbill/undotree',
-    enabled = true,
     lazy = false,
   },
   {
     'kshenoy/vim-signature',
-    enabled = true,
     lazy = false,
   },
   -- detect tabstop and shiftwidth automatically
   {
     'tpope/vim-sleuth',
-    enabled = true,
     lazy = false,
   },
   {
@@ -28,12 +25,12 @@ return {
         -- extra = nil,
         toggler = {
           line = '<leader>/',
-          block = '<leader>bc'
+          block = '<leader>?'
         },
 
         opleader = {
           line = '<leader>/',
-          block = '<leader>bc'
+          block = '<leader>?'
         },
 
         mappings = {

@@ -28,13 +28,17 @@ vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
+-- vim.o.termguicolors = true
 vim.o.rnu = true
 vim.opt.shiftwidth = 2
 
 vim.o.scrolloff = 12
 
 vim.g.netrw_browsex_viewer = "xdg-open"
+
+-- vim.opt.foldmethod = "expr"
+-- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 	end

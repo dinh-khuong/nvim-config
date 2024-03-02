@@ -5,10 +5,9 @@ return {
 		lazy = false,
 		dependencies = {
 			-- snippet engine & its associated nvim-cmp source
-			'l3mon4d3/luasnip',
 			'saadparwaiz1/cmp_luasnip',
-			"L3MON4D3/LuaSnip",
 
+			"L3MON4D3/LuaSnip",
 			-- adds lsp completion capabilities
 			'hrsh7th/cmp-nvim-lsp',
 
