@@ -47,6 +47,10 @@ return {
           current_dir = vim.fn.fnamemodify(current_file, ":h")
         end
 
+        if not current_dir then
+          return cwd
+        end
+
         -- Find the Git root directory from the current file's path
         local git_root = vim.fn.systemlist("git -C " .. vim.fn.escape(current_dir, " ") .. " rev-parse --show-toplevel")[1]
         -- local git_root = vim.fn.systemlist("git -C . rev-parse --show-toplevel")[1]
@@ -90,14 +94,6 @@ return {
       -- You can pass additional configuration to telescope to change theme, layout, etc.
 
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffer' })
-      -- vim.keymap.set('n', '<leader>ft',
-      --   function()
-      --    require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-      --     winblend = 10,
-      --     previewer = false,
-      --   })
-      --  end, { desc = ' ]][/] Fuzzily search in current buffer' })
-
 
       vim.keymap.set('n', '<leader>ff', function ()
         if not pcall(builtin.git_files) then
@@ -119,21 +115,6 @@ return {
       vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[F]ind [H]elp' })
       vim.keymap.set('n', '<leader>fj', builtin.jumplist, { desc = '[F]ind [J]ump list' })
       vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = '[F]ind [M]arks list' })
-
-      -- local pickers = require('telescope.pickers')
-      -- local finders = require('telescope.finders')
-      -- local sorters  require('telescope.sorters')
-      --
-      -- local shell = {'bat', '$HOME/.local/share/bash/data/old-directory.txt'}
-      --
-      -- local opts = {
-      --   finder = finders.new_oneshot_job(shell, {}),
-      --   sorter = sorters.get_generic_fuzzy_sorter(),
-      -- }
-      -- vim.keymap.set('n', '<leader>od', function ()
-      --   local picker = pickers.new(opts)
-      -- end)
-      --
     end
   },
 }

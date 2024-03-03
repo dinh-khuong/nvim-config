@@ -19,7 +19,7 @@ end
 vim.keymap.set("n", "<C-n>", sNext)
 vim.keymap.set("n", "<C-p>", sPrevious)
 
-vim.opt.gp = "rg -ne"
+vim.opt.gp = "rg -nf"
 vim.opt.hidden = true
 
 vim.api.nvim_create_user_command("Grep", function(opts)

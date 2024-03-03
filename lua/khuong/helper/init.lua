@@ -38,7 +38,7 @@ function RealPath(arg)
 		currentPath = "/" -- path is in root directory
 	else
 		currentPath = vim.fn.expand("%:p:h")
-		assert(currentPath ~= nil, "currnet dir not found")
+		assert(currentPath ~= nil, "current dir not found")
 	end
 
 	local currentCells = readPath(currentPath);
