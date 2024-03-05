@@ -102,11 +102,11 @@ return {
       end, { desc = '[F]ind [G]it [F]iles' })
       vim.keymap.set('n', '<leader>fF', builtin.find_files, { desc = '[F]ind [F]iles' })
 
-      vim.keymap.set('n', '<leader>fw', ':LiveGrepGitRoot<cr>', { desc = '[F]ind by [G]rep on Git Root' })
-      vim.keymap.set('n', '<leader>fW', builtin.live_grep, { desc = '[F]ind by [G]rep' })
+      vim.keymap.set({'n', 'v'}, '<leader>fw', ':LiveGrepGitRoot<cr>', { desc = '[F]ind by [G]rep on Git Root' })
+      vim.keymap.set({'n', 'v'}, '<leader>fW', builtin.live_grep, { desc = '[F]ind by [G]rep' })
 
-      vim.keymap.set('n', '<leader>fc', ':CurrentGrepGitRoot<cr>', { desc = '[F]ind current [W]ord in Git' })
-      vim.keymap.set('n', '<leader>fC', builtin.grep_string, { desc = '[F]ind current [W]ord' })
+      vim.keymap.set({'n', 'v'}, '<leader>fc', ':CurrentGrepGitRoot<cr>', { desc = '[F]ind current [W]ord in Git' })
+      vim.keymap.set({'n', 'v'}, '<leader>fC', builtin.grep_string, { desc = '[F]ind current [W]ord' })
 
       vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
       -- vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })

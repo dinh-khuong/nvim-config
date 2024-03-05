@@ -19,18 +19,17 @@ end
 vim.keymap.set("n", "<C-n>", sNext)
 vim.keymap.set("n", "<C-p>", sPrevious)
 
-vim.opt.gp = "rg -nf"
+vim.opt.gp = "rg -n"
 vim.opt.hidden = true
 
 vim.api.nvim_create_user_command("Grep", function(opts)
-	vim.cmd("silent grep '" .. opts.fargs[1] .. "'") -- ..  " `find . -not -path \'*/\\.*\'`")
+	vim.cmd("silent grep -F -U'" .. opts.fargs[1] .. "'") -- ..  " `find . -not -path \'*/\\.*\'`")
 end, {
 	nargs = 1,
 })
 
 vim.api.nvim_create_user_command("VimGrep", function(opts)
 	vim.cmd.vimgrep(opts.fargs[1] .. " `git ls-files`")
-	-- ..  " `find . -not -path \'*/\\.*\'`")
 end, {
 	nargs = 1,
 })
