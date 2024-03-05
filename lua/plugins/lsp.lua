@@ -124,43 +124,18 @@ return {
 				end,
 			}
 
-			-- local nvim_lsp = require 'lspconfig'
-
-			-- nvim_lsp.rust_analyzer.setup({
-			-- 	filetypes = "rust",
-			-- 	settings = {
-			-- 		["rust-analyzer"] = {
-			-- 			imports = {
-			-- 				granularity = {
-			-- 					group = "module",
-			-- 				},
-			-- 				prefix = "self",
-			-- 			},
-			-- 			cargo = {
-			-- 				buildScripts = {
-			-- 					enable = true,
-			-- 				},
-			-- 			},
-			-- 			procMacro = {
-			-- 				enable = true
-			-- 			},
-			-- 		}
-			-- 	}
-			-- })
-			--
 			-- Diagnostic keymaps
 			vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
 			vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
 			vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-			-- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
-			-- Use LspAttach autocommand to only map the following keys
-			-- after the language server attaches to the current buffer
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
 				callback = function(ev)
 					-- Enable completion triggered by <c-x><c-o>
 					vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+					local client = vim.lsp.get_client_by_id(ev.data.client_id)
+					client.server_capabilities.semanticTokensProvider = nil
 					on_attach(ev.client, ev.buf)
 				end,
 			})

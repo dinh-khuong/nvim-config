@@ -1,10 +1,3 @@
-
-
--- vim.api.nvim_create_autocmd("VimEnter", {
--- 	callback = function ()
--- 	end
--- })
-
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
 		vim.cmd("silent !old-append .")
@@ -55,3 +48,4 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		Color()
 	end
 })
+

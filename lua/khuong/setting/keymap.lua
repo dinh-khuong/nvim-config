@@ -22,10 +22,10 @@ vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
 
-vim.keymap.set("n", "f", "lf")
-vim.keymap.set("n", "F", "hF")
-vim.keymap.set("n", "t", "lt")
-vim.keymap.set("n", "T", "lT")
+-- vim.keymap.set("n", "f", "lf")
+-- vim.keymap.set("n", "F", "hF")
+-- vim.keymap.set("n", "t", "lt")
+-- vim.keymap.set("n", "T", "lT")
 
 vim.keymap.set("n", "<A-j>", ":move .+<cr>==")
 vim.keymap.set("n", "<A-k>", ":move .--<cr>==")
@@ -34,6 +34,14 @@ vim.keymap.set("v", "<A-k>", ":move '<-2<cr>gv=gv")
 vim.keymap.set("v", "<A-j>", ":move '>+1<cr>gv=gv")
 
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n>")
+
+vim.keymap.set({"n"}, "<leader>tn", "<cmd>tabnext<cr>", {
+ desc = "Move to next tab",
+})
+
+vim.keymap.set({"n"}, "<leader>tp", "<cmd>tabnext<cr>", {
+ desc = "Move to previous tab",
+})
 
 vim.keymap.set('n', '<leader>gx', function()
 	local arg = vim.fn.expand("<cWORD>")

@@ -19,6 +19,7 @@ return {
           modules = {},
           sync_install = false,
           highlight = { enable = true },
+          -- additional_vim_regex_highlighting = true,
           indent = { enable = true },
           incremental_selection = {
             enable = true,

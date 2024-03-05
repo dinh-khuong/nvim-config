@@ -5,6 +5,10 @@ return {
     lazy = false,
   },
   {
+    'LunarVim/horizon.nvim',
+    lazy = false,
+  },
+  {
     -- set lualine as statusline
     'nvim-lualine/lualine.nvim',
     lazy = false,
@@ -37,18 +41,13 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
-      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     }
   },
   {
     'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
-    config = function()
-      vim.cmd.colorscheme 'tokyonight'
-    end,
   },
-  -- useful plugin to show you pending keybinds.
   {
     'folke/which-key.nvim',
     lazy = false,
