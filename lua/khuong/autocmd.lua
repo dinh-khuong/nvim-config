@@ -7,7 +7,8 @@ vim.api.nvim_create_autocmd("VimEnter", {
 -- fix ident
 local Four_Space_Ident = {
 	"rust",
-	"sh",
+	"c",
+	"java",
 }
 
 local function contain(array, value)
@@ -35,17 +36,27 @@ function Color()
 	vim.api.nvim_set_hl(0, "Normal", {
 		bg = "none",
 	})
-	vim.api.nvim_set_hl(0, "NormalNC", {
-		bg = "none",
-	})
+	-- vim.api.nvim_set_hl(0, "NormalNC", {
+	-- 	bg = "none",
+	-- })
 	vim.api.nvim_set_hl(0, "NormalFloat", {
 		bg = "none",
 	})
+	-- vim.api.nvim_set_hl(0, "FloatBorder", {
+	-- 	bg = "none",
+	-- })
 end
 
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
+vim.api.nvim_create_autocmd("ColorScheme", {
+	callback = function(ev)
 		Color()
+		if (ev.match == "horizon") then
+			vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
+				-- fg = "LightGray"
+				fg = "#5D536B"
+			})
+		end
 	end
 })
-
+--
+--

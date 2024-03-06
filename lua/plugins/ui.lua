@@ -5,7 +5,7 @@ return {
     lazy = false,
   },
   {
-    'LunarVim/horizon.nvim',
+    'akinsho/horizon.nvim',
     lazy = false,
   },
   {
