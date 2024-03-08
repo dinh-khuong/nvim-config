@@ -23,7 +23,7 @@ vim.opt.gp = "rg -n"
 vim.opt.hidden = true
 
 vim.api.nvim_create_user_command("Grep", function(opts)
-	vim.cmd("silent grep -F -U'" .. opts.fargs[1] .. "'") -- ..  " `find . -not -path \'*/\\.*\'`")
+	vim.cmd("silent grep -F -U '" .. opts.fargs[1] .. "'")
 end, {
 	nargs = 1,
 })

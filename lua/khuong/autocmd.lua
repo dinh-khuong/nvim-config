@@ -8,6 +8,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 local Four_Space_Ident = {
 	"rust",
 	"c",
+	"c++",
 	"java",
 }
 
@@ -36,15 +37,15 @@ function Color()
 	vim.api.nvim_set_hl(0, "Normal", {
 		bg = "none",
 	})
-	-- vim.api.nvim_set_hl(0, "NormalNC", {
-	-- 	bg = "none",
-	-- })
 	vim.api.nvim_set_hl(0, "NormalFloat", {
 		bg = "none",
 	})
-	-- vim.api.nvim_set_hl(0, "FloatBorder", {
-	-- 	bg = "none",
-	-- })
+	vim.api.nvim_set_hl(0, "NormalNC", {
+		bg = "none",
+	})
+	vim.api.nvim_set_hl(0, "TelescopeNormal", {
+		link = "Normal"
+	})
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", {
