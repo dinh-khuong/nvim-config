@@ -59,5 +59,12 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		end
 	end
 })
---
---
+
+
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+	pattern = {"bash-fc.*"},
+	callback = function ()
+		vim.bo.filetype = "sh"
+	end
+	
+})

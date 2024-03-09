@@ -5,5 +5,5 @@ require("khuong.custom.search")
 require("khuong.custom.marker")
 require("khuong.autocmd")
 require("khuong.helper")
-
+require("khuong.snip.init")
 
