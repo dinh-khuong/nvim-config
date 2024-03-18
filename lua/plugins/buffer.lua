@@ -22,6 +22,9 @@ return {
     vim.keymap.set({ 'n', 'v' }, '<leader>bl', vim.cmd.BufferLineCloseRight, { desc = "Close all right buffers" })
     vim.keymap.set({ 'n', 'v' }, '<leader>q', vim.cmd.bd, { desc = "Quit buffer" })
 
+    -- vim.keymap.set({ 'n', 'v' }, '	', vim.cmd.BufferLineCycleNext, { desc = "Next Buffer" })
+    -- vim.keymap.set({ 'n', 'v' }, '<BS>', vim.cmd.BufferLineCyclePrev, { desc = "Previous Buffer" })
+
     vim.keymap.set({ 'n', 'v' }, '<leader>bse', vim.cmd.BufferLineSortByExtension, { desc = "Sort by extension" })
 
     -- vim.keymap.set({ 'n', 'v' }, '<leader>	', vim.cmd.BufferLineCycleNext, { desc = "Next Buffer" })

@@ -9,6 +9,10 @@ return {
     lazy = false,
   },
   {
+    'folke/tokyonight.nvim',
+    lazy = false,
+  },
+  {
     -- set lualine as statusline
     'nvim-lualine/lualine.nvim',
     lazy = false,
@@ -42,11 +46,6 @@ return {
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
     }
-  },
-  {
-    'folke/tokyonight.nvim',
-    lazy = false,
-    priority = 1000,
   },
   {
     'folke/which-key.nvim',

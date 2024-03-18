@@ -7,15 +7,10 @@ for _, value in pairs(cwdContent) do
 	local file = vim.split(value, '/', { trimempty = true })
 	local filetype = vim.split(file[#file], '.', { plain = true })
 
-	if filetype[1] == "init" then
-		goto continue
-	end
-
 	table.insert(snipets, {
 		filetype = filetype[1],
 		used = false,
 	})
-	::continue::
 end
 
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -28,3 +23,4 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		end
 	end
 })
+

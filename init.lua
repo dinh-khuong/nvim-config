@@ -1,6 +1,6 @@
 require("khuong")
 
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system {
     'git',
@@ -26,20 +26,19 @@ require('lazy').setup("plugins", {
     notify = true,        -- get a notification when new updates are found
     frequency = 86400,   -- check for updates every day 
     check_pinned = false, -- check for pinned packages that can't be updated
-
   },                      -- automatically check for plugin updates
   performance = {
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
-        "gzip",
+        -- "gzip",
         -- "matchit",
         -- "matchparen",
         -- "netrwPlugin",
-        "tarPlugin",
-        "tohtml",
+        -- "tarPlugin",
+        -- "tohtml",
         -- "tutor",
-        "zipPlugin",
+        -- "zipPlugin",
       },
     },
   },

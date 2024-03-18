@@ -3,6 +3,12 @@ return {
 		-- lsp configuration & plugins
 		'neovim/nvim-lspconfig',
 		lazy = false,
+		-- cond = function ()
+		-- 	if vim.bo.filetype == "sh" then
+		-- 		return true
+		-- 	end
+		-- 	return false
+		-- end,
 		dependencies = {
 			-- automatically install lsps to stdpath for neovim
 			'williamboman/mason.nvim',
@@ -92,6 +98,7 @@ return {
 					}
 				},
 				tsserver = {},
+				-- bashls = {},
 				lua_ls = {
 					Lua = {
 						workspace = { checkThirdParty = false },
@@ -132,11 +139,10 @@ return {
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
 				callback = function(ev)
-					-- Enable completion triggered by <c-x><c-o>
 					vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					client.server_capabilities.semanticTokensProvider = nil
-					on_attach(ev.client, ev.buf)
+					-- on_attach(ev.client, ev.buf)
 				end,
 			})
 		end

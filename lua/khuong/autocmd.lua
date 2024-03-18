@@ -7,9 +7,6 @@ vim.api.nvim_create_autocmd("VimEnter", {
 -- fix ident
 local Four_Space_Ident = {
 	"rust",
-	"c",
-	"c++",
-	"java",
 }
 
 local function contain(array, value)
@@ -53,7 +50,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 		Color()
 		if (ev.match == "horizon") then
 			vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
-				-- fg = "LightGray"
 				fg = "#5D536B"
 			})
 		end
@@ -66,5 +62,5 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
 	callback = function ()
 		vim.bo.filetype = "sh"
 	end
-	
 })
+

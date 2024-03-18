@@ -19,14 +19,11 @@ function Find_git_root()
 	end
 	return git_root
 end
+
 ---@param path string
 ---@return string[]
 local readPath = function(path) -- turn path into easy to parse array
-	local cells = {}
-	for cell in string.gmatch(path, "[^/]+") do
-		table.insert(cells, cell)
-	end
-
+	local cells = vim.split(path, "/", { trimempty = true })
 	return cells
 end
 
