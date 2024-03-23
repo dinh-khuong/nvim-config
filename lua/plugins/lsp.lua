@@ -3,35 +3,23 @@ return {
 		-- lsp configuration & plugins
 		'neovim/nvim-lspconfig',
 		lazy = false,
-		-- cond = function ()
-		-- 	if vim.bo.filetype == "sh" then
-		-- 		return true
-		-- 	end
-		-- 	return false
-		-- end,
+    priority = 1,
 		dependencies = {
-			-- automatically install lsps to stdpath for neovim
 			'williamboman/mason.nvim',
 			'williamboman/mason-lspconfig.nvim',
-
+			'folke/neodev.nvim',
 			-- useful status updates for lsp
 			-- note: `opts = {}` is the same as calling `require('fidget').setup({})`
 			-- { 'j-hui/fidget.nvim', opts = {} }, -- additional lua configuration, makes nvim stuff amazing!
-			'folke/neodev.nvim',
 		},
 		config = function()
 			require('mason').setup()
 			require('mason-lspconfig').setup()
+			require('neodev').setup({})
 
-			-- require("lspconfig.server_configurations.hydra_lsp")
 			local builtin = require('telescope.builtin');
 
 			local on_attach = function(_, bufnr)
-				-- NOTE: Remember that lua is a real programming language, and as such it is possible
-				-- to define small helper and utility functions so you don't have to repeat yourself
-				-- many times.
-				--
-				-- In this case, we create a function that lets us more easily define mappings specific for LSP related items. It sets the mode, buffer and description for us each time.
 				local nmap = function(keys, func, desc)
 					if desc then
 						desc = 'LSP: ' .. desc
@@ -46,20 +34,15 @@ return {
 
 				nmap('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
 				nmap('gt', builtin.lsp_type_definitions, '[G]oto [T]ype [D]efinition')
-
-				-- nmap('gi', vim.lsp.buf.implementation, '[G]oto [D]efinition')
+				nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
 				nmap('gr', builtin.lsp_references, '[G]oto [R]eferences')
-				nmap('<leader>ls', builtin.lsp_document_symbols, '[F]ind [S]ymbols')
 
-				-- See `:help K` for why this keymap
 				nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 				nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
 				nmap('<leader>lw', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-				-- Lesser used LSP functionality
-				-- nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-				-- nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
 
+				nmap('<leader>ls', builtin.lsp_document_symbols, '[F]ind [S]ymbols')
 				nmap('<leader>wf', function()
 					print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 				end, '[W]orkspace [L]ist Folders')
@@ -107,9 +90,6 @@ return {
 				},
 			}
 
-			-- Setup neovim lua configuration
-			require('neodev').setup({})
-
 			-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -125,7 +105,7 @@ return {
 				function(server_name)
 					require('lspconfig')[server_name].setup {
 						capabilities = capabilities,
-						on_attach = on_attach,
+						-- on_attach = on_attach,
 						settings = servers[server_name],
 					}
 				end,
@@ -142,7 +122,7 @@ return {
 					vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					client.server_capabilities.semanticTokensProvider = nil
-					-- on_attach(ev.client, ev.buf)
+					on_attach(ev.client, ev.buf)
 				end,
 			})
 		end
