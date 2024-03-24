@@ -6,6 +6,11 @@ require("khuong.snipconfig")
 
 require("khuong.custom.init")
 
+local a = 0
+if a == 1 then
+	print(a)
+end
+
 -- (function_declaration
 -- 	name: (identifier) @name (#eq? @name "Find_git_root")
 -- 	) @id
@@ -54,6 +59,7 @@ require("khuong.custom.init")
 -- 			)
 -- 			]]
 -- 		)
+--
 -- 		for _, node in string_contents:iter_captures(root, bufnr, 0, -1) do
 -- 			local css = vim.treesitter.get_node_text(node, bufnr)
 --
@@ -67,3 +73,4 @@ require("khuong.custom.init")
 -- 		end
 -- 	end
 -- })
+
