@@ -31,6 +31,9 @@ require('lazy').setup("plugins", {
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
+        "sql-completion",
+        "sql-completion-static",
+        "omni-sql-completion",
         -- "gzip",
         -- "matchit",
         -- "matchparen",

@@ -3,11 +3,14 @@ require("khuong.setting.keymap")
 require("khuong.autocmd")
 require("khuong.helper")
 require("khuong.snipconfig")
-
 require("khuong.custom.init")
 
+-- dfkd3
+--
+
+-- local foo = 0
 local a = 0
-if a == 1 then
+if a ~= 1 then
 	print(a)
 end
 

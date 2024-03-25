@@ -3,19 +3,33 @@ return {
 		-- lsp configuration & plugins
 		'neovim/nvim-lspconfig',
 		lazy = false,
-    priority = 1,
+		priority = 1,
 		dependencies = {
 			'williamboman/mason.nvim',
 			'williamboman/mason-lspconfig.nvim',
 			'folke/neodev.nvim',
 			-- useful status updates for lsp
 			-- note: `opts = {}` is the same as calling `require('fidget').setup({})`
-			-- { 'j-hui/fidget.nvim', opts = {} }, -- additional lua configuration, makes nvim stuff amazing!
+			{
+				'j-hui/fidget.nvim',
+				opts = {
+					notification = {
+						view = {
+							group_separator_hl = "Normal",
+						},
+						window = {
+							normal_hl = "Keyword",
+							-- winbled = 80,
+						}
+					}
+				}
+			}, -- additional lua configuration, makes nvim stuff amazing!
 		},
 		config = function()
 			require('mason').setup()
 			require('mason-lspconfig').setup()
 			require('neodev').setup({})
+			-- require('fidget').setup({ })
 
 			local builtin = require('telescope.builtin');
 

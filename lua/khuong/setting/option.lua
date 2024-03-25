@@ -37,6 +37,7 @@ vim.opt.shiftwidth = 2
 vim.o.scrolloff = 12
 
 vim.g.netrw_browsex_viewer = "xdg-open"
+vim.g.omni_sql_no_default_maps = 0
 
 -- vim.opt.foldmethod = "expr"
 -- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
