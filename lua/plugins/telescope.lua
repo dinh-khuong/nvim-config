@@ -77,7 +77,6 @@ return {
       vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
       vim.api.nvim_create_user_command('CurrentGrepGitRoot', current_grep_git_root, {})
 
-      -- See `:help telescope.builtin`
       vim.keymap.set('n', '<leader>of', builtin.oldfiles, { desc = 'Find recently opened files' })
       vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = 'Find registers' })
 
@@ -97,7 +96,6 @@ return {
       vim.keymap.set({'n', 'v'}, '<leader>fC', builtin.grep_string, { desc = '[F]ind current [W]ord' })
 
       vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
-      -- vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
 
       vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[F]ind [H]elp' })
