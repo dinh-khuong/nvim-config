@@ -28,7 +28,7 @@ vim.keymap.set("n", "<A-k>", ":move .--<cr>==")
 vim.keymap.set("v", "<A-k>", ":move '<-2<cr>gv=gv")
 vim.keymap.set("v", "<A-j>", ":move '>+1<cr>gv=gv")
 
-vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
+-- vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
 
 -- vim.keymap.set({ "n" }, "<leader>tn", "<cmd>tabnext<cr>", {
 -- 	desc = "Move to next tab",
@@ -37,7 +37,19 @@ vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
 -- vim.keymap.set({ "n" }, "<leader>tp", "<cmd>tabnext<cr>", {
 -- 	desc = "Move to previous tab",
 -- })
---
+
+vim.keymap.set({ "n" }, "<leader>kt", function()
+	if vim.opt.keymap == "vietnamese-telex_utf-8" then
+		vim.opt.keymap = ""
+	else
+		vim.opt.keymap = "vietnamese-telex_utf-8"
+	end
+end, {
+	desc = "toggle unikey"
+})
+
+
+
 vim.keymap.set('n', '<leader>gx', function()
 	local arg = vim.fn.expand("<cWORD>")
 
