@@ -6,6 +6,7 @@ if not vim.loop.fs_stat(lazypath) then
     'git',
     'clone',
     '--filter=blob:none', 'https://github.com/folke/lazy.nvim.git', '--branch=stable', -- latest stable release lazypath,
+    lazypath,
   }
 end
 vim.opt.rtp:prepend(lazypath)
@@ -31,9 +32,9 @@ require('lazy').setup("plugins", {
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
-        "sql-completion",
-        "sql-completion-static",
-        "omni-sql-completion",
+        -- "sql-completion",
+        -- "sql-completion-static",
+        -- "omni-sql-completion",
         -- "gzip",
         -- "matchit",
         -- "matchparen",
