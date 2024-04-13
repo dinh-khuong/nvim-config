@@ -57,10 +57,24 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 
 
-vim.api.nvim_create_autocmd({"BufEnter"}, {
-	pattern = {"bash-fc.*"},
-	callback = function ()
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	pattern = { "bash-fc.*" },
+	callback = function()
 		vim.bo.filetype = "sh"
 	end
 })
 
+vim.api.nvim_create_autocmd({"BufWinEnter"}, {
+	pattern = { "*.json" },
+	callback = function()
+		local filename = vim.fn.expand("%")
+		local bash_cmd = string.format("stat --printf='%%s' %s", filename)
+		local file_size_raw = vim.fn.systemlist(bash_cmd)[1]
+		if file_size_raw then
+			local file_size = vim.fn.eval(file_size_raw)
+			if file_size > 10000 then
+				vim.cmd("TSBufDisable highlight")
+			end
+		end
+	end
+})

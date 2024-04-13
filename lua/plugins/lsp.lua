@@ -72,7 +72,10 @@ return {
 			local servers = {
 				-- clangd = {},
 				-- gopls = {},
-				-- pyright = {},
+				pyright = {
+					-- filetype = "python",
+					-- root_dir = vim.loop.cwd(),
+				},
 				rust_analyzer = {
 					filetypes = "rust",
 					settings = {
@@ -119,7 +122,7 @@ return {
 				function(server_name)
 					require('lspconfig')[server_name].setup {
 						capabilities = capabilities,
-						-- on_attach = on_attach,
+						on_attach = on_attach,
 						settings = servers[server_name],
 					}
 				end,
@@ -136,7 +139,7 @@ return {
 					vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 					local client = vim.lsp.get_client_by_id(ev.data.client_id)
 					client.server_capabilities.semanticTokensProvider = nil
-					on_attach(ev.client, ev.buf)
+					-- on_attach(ev.client, ev.buf)
 				end,
 			})
 		end
