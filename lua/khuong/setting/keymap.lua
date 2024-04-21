@@ -28,6 +28,11 @@ vim.keymap.set("n", "<A-k>", ":move .--<cr>==")
 vim.keymap.set("v", "<A-k>", ":move '<-2<cr>gv=gv")
 vim.keymap.set("v", "<A-j>", ":move '>+1<cr>gv=gv")
 
+vim.keymap.set("i", "(", "()<left>");
+vim.keymap.set("i", "[", "[]<left>");
+vim.keymap.set("i", "{", "{}<left>");
+vim.keymap.set("i", "\"", "\"\"<left>");
+
 -- vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
 
 -- vim.keymap.set({ "n" }, "<leader>tn", "<cmd>tabnext<cr>", {
@@ -38,10 +43,14 @@ vim.keymap.set("v", "<A-j>", ":move '>+1<cr>gv=gv")
 -- 	desc = "Move to previous tab",
 -- })
 
+
+local vietnamese = false
 vim.keymap.set({ "n" }, "<leader>kt", function()
-	if vim.opt.keymap == "vietnamese-telex_utf-8" then
+	if vietnamese then
+		vietnamese = false
 		vim.opt.keymap = ""
 	else
+		vietnamese = true
 		vim.opt.keymap = "vietnamese-telex_utf-8"
 	end
 end, {

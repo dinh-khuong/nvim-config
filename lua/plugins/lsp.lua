@@ -72,10 +72,7 @@ return {
 			local servers = {
 				-- clangd = {},
 				-- gopls = {},
-				pyright = {
-					-- filetype = "python",
-					-- root_dir = vim.loop.cwd(),
-				},
+				pyright = { },
 				rust_analyzer = {
 					filetypes = "rust",
 					settings = {

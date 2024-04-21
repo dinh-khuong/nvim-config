@@ -24,6 +24,15 @@ ls.add_snippets("sh", {
 })
 
 ls.add_snippets("sh", {
+	snip("fun", fmt([[
+	function {}() {{
+		{}
+	}}
+	]], {i(1), i(2)}))
+
+})
+
+ls.add_snippets("sh", {
 	snip("if", fmt([[
 	if [{}]; then
 		{}

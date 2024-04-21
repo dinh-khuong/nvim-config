@@ -9,10 +9,6 @@ require("khuong.custom.init")
 --
 
 -- local foo = 0
-local a = 0
-if a ~= 1 then
-	print(a)
-end
 
 -- (function_declaration
 -- 	name: (identifier) @name (#eq? @name "Find_git_root")
