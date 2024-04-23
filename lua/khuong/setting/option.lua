@@ -22,6 +22,7 @@ vim.o.rnu = true
 vim.opt.shiftwidth = 2
 
 vim.o.scrolloff = 12
+vim.o.laststatus = 3
 
 vim.g.netrw_browsex_viewer = "xdg-open"
 vim.g.omni_sql_no_default_maps = 0

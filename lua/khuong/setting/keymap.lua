@@ -57,7 +57,27 @@ end, {
 	desc = "toggle unikey"
 })
 
+local function dyn_split()
+	local winum = vim.api.nvim_get_current_win()
+	local width = vim.api.nvim_win_get_width(winum)
+	local height = vim.api.nvim_win_get_height(winum)
 
+	local sorted = vim.fn.sort({width, height})
+	local half_max = sorted[1] / 2
+	local full_min = sorted[2]
+
+	if half_max > full_min then
+		vim.cmd("vertical :split")
+	else
+		vim.cmd("horizontal :split")
+	end
+end
+
+vim.keymap.set('n', '<C-w>d', dyn_split, {
+	desc = "Split window dynamically"
+})
+
+-- vim.keymap.set('n', '<C-w><C-d>', Dyn_split)
 
 vim.keymap.set('n', '<leader>gx', function()
 	local arg = vim.fn.expand("<cWORD>")
