@@ -1,5 +1,9 @@
 return {
   {
+    'oxfist/night-owl.nvim',
+    lazy = false,
+  },
+  {
     -- theme inspired by atom
     'navarasu/onedark.nvim',
     lazy = false,

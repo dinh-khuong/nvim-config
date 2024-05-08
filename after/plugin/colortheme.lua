@@ -1,4 +1,7 @@
+-- require("night-owl").setup()
+
 vim.cmd.colorscheme "horizon"
+-- vim.cmd.colorscheme("night-owl")
 
 -- vim.api.nvim_create_autocmd("LspAttach", {
 -- 	callback = function(ev)

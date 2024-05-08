@@ -13,13 +13,13 @@ return {
         require('nvim-treesitter.configs').setup {
           -- Add languages to be installed here that you want installed for treesitter
           ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash', 'css', 'html', 'java', 'zig', 'markdown',  'r', },
-          ignore_install = { 'tmux', },
+          ignore_install = { 'tmux', 'dockerfile' },
           -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
           auto_install = true,
           modules = {},
           sync_install = false,
           highlight = { enable = true },
-          -- additional_vim_regex_highlighting = true,
+          additional_vim_regex_highlighting = true,
           indent = { enable = true },
           incremental_selection = {
             enable = true,

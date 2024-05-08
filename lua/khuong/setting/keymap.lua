@@ -33,6 +33,17 @@ vim.keymap.set("i", "[", "[]<left>");
 vim.keymap.set("i", "{", "{}<left>");
 vim.keymap.set("i", "\"", "\"\"<left>");
 
+vim.keymap.set("t", "<esc>", function ()
+	local currentdir = vim.fn.getcwd()
+	local oldfile = vim.v.oldfiles[1]
+	if vim.startswith(oldfile, currentdir) then
+		vim.cmd("e " .. oldfile)
+	else
+		vim.cmd("e " .. currentdir)
+	end
+	-- "<C-\\><C-n>:buf"
+end)
+
 -- vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
 
 -- vim.keymap.set({ "n" }, "<leader>tn", "<cmd>tabnext<cr>", {
@@ -42,7 +53,6 @@ vim.keymap.set("i", "\"", "\"\"<left>");
 -- vim.keymap.set({ "n" }, "<leader>tp", "<cmd>tabnext<cr>", {
 -- 	desc = "Move to previous tab",
 -- })
-
 
 local vietnamese = false
 vim.keymap.set({ "n" }, "<leader>kt", function()
@@ -77,7 +87,7 @@ vim.keymap.set('n', '<C-w>d', dyn_split, {
 	desc = "Split window dynamically"
 })
 
--- vim.keymap.set('n', '<C-w><C-d>', Dyn_split)
+vim.keymap.set('n', '<C-w><C-d>', dyn_split)
 
 vim.keymap.set('n', '<leader>gx', function()
 	local arg = vim.fn.expand("<cWORD>")
