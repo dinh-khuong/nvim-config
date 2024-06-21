@@ -9,6 +9,7 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   }
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup("plugins", {
@@ -25,7 +26,7 @@ require('lazy').setup("plugins", {
     enabled = true,
     concurrency = 10, ---@type number? set to 1 to check for updates very slowly
     notify = true,        -- get a notification when new updates are found
-    frequency = 86400,   -- check for updates every day 
+    frequency = 604800,   -- check for updates every day 
     check_pinned = false, -- check for pinned packages that can't be updated
   },                      -- automatically check for plugin updates
   performance = {

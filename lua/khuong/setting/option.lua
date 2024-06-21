@@ -3,8 +3,10 @@ vim.wo.number = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
-vim.o.mouse = 'a'
+-- vim.o.mouse = 'a'
+vim.o.mouse = ''
 vim.o.completeopt = 'menuone,noselect'
+vim.opt.inccommand = "split"
 
 vim.o.breakindent = true
 

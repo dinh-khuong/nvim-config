@@ -6,7 +6,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 
 -- fix ident
 local Four_Space_Ident = {
-	"rust",
+	"rust", "python",
 }
 
 local function contain(array, value)
@@ -56,11 +56,18 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 	end
 })
 
-
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
 	pattern = { "bash-fc.*" },
 	callback = function()
 		vim.bo.filetype = "sh"
+	end
+})
+
+vim.api.nvim_create_autocmd({ "TermOpen" }, {
+	pattern = { "*" },
+	callback = function ()
+		vim.cmd("setlocal norelativenumber")
+		vim.cmd("setlocal nonumber")
 	end
 })
 
