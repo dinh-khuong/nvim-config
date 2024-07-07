@@ -96,5 +96,9 @@ vim.keymap.set('n', '<leader>gx', function()
 	end
 end, { desc = "Open default app" });
 
+local query = [[
+	select * from user
+]]
+
 
 
