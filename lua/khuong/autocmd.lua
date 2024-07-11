@@ -43,16 +43,21 @@ function Color()
 	vim.api.nvim_set_hl(0, "TelescopeNormal", {
 		link = "Normal"
 	})
+	vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
+		link = "Comment"
+	})
 end
 
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	callback = function ()
+-- 		vim.cmd.colorscheme "horizon"
+-- 		-- Color()
+-- 	end
+-- })
+
 vim.api.nvim_create_autocmd("ColorScheme", {
-	callback = function(ev)
+	callback = function(_ev)
 		Color()
-		if (ev.match == "horizon") then
-			vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
-				fg = "#5D536B"
-			})
-		end
 	end
 })
 

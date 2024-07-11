@@ -8,11 +8,9 @@
 		(identifier) @src_ident
 		(#eq? @src_ident "src")
 		(raw_string_literal
-			(string_content) @injection.content
-			(#set! injection.language "glsl")
+			(string_content) @content
+			(#set! "priority" 90)
 			) 
 		)
  ) 
-
-
 

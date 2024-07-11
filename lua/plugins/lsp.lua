@@ -37,10 +37,17 @@ end
 
 return {
 	{
+		'folke/neodev.nvim',
+		filetypes = "lua",
+		config = function ()
+			require('neodev').setup({})
+		end,
+	},
+	{
 		-- lsp configuration & plugins
 		'neovim/nvim-lspconfig',
 		lazy = false,
-		priority = 1,
+		priority = 10,
 		dependencies = {
 			'williamboman/mason.nvim',
 			'williamboman/mason-lspconfig.nvim',
@@ -65,7 +72,10 @@ return {
 		config = function()
 			require('mason').setup()
 			require('mason-lspconfig').setup()
-			require('neodev').setup({})
+
+			-- if vim. then
+			-- 	
+			-- end
 			-- require('fidget').setup({ })
 
 
@@ -137,8 +147,11 @@ return {
 				callback = function(ev)
 					vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 					local client = vim.lsp.get_client_by_id(ev.data.client_id)
-					client.server_capabilities.semanticTokensProvider = nil
-					-- on_attach(ev.client, ev.buf)
+					if client then
+						client.server_capabilities.semanticTokensProvider = nil
+						client.server_capabilities.documentHighlightProvider = nil
+					end
+					on_attach(ev.client, ev.buf)
 				end,
 			})
 		end
@@ -150,19 +163,21 @@ return {
 	{
 		'simrat39/rust-tools.nvim',
 		ft = "rust",
+		priority = 1,
 		config = function()
 			local rt = require("rust-tools")
 
 			rt.setup({
 				server = {
-					on_attach = function(_, bufnr)
+					on_attach = function(env, bufnr)
 						-- Hover actions
 						-- vim.keymap.set("n", "<C-k>", rt.hover_actions.hover_actions, { buffer = bufnr })
-						on_attach(_, bufnr)
+						on_attach(env, bufnr)
 
 						vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
 						-- Code action groups
 						vim.keymap.set("n", "<leader>lca", rt.code_action_group.code_action_group, { buffer = bufnr })
+						-- rt.expand_macro.expand_macro()
 					end,
 				},
 			})

@@ -3,6 +3,7 @@ return {
     -- highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
+		priority = 20,
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ':TSUpdate',

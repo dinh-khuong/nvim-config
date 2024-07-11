@@ -24,3 +24,20 @@
 	)
  )
 
+(variable_declaration
+	(assignment_statement
+		(variable_list
+			name: (identifier) @ident
+			(#match? @ident "query.*")
+			)
+		(expression_list
+			value: (
+							string
+							content: (string_content) @injection.content
+							)
+			)
+		)
+			(#set! injection.language "sql")
+	)
+
+

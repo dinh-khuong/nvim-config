@@ -96,9 +96,18 @@ vim.keymap.set('n', '<leader>gx', function()
 	end
 end, { desc = "Open default app" });
 
-local query = [[
-	select * from user
-]]
+vim.keymap.set("v", "'", [[:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
+vim.keymap.set("v", '"', [[:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })
+
+vim.keymap.set("v", '<leader><', [[:s/\%V\(.*\)\%V/<\1>/ <CR>]], { desc = 'Surround selection with <>' })
+vim.keymap.set("v", "<leader>(", [[:s/\%V\(.*\)\%V/(\1)/ <CR>]], { desc = "Surround selection with ()" })
+vim.keymap.set("v", "<leader>{", [[:s/\%V\(.*\)\%V/{\1}/ <CR>]], { desc = "Surround selection with {}" })
+vim.keymap.set("v", "<leader>[", [[:s/\%V\(.*\)\%V/{\1}/ <CR>]], { desc = "Surround selection with []" })
 
 
+-- vim.keymap.set("v", '*', [[:s/\%V\(.*\)\%V/*\1*/ <CR>]], { desc = "Surround selection with *" })
+
+-- vim.keymap.set("n", '<leader>s*', [[:s/\<<C-r><C-w>\>/*<C-r><C-w>\*/ <CR>]], { desc = "Surround word with *" })
+-- vim.keymap.set("n", '<leader>s"', [[:s/\<<C-r><C-w>\>/"<C-r><C-w>\"/ <CR>]], { desc = 'Surround word with "' })
+-- vim.keymap.set("n", "<leader>s'", [[:s/\<<C-r><C-w>\>/'<C-r><C-w>\'/ <CR>]], { desc = "Surround word with '" })
 

@@ -6,6 +6,13 @@ require("khuong.snipconfig")
 require("khuong.custom.init")
 
 
+
+-- vim.api.nvim_buf_set_extmark();
+-- vim.api.nvim_buf_set_keymap
+-- local query_sdfsdf = [[
+-- 	select * from user;
+-- ]]
+
 -- (call_expression
 -- 	function: 
 -- 	(member_expression
