@@ -12,10 +12,11 @@ local on_attach = function(_, bufnr)
 	-- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 	nmap('<leader>lca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-	nmap('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
+	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
 	nmap('gt', builtin.lsp_type_definitions, '[G]oto [T]ype [D]efinition')
 	nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
 	nmap('gr', builtin.lsp_references, '[G]oto [R]eferences')
+
 
 	nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 	nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
@@ -85,6 +86,27 @@ return {
 				-- clangd = {},
 				-- gopls = {},
 				pyright = { },
+				-- rls = {
+				-- 	filetypes = "rust",
+				-- 	settings = {
+				-- 		["rls"] = {
+				-- 			imports = {
+				-- 				granularity = {
+				-- 					group = "module",
+				-- 				},
+				-- 				prefix = "self",
+				-- 			},
+				-- 			cargo = {
+				-- 				buildScripts = {
+				-- 					enable = true,
+				-- 				},
+				-- 			},
+				-- 			procMacro = {
+				-- 				enable = true
+				-- 			},
+				-- 		}
+				-- 	}
+				-- },
 				rust_analyzer = {
 					filetypes = "rust",
 					settings = {
@@ -106,7 +128,11 @@ return {
 						}
 					}
 				},
-				tsserver = {},
+				tsserver = {
+					-- settings = {
+					-- 	[]
+					-- }
+				},
 				-- bashls = {},
 				lua_ls = {
 					Lua = {
@@ -160,27 +186,27 @@ return {
 	-- 	'rust-lang/rust.vim',
 	-- 	ft = "rust",
 	-- },
-	{
-		'simrat39/rust-tools.nvim',
-		ft = "rust",
-		priority = 1,
-		config = function()
-			local rt = require("rust-tools")
-
-			rt.setup({
-				server = {
-					on_attach = function(env, bufnr)
-						-- Hover actions
-						-- vim.keymap.set("n", "<C-k>", rt.hover_actions.hover_actions, { buffer = bufnr })
-						on_attach(env, bufnr)
-
-						vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
-						-- Code action groups
-						vim.keymap.set("n", "<leader>lca", rt.code_action_group.code_action_group, { buffer = bufnr })
-						-- rt.expand_macro.expand_macro()
-					end,
-				},
-			})
-		end
-	},
+	-- {
+	-- 	'simrat39/rust-tools.nvim',
+	-- 	ft = "rust",
+	-- 	priority = 1,
+	-- 	config = function()
+	-- 		local rt = require("rust-tools")
+	--
+	-- 		rt.setup({
+	-- 			server = {
+	-- 				on_attach = function(env, bufnr)
+	-- 					-- Hover actions
+	-- 					-- vim.keymap.set("n", "<C-k>", rt.hover_actions.hover_actions, { buffer = bufnr })
+	-- 					on_attach(env, bufnr)
+	--
+	-- 					vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
+	-- 					-- Code action groups
+	-- 					vim.keymap.set("n", "<leader>lca", rt.code_action_group.code_action_group, { buffer = bufnr })
+	-- 					-- rt.expand_macro.expand_macro()
+	-- 				end,
+	-- 			},
+	-- 		})
+	-- 	end
+	-- },
 }

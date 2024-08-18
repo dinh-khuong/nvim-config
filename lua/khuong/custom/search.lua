@@ -20,7 +20,6 @@ vim.keymap.set("n", "<C-n>", sNext)
 vim.keymap.set("n", "<C-p>", sPrevious)
 
 vim.opt.gp = "rg -n"
-vim.opt.hidden = true
 
 vim.api.nvim_create_user_command("Grep", function(opts)
 	vim.cmd("silent grep -F -U '" .. opts.fargs[1] .. "'")

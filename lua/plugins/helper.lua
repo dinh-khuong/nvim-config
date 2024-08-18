@@ -4,6 +4,13 @@ return {
     lazy = false,
   },
   {
+    'tpope/vim-surround',
+    lazy = false,
+    config = function ()
+
+    end
+  },
+  {
     'kshenoy/vim-signature',
     lazy = false,
   },
@@ -19,6 +26,7 @@ return {
     config = function()
       require("Comment").setup {
         padding = true,
+        ignore = "^$",
 
         sticky = true,
         -- ignore = nil,

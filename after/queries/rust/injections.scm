@@ -1,5 +1,8 @@
 ; extends
 
+((string_content) @string.rust (#set! "priority" 90))
+((raw_string_literal) @string.rust (#set! "priority" 90))
+
 (
  macro_invocation
  (scoped_identifier) @shader_ident

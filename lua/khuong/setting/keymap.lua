@@ -18,6 +18,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', '"-d')
 
 vim.keymap.set({ 'n', 'v' }, 'd', '"_d')
 vim.keymap.set({ 'n', 'v' }, 'x', '"_x')
+-- vim.keymap.set({ 'n', 'v' }, 'p', '"_x')
 
 vim.keymap.set("n", "n", "nzz")
 vim.keymap.set("n", "N", "Nzz")
@@ -73,9 +74,7 @@ local function dyn_split()
 	end
 end
 
-vim.keymap.set('n', '<C-w>d', dyn_split, {
-	desc = "Split window dynamically"
-})
+vim.keymap.set('n', '<C-w>d', dyn_split, { desc = "Split window dynamically" })
 
 vim.keymap.set('n', '<C-w><C-d>', dyn_split, {
 	desc = "Split window dynamically"
@@ -96,14 +95,15 @@ vim.keymap.set('n', '<leader>gx', function()
 	end
 end, { desc = "Open default app" });
 
-vim.keymap.set("v", "'", [[:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
-vim.keymap.set("v", '"', [[:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })
 
-vim.keymap.set("v", '<leader><', [[:s/\%V\(.*\)\%V/<\1>/ <CR>]], { desc = 'Surround selection with <>' })
-vim.keymap.set("v", "<leader>(", [[:s/\%V\(.*\)\%V/(\1)/ <CR>]], { desc = "Surround selection with ()" })
-vim.keymap.set("v", "<leader>{", [[:s/\%V\(.*\)\%V/{\1}/ <CR>]], { desc = "Surround selection with {}" })
-vim.keymap.set("v", "<leader>[", [[:s/\%V\(.*\)\%V/{\1}/ <CR>]], { desc = "Surround selection with []" })
 
+-- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
+-- vim.keymap.set("v", '"', [[l:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })
+
+-- vim.keymap.set("v", '<leader><', [[l:s/\%V\(.*\)\%V/<\1>/ <CR>]], { desc = 'Surround selection with <>' })
+-- vim.keymap.set("v", "<leader>(", [[l:s/\%V\(.*\)\%V/(\1)/ <CR>]], { desc = "Surround selection with ()" })
+-- vim.keymap.set("v", "<leader>{", [[l:s/\%V\(.*\)\%V/{\1}/ <CR>]], { desc = "Surround selection with {}" })
+-- vim.keymap.set("v", "<leader>[", [[l:s/\%V\(.*\)\%V/{\1}/ <CR>]], { desc = "Surround selection with []" })
 
 -- vim.keymap.set("v", '*', [[:s/\%V\(.*\)\%V/*\1*/ <CR>]], { desc = "Surround selection with *" })
 

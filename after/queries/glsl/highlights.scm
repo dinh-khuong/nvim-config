@@ -1,6 +1,6 @@
 ; extends
 
-((preproc_directive) @hello (#set! "priority" 200))
+; ((preproc_directive) @hello (#set! "priority" 200))
 
 ; (
 ; (keyword) @Keyoword 

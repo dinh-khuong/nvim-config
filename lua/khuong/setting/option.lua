@@ -2,6 +2,9 @@ vim.o.hlsearch = true
 vim.wo.number = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
+vim.o.hidden = true
+
+vim.opt.hidden = true
 
 -- vim.o.mouse = 'a'
 vim.o.mouse = ''
@@ -29,8 +32,9 @@ vim.o.laststatus = 3
 vim.g.netrw_browsex_viewer = "xdg-open"
 vim.g.omni_sql_no_default_maps = 0
 
--- vim.opt.foldmethod = "expr"
--- vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldlevel = 99
 
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
@@ -49,6 +53,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 
-
-
+-- vim.api.nvim_set_var
+-- vim.api.nvim_set_hl(0, "String", {
+-- 	priority = 90
+-- });
 

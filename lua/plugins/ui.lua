@@ -10,9 +10,6 @@ return {
   },
   {
     'akinsho/horizon.nvim',
-    config = function ()
-      vim.cmd.colorscheme "horizon"
-    end,
     lazy = false,
   },
   {
@@ -58,7 +55,7 @@ return {
     'folke/which-key.nvim',
     lazy = false,
     config = function()
-      require('which-key').register {
+      require('which-key').setup {
         ['<leader>d'] = { name = '[D]edug', _ = 'which_key_ignore' },
         ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
         ['<leader>f'] = { name = '[F]ind', _ = 'which_key_ignore' },
