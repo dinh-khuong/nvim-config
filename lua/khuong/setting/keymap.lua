@@ -36,6 +36,8 @@ vim.keymap.set("i", "\"", "\"\"<left>");
 
 vim.keymap.set("t", "<esc>", "<cmd>bp<cr>")
 
+-- vim.print(vim.sy(vim.fn.expand("%")))
+
 -- vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
 
 -- ydotool key 29:1 15:1 15:0 29:0
@@ -43,18 +45,18 @@ vim.keymap.set("t", "<esc>", "<cmd>bp<cr>")
 -- jkm17n:vi:telex
 local vietnamese_auto_id = nil;
 
-local onInsert = true;
+local on_insert = false;
 local function enable_vietnamese()
 	vietnamese_auto_id = vim.api.nvim_create_autocmd({"ModeChanged"}, {
 		pattern = { "i:n", "n:i", "i:v" },
 		callback = function ()
-			if onInsert then
-				vim.cmd("silent !ibus engine m17n:vi:telex")
+			on_insert = not on_insert
+			if on_insert then
+				vim.system({'ibus', 'engine', 'm17n:vi:telex' }, { text = false });
 			else
-				vim.cmd("silent !ibus engine xkb:us::eng")
+				vim.system({'ibus', 'engine', 'xkb:us::eng' }, { text = false });
+				-- vim.cmd("silent !ibus engine xkb:us::eng")
 			end
-
-			onInsert = not onInsert
 		end
 	})
 end
@@ -67,16 +69,16 @@ local function disable_vietnamese()
 end
 
 local vietnamese = false
-vim.keymap.set({ "n" }, "<leader>kt", function()
-	if vietnamese then
-		disable_vietnamese()
-	else
-		enable_vietnamese()
-	end
-	onInsert = true
+vim.keymap.set({ "n" }, "<leader>kv", function()
+	on_insert = false
 	vietnamese = not vietnamese
+	if vietnamese then
+		enable_vietnamese()
+	else
+		disable_vietnamese()
+	end
 end, {
-	desc = "toggle unikey"
+	desc = "Toggle Vietnamese unikey"
 })
 
 -- vim.opt.keymap = "vietnamese-telex_utf-8"
@@ -102,6 +104,8 @@ vim.keymap.set('n', '<C-w><C-d>', dyn_split, {
 	desc = "Split window dynamically"
 })
 
+-- local regex_markdown_path = vim.regex("(/.*)+")
+
 vim.keymap.set('n', '<leader>gx', function()
 	local arg = vim.fn.expand("<cWORD>")
 
@@ -109,11 +113,15 @@ vim.keymap.set('n', '<leader>gx', function()
 		arg = string.sub(arg, 1, -2)
 	end
 
+	-- if vim.bo.filetype == 'markdown' then
+	-- 	vim.re.gsub
+	-- 	regex_markdown_path:match_str(arg)
+	-- 	print(arg)
+	-- end
+
 	local path = RealPath(arg)
-	local file = io.open(path)
-	if file then
-		file:close()
-		os.execute("xdg-open \'" .. path .. "\'")
+	if vim.loop.fs_statfs(path) then
+		vim.system({'xdg-open', path}, { text=false })
 	end
 end, { desc = "Open default app" });
 
