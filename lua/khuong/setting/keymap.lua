@@ -38,26 +38,48 @@ vim.keymap.set("t", "<esc>", "<cmd>bp<cr>")
 
 -- vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
 
--- vim.keymap.set({ "n" }, "<leader>tn", "<cmd>tabnext<cr>", {
--- 	desc = "Move to next tab",
--- })
---
--- vim.keymap.set({ "n" }, "<leader>tp", "<cmd>tabnext<cr>", {
--- 	desc = "Move to previous tab",
--- })
+-- ydotool key 29:1 15:1 15:0 29:0
+-- xkjib:us::eng
+-- jkm17n:vi:telex
+local vietnamese_auto_id = nil;
+
+local onInsert = true;
+local function enable_vietnamese()
+	vietnamese_auto_id = vim.api.nvim_create_autocmd({"ModeChanged"}, {
+		pattern = { "i:n", "n:i", "i:v" },
+		callback = function ()
+			if onInsert then
+				vim.cmd("silent !ibus engine m17n:vi:telex")
+			else
+				vim.cmd("silent !ibus engine xkb:us::eng")
+			end
+
+			onInsert = not onInsert
+		end
+	})
+end
+
+local function disable_vietnamese()
+	if vietnamese_auto_id then
+		vim.api.nvim_del_autocmd(vietnamese_auto_id)
+		vietnamese_auto_id = nil
+	end
+end
 
 local vietnamese = false
 vim.keymap.set({ "n" }, "<leader>kt", function()
 	if vietnamese then
-		vietnamese = false
-		vim.opt.keymap = ""
+		disable_vietnamese()
 	else
-		vietnamese = true
-		vim.opt.keymap = "vietnamese-telex_utf-8"
+		enable_vietnamese()
 	end
+	onInsert = true
+	vietnamese = not vietnamese
 end, {
 	desc = "toggle unikey"
 })
+
+-- vim.opt.keymap = "vietnamese-telex_utf-8"
 
 local function dyn_split()
 	local winum = vim.api.nvim_get_current_win()
@@ -94,8 +116,6 @@ vim.keymap.set('n', '<leader>gx', function()
 		os.execute("xdg-open \'" .. path .. "\'")
 	end
 end, { desc = "Open default app" });
-
-
 
 -- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
 -- vim.keymap.set("v", '"', [[l:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })

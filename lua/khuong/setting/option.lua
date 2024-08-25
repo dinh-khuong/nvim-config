@@ -25,6 +25,8 @@ vim.o.timeoutlen = 300
 -- vim.o.termguicolors = true
 vim.o.rnu = true
 vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 
 vim.o.scrolloff = 12
 vim.o.laststatus = 3
