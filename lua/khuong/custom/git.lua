@@ -9,6 +9,7 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	end
 })
 
+
 vim.api.nvim_create_autocmd("BufLeave", {
 	callback = function ()
 		if vim.bo.filetype == "fugitive" then

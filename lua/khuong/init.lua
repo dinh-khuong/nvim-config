@@ -4,6 +4,7 @@ require("khuong.autocmd")
 require("khuong.helper")
 require("khuong.snipconfig")
 require("khuong.custom.init")
+require("khuong.setting.highlight")
 
 -- local a = vim.treesitter.query.parse("lua", [[
 -- 	(function_call)

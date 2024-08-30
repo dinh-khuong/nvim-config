@@ -55,7 +55,6 @@ local function enable_vietnamese()
 				vim.system({'ibus', 'engine', 'm17n:vi:telex' }, { text = false });
 			else
 				vim.system({'ibus', 'engine', 'xkb:us::eng' }, { text = false });
-				-- vim.cmd("silent !ibus engine xkb:us::eng")
 			end
 		end
 	})
@@ -107,17 +106,15 @@ vim.keymap.set('n', '<C-w><C-d>', dyn_split, {
 -- local regex_markdown_path = vim.regex("(/.*)+")
 
 vim.keymap.set('n', '<leader>gx', function()
-	local arg = vim.fn.expand("<cWORD>")
+	local arg = vim.fn.expand("<cfile>")
 
 	if string.sub(arg, -1) == "@" then -- check symbolic link
 		arg = string.sub(arg, 1, -2)
 	end
 
-	-- if vim.bo.filetype == 'markdown' then
-	-- 	vim.re.gsub
-	-- 	regex_markdown_path:match_str(arg)
-	-- 	print(arg)
-	-- end
+	if vim.bo.filetype == 'markdown' then
+		arg = string.sub(arg, 2, -1);
+	end
 
 	local path = RealPath(arg)
 	if vim.loop.fs_statfs(path) then

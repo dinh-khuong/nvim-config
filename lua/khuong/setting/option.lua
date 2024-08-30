@@ -1,13 +1,10 @@
 vim.o.hlsearch = true
-vim.wo.number = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hidden = true
 
-vim.opt.hidden = true
-
 -- vim.o.mouse = 'a'
-vim.o.mouse = ''
+vim.o.mouse = 'a'
 vim.o.completeopt = 'menuone,noselect'
 vim.opt.inccommand = "split"
 
@@ -24,9 +21,11 @@ vim.o.timeoutlen = 300
 
 -- vim.o.termguicolors = true
 vim.o.rnu = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.number = true
+
+vim.opt.shiftwidth = 0
+-- vim.opt.tabstop = 4
+-- vim.opt.shiftwidth = 4
 
 vim.o.scrolloff = 12
 vim.o.laststatus = 3
@@ -37,11 +36,6 @@ vim.g.omni_sql_no_default_maps = 0
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 99
-
-vim.api.nvim_create_autocmd("BufEnter", {
-	callback = function()
-	end
-})
 
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
@@ -59,4 +53,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- vim.api.nvim_set_hl(0, "String", {
 -- 	priority = 90
 -- });
-

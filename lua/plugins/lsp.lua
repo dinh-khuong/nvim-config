@@ -1,4 +1,4 @@
-local on_attach = function(_, bufnr)
+local on_attach = function(_ev, bufnr)
 	local builtin = require('telescope.builtin');
 	local nmap = function(keys, func, desc)
 		if desc then
@@ -9,10 +9,11 @@ local on_attach = function(_, bufnr)
 		vim.keymap.set('n', keys, func, { desc = desc })
 	end
 
+
 	-- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 	nmap('<leader>lca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-	nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+	nmap('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
 	nmap('gt', builtin.lsp_type_definitions, '[G]oto [T]ype [D]efinition')
 	nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
 	nmap('gr', builtin.lsp_references, '[G]oto [R]eferences')
@@ -33,6 +34,13 @@ local on_attach = function(_, bufnr)
 	vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
 		vim.lsp.buf.format()
 		end, { desc = 'Format current buffer with LSP' })
+
+	vim.api.nvim_create_autocmd("BufWritePre", {
+		callback = function ()
+			vim.lsp.buf.format();
+		end
+	})
+
 end
 
 
@@ -83,57 +91,8 @@ return {
 			-- local util = require("lspconfig.util")
 
 			local servers = {
-				-- clangd = {},
-				-- gopls = {},
 				pyright = { },
-				-- rls = {
-				-- 	filetypes = "rust",
-				-- 	settings = {
-				-- 		["rls"] = {
-				-- 			imports = {
-				-- 				granularity = {
-				-- 					group = "module",
-				-- 				},
-				-- 				prefix = "self",
-				-- 			},
-				-- 			cargo = {
-				-- 				buildScripts = {
-				-- 					enable = true,
-				-- 				},
-				-- 			},
-				-- 			procMacro = {
-				-- 				enable = true
-				-- 			},
-				-- 		}
-				-- 	}
-				-- },
-				rust_analyzer = {
-					filetypes = "rust",
-					settings = {
-						["rust-analyzer"] = {
-							imports = {
-								granularity = {
-									group = "module",
-								},
-								prefix = "self",
-							},
-							cargo = {
-								buildScripts = {
-									enable = true,
-								},
-							},
-							procMacro = {
-								enable = true
-							},
-						}
-					}
-				},
-				tsserver = {
-					-- settings = {
-					-- 	[]
-					-- }
-				},
-				-- bashls = {},
+				tsserver = {},
 				lua_ls = {
 					Lua = {
 						workspace = { checkThirdParty = false },
@@ -163,10 +122,10 @@ return {
 				end,
 			}
 
-			-- Diagnostic keymaps
-			vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-			vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-			vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
+			-- -- Diagnostic keymaps
+			-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
+			-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
+			-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -177,36 +136,55 @@ return {
 						client.server_capabilities.semanticTokensProvider = nil
 						client.server_capabilities.documentHighlightProvider = nil
 					end
-					on_attach(ev.client, ev.buf)
 				end,
 			})
 		end
 	},
 	-- {
-	-- 	'rust-lang/rust.vim',
-	-- 	ft = "rust",
-	-- },
-	-- {
-	-- 	'simrat39/rust-tools.nvim',
-	-- 	ft = "rust",
-	-- 	priority = 1,
-	-- 	config = function()
-	-- 		local rt = require("rust-tools")
-	--
-	-- 		rt.setup({
-	-- 			server = {
-	-- 				on_attach = function(env, bufnr)
-	-- 					-- Hover actions
-	-- 					-- vim.keymap.set("n", "<C-k>", rt.hover_actions.hover_actions, { buffer = bufnr })
-	-- 					on_attach(env, bufnr)
-	--
-	-- 					vim.keymap.set("n", "K", rt.hover_actions.hover_actions, { buffer = bufnr })
-	-- 					-- Code action groups
-	-- 					vim.keymap.set("n", "<leader>lca", rt.code_action_group.code_action_group, { buffer = bufnr })
-	-- 					-- rt.expand_macro.expand_macro()
-	-- 				end,
+	-- 	'mrcjkb/rustaceanvim',
+	-- 	version = '^5', -- Recommended
+	-- 	lazy = false, -- This plugin is already lazy
+	-- 	config = function ()
+	-- 		vim.g.rustaceanvim = {
+	-- 			-- Plugin configuration
+	-- 			tools = {
 	-- 			},
-	-- 		})
+	-- 			on_attach = on_attach,
+	-- 			-- LSP configuration
+	-- 			server = {
+	-- 				cmd = function()
+	-- 					local mason_registry = require('mason-registry')
+	-- 					local ra_binary = mason_registry.is_installed('rust-analyzer')
+	-- 					-- This may need to be tweaked, depending on the operating system.
+	-- 					and mason_registry.get_package('rust-analyzer'):get_install_path() .. "/rust-analyzer"
+	-- 					or "rust-analyzer"
+
+	-- 					return { ra_binary } -- You can add args to the list, such as '--log-file'
+	-- 				end,
+	-- 				default_settings = {
+	-- 					-- rust-analyzer language server configuration
+	-- 					['rust-analyzer'] = {
+	-- 						imports = {
+	-- 							granularity = {
+	-- 								group = "module",
+	-- 							},
+	-- 							prefix = "self",
+	-- 						},
+	-- 						cargo = {
+	-- 							buildScripts = {
+	-- 								enable = true,
+	-- 							},
+	-- 						},
+	-- 						procMacro = {
+	-- 							enable = true
+	-- 						},
+	-- 					},
+	-- 				},
+	-- 			},
+	-- 			-- DAP configuration
+	-- 			dap = {
+	-- 			},
+	-- 		}
 	-- 	end
-	-- },
+	-- }
 }

@@ -24,7 +24,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     lazy = false,
     dependencies = {
-		priority = 20,
+      priority = 20,
       'nvim-treesitter/nvim-treesitter-textobjects',
     },
     build = ':TSUpdate',
@@ -79,20 +79,20 @@ return {
               enable = true,
               set_jumps = true, -- whether to set jumps in the jumplist
               goto_next_start = {
-                [']m'] = '@function.outer',
-                [']]'] = '@class.outer',
+                [']]'] = '@function.outer',
+                [']m'] = '@class.outer',
               },
               goto_next_end = {
-                [']M'] = '@function.outer',
-                [']['] = '@class.outer',
+                [']['] = '@function.outer',
+                [']M'] = '@class.outer',
               },
               goto_previous_start = {
-                ['[m'] = '@function.outer',
-                ['[['] = '@class.outer',
+                ['[['] = '@function.outer',
+                ['[m'] = '@class.outer',
               },
               goto_previous_end = {
-                ['[M'] = '@function.outer',
-                ['[]'] = '@class.outer',
+                ['[]'] = '@function.outer',
+                ['[M'] = '@class.outer',
               },
             },
           },
@@ -101,8 +101,8 @@ return {
     end
   },
   {
-		"theRealCarneiro/hyprland-vim-syntax",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		ft = "hypr",
-	},
+    "theRealCarneiro/hyprland-vim-syntax",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    ft = "hypr",
+  },
 }
