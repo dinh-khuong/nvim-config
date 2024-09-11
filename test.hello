@@ -1,0 +1,8 @@
+nil{ "/usr/share",
+  index = 1,
+  <metatable> = {
+    __index = <function 1>,
+    cwd = "/home/khuong/.config/nvim",
+    display = <function 2>
+  }
+}nil/mnt/new/Documents/code/rust/littleVulkanEngine/

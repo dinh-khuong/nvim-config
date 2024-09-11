@@ -39,7 +39,7 @@ end, {
 	nargs = 1,
 })
 
-vim.keymap.set("n", "<leader>s", function()
-	local input = vim.fn.input "Git Search: "
-	vim.cmd("Grep " .. input) -- .. " `git ls-files`")
-end)
+-- vim.keymap.set("n", "<leader>s", function()
+-- 	local input = vim.fn.input "Git Search: "
+-- 	vim.cmd("Grep " .. input) -- .. " `git ls-files`")
+-- end)

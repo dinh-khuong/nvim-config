@@ -4,14 +4,14 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end
 })
 
-vim.api.nvim_create_autocmd({"BufEnter", "BufNewFile"}, {
-	pattern = {"*.vert", "*.frag"},
-	callback = function ()
+vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
+	pattern = { "*.vert", "*.frag" },
+	callback = function()
 		vim.cmd("set filetype=glsl")
 	end
 })
 
--- fix ident
+-- -- fix ident
 -- local Four_Space_Ident = {
 -- 	"python", "zig", "rust",
 -- }
@@ -27,12 +27,11 @@ vim.api.nvim_create_autocmd({"BufEnter", "BufNewFile"}, {
 
 -- vim.api.nvim_create_autocmd("BufEnter", {
 -- 	callback = function()
+-- 		vim.opt.shiftwidth = 0
 -- 		if contain(Four_Space_Ident, vim.bo.filetype) then
--- 			vim.opt.shiftwidth = 4
 -- 			vim.opt.tabstop = 4
 -- 		else
 -- 			vim.opt.tabstop = 2
--- 			vim.opt.shiftwidth = 2
 -- 		end
 -- 	end,
 -- })
@@ -77,18 +76,18 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
 vim.api.nvim_create_autocmd({ "TermOpen" }, {
 	pattern = { "*" },
-	callback = function ()
+	callback = function()
 		vim.cmd("setlocal norelativenumber")
 		vim.cmd("setlocal nonumber")
 	end
 })
 
-vim.api.nvim_create_autocmd({"BufWinEnter"}, {
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
 	pattern = { "*.json" },
 	callback = function()
 		local filename = vim.fn.expand("%")
-		pcall(function ()
-			local bash_cmd =string.format("stat --printf='%%s' %s", filename);
+		pcall(function()
+			local bash_cmd = string.format("stat --printf='%%s' %s", filename);
 			local file_size_raw = vim.fn.systemlist(bash_cmd)[1]
 			if file_size_raw then
 				local file_size = vim.fn.eval(file_size_raw)

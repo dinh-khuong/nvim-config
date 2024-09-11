@@ -9,7 +9,6 @@ local on_attach = function(_ev, bufnr)
 		vim.keymap.set('n', keys, func, { desc = desc })
 	end
 
-
 	-- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 	nmap('<leader>lca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
@@ -18,29 +17,27 @@ local on_attach = function(_ev, bufnr)
 	nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
 	nmap('gr', builtin.lsp_references, '[G]oto [R]eferences')
 
-
 	nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 	nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
 	nmap('<leader>lw', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
 	nmap('<leader>ls', builtin.lsp_document_symbols, '[F]ind [S]ymbols')
+
 	nmap('<leader>wf', function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-		end, '[W]orkspace [L]ist Folders')
+	end, '[W]orkspace [L]ist Folders')
 
 	nmap('<leader>lr', vim.lsp.buf.rename, 'Rename references')
 	-- Create a command `:Format` local to the LSP buffer
-	vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-		vim.lsp.buf.format()
-		end, { desc = 'Format current buffer with LSP' })
+	vim.api.nvim_buf_create_user_command(bufnr, 'Format',
+		vim.lsp.buf.format,
+		{ desc = 'Format current buffer with LSP' })
 
-	vim.api.nvim_create_autocmd("BufWritePre", {
-		callback = function ()
-			vim.lsp.buf.format();
-		end
-	})
-
+	-- Diagnostic keymaps
+	nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
+	nmap(']d', vim.diagnostic.goto_next, 'Go to next diagnostic message')
+	nmap('<leader>e', vim.diagnostic.open_float, 'Open floating diagnostic message')
 end
 
 
@@ -48,7 +45,7 @@ return {
 	{
 		'folke/neodev.nvim',
 		filetypes = "lua",
-		config = function ()
+		config = function()
 			require('neodev').setup({})
 		end,
 	},
@@ -91,7 +88,7 @@ return {
 			-- local util = require("lspconfig.util")
 
 			local servers = {
-				pyright = { },
+				pyright = {},
 				tsserver = {},
 				lua_ls = {
 					Lua = {
@@ -122,10 +119,6 @@ return {
 				end,
 			}
 
-			-- -- Diagnostic keymaps
-			-- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-			-- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-			-- vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('UserLspConfig', {}),

@@ -47,14 +47,14 @@ local vietnamese_auto_id = nil;
 
 local on_insert = false;
 local function enable_vietnamese()
-	vietnamese_auto_id = vim.api.nvim_create_autocmd({"ModeChanged"}, {
+	vietnamese_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
 		pattern = { "i:n", "n:i", "i:v" },
-		callback = function ()
+		callback = function()
 			on_insert = not on_insert
 			if on_insert then
-				vim.system({'ibus', 'engine', 'm17n:vi:telex' }, { text = false });
+				vim.system({ 'ibus', 'engine', 'm17n:vi:telex' }, { text = false });
 			else
-				vim.system({'ibus', 'engine', 'xkb:us::eng' }, { text = false });
+				vim.system({ 'ibus', 'engine', 'xkb:us::eng' }, { text = false });
 			end
 		end
 	})
@@ -87,7 +87,7 @@ local function dyn_split()
 	local width = vim.api.nvim_win_get_width(winum)
 	local height = vim.api.nvim_win_get_height(winum)
 
-	local sorted = vim.fn.sort({width, height})
+	local sorted = vim.fn.sort({ width, height })
 	local half_max = sorted[1] / 2
 	local full_min = sorted[2]
 	if half_max > full_min then
@@ -118,9 +118,11 @@ vim.keymap.set('n', '<leader>gx', function()
 
 	local path = RealPath(arg)
 	if vim.loop.fs_statfs(path) then
-		vim.system({'xdg-open', path}, { text=false })
+		vim.system({ 'xdg-open', path }, { text = false })
 	end
 end, { desc = "Open default app" });
+
+vim.api.nvim_create_user_command("SourceConfig", [[so /home/khuong/.config/nvim/lua/khuong/init.lua]], { desc = "Source config"})
 
 -- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
 -- vim.keymap.set("v", '"', [[l:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })
@@ -135,4 +137,3 @@ end, { desc = "Open default app" });
 -- vim.keymap.set("n", '<leader>s*', [[:s/\<<C-r><C-w>\>/*<C-r><C-w>\*/ <CR>]], { desc = "Surround word with *" })
 -- vim.keymap.set("n", '<leader>s"', [[:s/\<<C-r><C-w>\>/"<C-r><C-w>\"/ <CR>]], { desc = 'Surround word with "' })
 -- vim.keymap.set("n", "<leader>s'", [[:s/\<<C-r><C-w>\>/'<C-r><C-w>\'/ <CR>]], { desc = "Surround word with '" })
-
