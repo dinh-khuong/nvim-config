@@ -1,6 +1,7 @@
 require("khuong.setting.option")
 require("khuong.setting.keymap")
-require("khuong.autocmd")
+require("khuong.setting.autocmd")
+require("khuong.setting.command")
 require("khuong.helper")
 require("khuong.snipconfig")
 require("khuong.custom.init")
