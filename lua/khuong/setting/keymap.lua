@@ -43,11 +43,13 @@ vim.keymap.set("t", "<esc>", "<cmd>bp<cr>")
 -- ydotool key 29:1 15:1 15:0 29:0
 -- xkjib:us::eng
 -- jkm17n:vi:telex
-local vietnamese_auto_id = nil;
+local ibus_auto_id = nil;
 
 local on_insert = false;
-local function enable_vietnamese()
-	vietnamese_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
+
+--- @param engine string
+local function enable_ibus(engine)
+	ibus_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
 		pattern = { "i:n", "n:i", "i:v" },
 		callback = function()
 			on_insert = not on_insert
@@ -60,25 +62,54 @@ local function enable_vietnamese()
 	})
 end
 
-local function disable_vietnamese()
-	if vietnamese_auto_id then
-		vim.api.nvim_del_autocmd(vietnamese_auto_id)
-		vietnamese_auto_id = nil
+local function disable_ibus()
+	if ibus_auto_id then
+		vim.api.nvim_del_autocmd(ibus_auto_id)
+		ibus_auto_id = nil
 	end
 end
 
-local vietnamese = false
-vim.keymap.set({ "n" }, "<leader>kv", function()
+local ibus_on = false
+
+local Ibus_engine = {
+	vi = 'm17n:vi:telex',
+	en = 'xkb:us::eng',
+}
+
+vim.api.nvim_create_user_command("Ibus", function(a)
+	local engine = Ibus_engine[a.args]
+	if not engine then
+		error("Engine not founded")
+	end
+
 	on_insert = false
-	vietnamese = not vietnamese
-	if vietnamese then
-		enable_vietnamese()
+	ibus_on = not ibus_on
+
+	if ibus_on and engine ~= "en" then
+		enable_ibus(engine)
 	else
-		disable_vietnamese()
+		disable_ibus()
 	end
 end, {
-	desc = "Toggle Vietnamese unikey"
+	desc = "Set ibus engine",
+	nargs = 1,
+	count = 2,
+	complete = function()
+		return { "vi", "en" }
+	end,
 })
+
+-- vim.keymap.set({ "n" }, "<leader>kv", function()
+-- 	on_insert = false
+-- 	vietnamese = not vietnamese
+-- 	if vietnamese then
+-- 		enable_vietnamese()
+-- 	else
+-- 		disable_vietnamese()
+-- 	end
+-- end, {
+-- 	desc = "Toggle Vietnamese unikey"
+-- })
 
 -- vim.opt.keymap = "vietnamese-telex_utf-8"
 
@@ -106,7 +137,7 @@ vim.keymap.set('n', '<C-w><C-d>', dyn_split, {
 -- local regex_markdown_path = vim.regex("(/.*)+")
 
 vim.keymap.set('n', '<leader>gx', function()
-	local arg = vim.fn.expand("<cfile>")
+	local arg = vim.fn.expand("<cWORD>")
 
 	if string.sub(arg, -1) == "@" then -- check symbolic link
 		arg = string.sub(arg, 1, -2)
@@ -122,7 +153,8 @@ vim.keymap.set('n', '<leader>gx', function()
 	end
 end, { desc = "Open default app" });
 
-vim.api.nvim_create_user_command("SourceConfig", [[so /home/khuong/.config/nvim/lua/khuong/init.lua]], { desc = "Source config"})
+vim.api.nvim_create_user_command("SourceConfig", [[so /home/khuong/.config/nvim/lua/khuong/init.lua]],
+	{ desc = "Source config" })
 
 -- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
 -- vim.keymap.set("v", '"', [[l:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })

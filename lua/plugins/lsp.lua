@@ -30,9 +30,13 @@ local on_attach = function(_ev, bufnr)
 
 	nmap('<leader>lr', vim.lsp.buf.rename, 'Rename references')
 	-- Create a command `:Format` local to the LSP buffer
-	vim.api.nvim_buf_create_user_command(bufnr, 'Format',
-		vim.lsp.buf.format,
-		{ desc = 'Format current buffer with LSP' })
+	vim.api.nvim_buf_create_user_command(bufnr, 'Format', function ()
+		vim.lsp.buf.format({bufnr=bufnr})
+	end, { desc = 'Format current buffer with LSP' })
+
+	-- vim.api.nvim_create_autocmd({"BufWritePre"}, {
+	-- 	command = "Format"
+	-- })
 
 	-- Diagnostic keymaps
 	nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
