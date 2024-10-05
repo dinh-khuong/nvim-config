@@ -19,8 +19,8 @@ return {
       --
       nnmap("<leader>gC", telescope.git_commits, "[C]ommit all");
       nnmap("<leader>gc", telescope.git_bcommits, "[c]urrent commit"); --
-      nnmap("<leader>gs", telescope.git_stash, "[s]tash");
-      nnmap("<leader>gS", telescope.git_status, "[S]atus");
+      nnmap("<leader>gs", telescope.git_status, "[S]atus");
+      nnmap("<leader>gS", telescope.git_stash, "[s]tash");
 
       -- merge thing
 

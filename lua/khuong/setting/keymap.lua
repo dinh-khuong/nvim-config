@@ -75,6 +75,7 @@ vim.keymap.set('n', '<C-w><C-d>', dyn_split, {
 	desc = "Split window dynamically"
 })
 
+vim.keymap.set({ 'n', 'v' }, '<leader>q', vim.cmd.bd, { desc = "Quit buffer" })
 -- local regex_markdown_path = vim.regex("(/.*)+")
 
 vim.keymap.set('n', '<leader>gx', function()

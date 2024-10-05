@@ -1,4 +1,4 @@
-local on_attach = function(_ev, bufnr)
+local on_attach = function(ev, bufnr)
 	local builtin = require('telescope.builtin');
 	local nmap = function(keys, func, desc)
 		if desc then
@@ -29,9 +29,17 @@ local on_attach = function(_ev, bufnr)
 	end, '[W]orkspace [L]ist Folders')
 
 	nmap('<leader>lr', vim.lsp.buf.rename, 'Rename references')
+	-- vim.print(ev)
+
 	-- Create a command `:Format` local to the LSP buffer
-	vim.api.nvim_buf_create_user_command(bufnr, 'Format', function ()
-		vim.lsp.buf.format({bufnr=bufnr})
+	vim.api.nvim_buf_create_user_command(bufnr, 'Format', function()
+		vim.lsp.buf.format({
+			bufnr = bufnr,
+			async = false,
+			-- filter = function(c)
+			-- 	return c.id == ev.data.client_id
+			-- end,
+		})
 	end, { desc = 'Format current buffer with LSP' })
 
 	-- vim.api.nvim_create_autocmd({"BufWritePre"}, {
@@ -83,19 +91,23 @@ return {
 			require('mason').setup()
 			require('mason-lspconfig').setup()
 
-			-- if vim. then
-			-- 	
-			-- end
-			-- require('fidget').setup({ })
-
-
-			-- local util = require("lspconfig.util")
-
 			local servers = {
-				pyright = {},
-				tsserver = {},
+				basedpyright = {
+					basedpyright = {
+						analysis = {
+							diagnosticSeverityOverrides = {
+								reportAny = "none",
+								reportUnknownMemberType = "none",
+								reportUnknownVariableType = "none",
+								reportUnknownLambdaType = "none",
+								reportMissingTypeStubs = "information",
+								reportAttributeAccessIssue = "information",
+							},
+						},
+					},
+				},
 				lua_ls = {
-					Lua = {
+					lua_ls = {
 						workspace = { checkThirdParty = false },
 						telemetry = { enable = false },
 					},
@@ -115,14 +127,18 @@ return {
 
 			mason_lspconfig.setup_handlers {
 				function(server_name)
+					-- local file = io.open("/home/khuong/.config/nvim/test", "a")
 					require('lspconfig')[server_name].setup {
 						capabilities = capabilities,
 						on_attach = on_attach,
 						settings = servers[server_name],
 					}
+					-- if file then
+					-- 	file:write(server_name .. "\n")
+					-- 	file:close()
+					-- g:netrw_liststyle=end
 				end,
 			}
-
 
 			vim.api.nvim_create_autocmd('LspAttach', {
 				group = vim.api.nvim_create_augroup('UserLspConfig', {}),

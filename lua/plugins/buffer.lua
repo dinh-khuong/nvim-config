@@ -2,7 +2,7 @@ return {
   'akinsho/bufferline.nvim',
   version = "*",
   dependencies = 'nvim-tree/nvim-web-devicons',
-  lazy = false,
+  -- lazy = false,
   -- cond = function ()
   --   vim.fn.expand('%')
   --   return true
@@ -10,8 +10,8 @@ return {
   config = function()
     require("bufferline").setup {
       options = {
-        -- mode = 'tabs',
-        mode = 'buffers',
+        mode = 'tabs',
+        -- mode = 'buffers',
       }
     }
 
@@ -20,7 +20,6 @@ return {
     -- vim.keymap.set({ 'n', 'v' }, '<leader>bsd', vim.cmd.BufferLineSortByRelativeDirectory, { desc = "Sort by directory" })
     vim.keymap.set({ 'n', 'v' }, '<leader>bh', vim.cmd.BufferLineCloseLeft, { desc = "Close all left buffers" })
     vim.keymap.set({ 'n', 'v' }, '<leader>bl', vim.cmd.BufferLineCloseRight, { desc = "Close all right buffers" })
-    vim.keymap.set({ 'n', 'v' }, '<leader>q', vim.cmd.bd, { desc = "Quit buffer" })
 
     -- vim.keymap.set({ 'n', 'v' }, '	', vim.cmd.BufferLineCycleNext, { desc = "Next Buffer" })
     -- vim.keymap.set({ 'n', 'v' }, '<BS>', vim.cmd.BufferLineCyclePrev, { desc = "Previous Buffer" })

@@ -11,6 +11,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
 	end
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "netrw",
+	callback = function()
+		vim.cmd("set number")
+		vim.cmd("set rnu")
+	end,
+})
+
 -- -- fix ident
 -- local Four_Space_Ident = {
 -- 	"python", "zig", "rust",
@@ -24,7 +32,6 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
 -- 	end
 -- 	return nil
 -- end
-
 -- vim.api.nvim_create_autocmd("BufEnter", {
 -- 	callback = function()
 -- 		vim.opt.shiftwidth = 0

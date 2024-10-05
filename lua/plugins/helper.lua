@@ -29,22 +29,21 @@ return {
 				ignore = "^$",
 
 				sticky = true,
-				-- ignore = nil,
-				-- extra = nil,
 				toggler = {
-					line = '<leader>/',
-					block = '<leader>?'
-				},
+					line = '',
+					block = '<leader>/'
 
+				},
 				opleader = {
-					line = '<leader>/',
-					block = '<leader>?'
+					line = '',
+					block = '<leader>/'
 				},
 
 				mappings = {
 					basic = true,
 					extra = true,
 				},
+				-- extra = nil,
 				-- pre_hook = nil,
 				-- post_hook = nil,
 			}

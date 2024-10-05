@@ -32,6 +32,15 @@ vim.o.scrolloff = 12
 vim.o.laststatus = 3
 vim.opt.lz = true
 
+-- vim.o.statusline = "%f"
+vim.o.winbar = "%f %m"
+
+vim.g.netrw_liststyle = 3
+-- vim.g.netrw_keepdir = 0
+-- vim.g.netrw_preview = 1
+-- vim.g.netrw_fastbrowse = 0
+-- vim.b.netrw_col = 3
+
 -- vim.opt.listchars:append("tab:  ")
 -- vim.opt.listchars:append("nbsp:|")
 -- vim.opt.listchars:append("trail:|")
@@ -39,6 +48,7 @@ vim.opt.lz = true
 
 
 vim.g.netrw_browsex_viewer = "xdg-open"
+-- vim.g.netrw_rnumb = 1
 vim.g.omni_sql_no_default_maps = 0
 
 vim.opt.foldmethod = "expr"

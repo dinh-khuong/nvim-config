@@ -16,7 +16,7 @@ ls.add_snippets("typescriptreact", {
 	snip("init", fmt([[
 	import React from 'react';
 
-	const {} = () => {{
+	function {}() {{
 		return (<>{}</>);
 	}}
 
@@ -29,3 +29,21 @@ ls.add_snippets("typescriptreact", {
 		rep(1),
 	}))
 })
+
+ls.add_snippets("typescriptreact", {
+	snip("if", fmt([[
+	if ({}) {{
+		{}
+	}}
+	]], { i(1), rep(1) }))
+})
+
+ls.add_snippets("typescriptreact", {
+	snip("else", fmt([[
+	else {{
+		{}
+	}}
+	]], {i(1)}))
+})
+
+
