@@ -97,7 +97,7 @@ return {
 
 			vim.keymap.set({ 'n', 'v' }, '<leader>fc', ':CurrentGrepGitRoot<cr>',
 				{ desc = '[F]ind current [W]ord in Git' })
-			vim.keymap.set({ 'n', 'v' }, '<leader>fC', builtin.grep_string, { desc = '[F]ind current [W]ord' })
+			vim.keymap.set({ 'n', 'v' }, '<leader>fC', builtin.grep_string, { desc = '[F]ind [C]urrent word' })
 
 			vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
 			vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })

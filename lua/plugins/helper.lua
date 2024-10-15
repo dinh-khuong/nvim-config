@@ -16,8 +16,8 @@ return {
 	},
 	-- detect tabstop and shiftwidth automatically
 	{
-	  'tpope/vim-sleuth',
-	  lazy = false,
+		'tpope/vim-sleuth',
+		lazy = false,
 	},
 	{
 		'numToStr/Comment.nvim',
@@ -47,6 +47,23 @@ return {
 				-- pre_hook = nil,
 				-- post_hook = nil,
 			}
+            ft = require("Comment.ft")
+            ft.set('swayconfig', '#%s')
 		end,
 	},
+	{
+		'rmagatti/auto-session',
+		lazy = false,
+		dependencies = {
+			'nvim-telescope/telescope.nvim',
+		},
+		config = function()
+			require("auto-session").setup {
+				suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
+			}
+			vim.keymap.set("n", '<leader>op', require("auto-session.session-lens").search_session, {
+				noremap = true,
+			})
+		end
+	}
 }

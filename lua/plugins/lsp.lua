@@ -17,8 +17,9 @@ local on_attach = function(ev, bufnr)
 	nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
 	nmap('gr', builtin.lsp_references, '[G]oto [R]eferences')
 
-	nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-	nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+	-- nmap('', vim.lsp.buf.hover, 'Hover Documentation')
+	-- nmap('K', vim.lsp.buf.signature_help, 'Signature Documentation')
+	nmap('<C-k>', vim.lsp.buf.hover, 'Hover Documentation')
 
 	nmap('<leader>lw', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
@@ -99,9 +100,14 @@ return {
 								reportAny = "none",
 								reportUnknownMemberType = "none",
 								reportUnknownVariableType = "none",
+								reportUnknownArgumentType = "none",
 								reportUnknownLambdaType = "none",
 								reportMissingTypeStubs = "information",
 								reportAttributeAccessIssue = "information",
+								reportUnusedExpression = "information",
+								reportIndexIssue = "none",
+								reportGeneralTypeIssues = "none",
+								reportUnusedCallResult = "information",
 							},
 						},
 					},

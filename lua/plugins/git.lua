@@ -3,8 +3,7 @@ return {
     -- adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     lazy = false,
-    enabled = true,
-    cond = true,
+	-- cmd = {"Gitsigns"},
     config = function()
       -- config git signs
       require('gitsigns').setup {

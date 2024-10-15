@@ -1,8 +1,8 @@
 return {
   {
     'tpope/vim-fugitive',
-    lazy = false,
-    cmd = "Git",
+    lazy = true,
+    cmd = {"G", "Git"},
     version = false,
     config = function()
       local telescope = require("telescope.builtin")
