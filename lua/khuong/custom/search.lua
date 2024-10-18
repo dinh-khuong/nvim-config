@@ -1,23 +1,21 @@
-local function sNext()
+function CNext()
 	if not pcall(vim.cmd.cnext) then
 		if not pcall(vim.cmd.cfirst) then
 			print("not found")
 		end
 	end
-	vim.cmd.norm("zz")
 end
 
-local function sPrevious()
+function CPrevious()
 	if not pcall(vim.cmd.cprevious) then
 		if not pcall(vim.cmd.clast) then
 			print("not found")
 		end
 	end
-	vim.cmd.norm("zz")
 end
 
-vim.keymap.set("n", "<C-n>", sNext)
-vim.keymap.set("n", "<C-p>", sPrevious)
+vim.keymap.set("n", "<C-n>", "<cmd>lua CNext()<cr>zz")
+vim.keymap.set("n", "<C-p>", "<cmd>lua CPrevious()<cr>zz")
 
 vim.opt.gp = "rg -n"
 

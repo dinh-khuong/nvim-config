@@ -32,7 +32,8 @@ vim.o.laststatus = 3
 vim.opt.lz = true
 
 -- vim.o.statusline = "%f"
-vim.o.winbar = "%f %m"
+-- vim.o.winbar = "%f %m"
+-- print(vim.fn.expand("%f"))
 
 vim.g.netrw_liststyle = 3
 -- vim.g.netrw_keepdir = 0
@@ -40,9 +41,13 @@ vim.g.netrw_liststyle = 3
 -- vim.g.netrw_fastbrowse = 0
 -- vim.b.netrw_col = 3
 
+vim.opt.modeline = true
+vim.opt.modelineexpr = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.listchars:append("tab:>.")
+vim.opt.listchars:append("extends:-")
+-- vim.opt.listchars:append("eol: ")
 vim.opt.listchars:append("nbsp:.")
 vim.opt.listchars:append("lead:.")
 vim.opt.listchars:append("trail:.")

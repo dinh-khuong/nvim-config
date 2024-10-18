@@ -1,35 +1,35 @@
 return {
-  {
-    'tpope/vim-fugitive',
-    lazy = true,
-    cmd = {"G", "Git"},
-    version = false,
-    config = function()
-      local telescope = require("telescope.builtin")
+    {
+        'tpope/vim-fugitive',
+        -- lazy = true,
+        cmd = { "G", "Git" },
+        version = false,
+        config = function()
+            local function nnmap(key, action, desc)
+                local newDesc
+                if desc ~= nil then
+                    newDesc = "[G]it " .. desc
+                end
+                vim.keymap.set('n', key, action, { desc = newDesc });
+            end
 
-      local function nnmap(key, action, desc)
-        local newDesc
-        if desc ~= nil then
-          newDesc = "[G]it " .. desc
+
+            -- merge thing
+            nnmap("<leader>gm", "<cmd>Gvdiffsplit!<cr>", "[M]erge current file");
+            nnmap("gl", "<cmd>diffget //3<cr>", "[G]et [N]ew")
+            nnmap("gh", "<cmd>diffget //2<cr>", "[G]et [O]ld")
+
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "fugitive",
+                callback = function (_e)
+                    local remote_origin = vim.fn.systemlist("git remote")[1]
+
+                    vim.keymap.set("n", "<leader>gp", function ()
+                        local branch = vim.fn.systemlist("git branch --show-current")[1];
+                        vim.cmd("G push " .. remote_origin .. " " .. branch);
+                    end, { desc = "[G]it push to origin", buffer = 0 })
+                end
+            })
         end
-        vim.keymap.set('n', key, action, { desc = newDesc });
-      end
-
-      nnmap("<leader>gb", telescope.git_branches, "[B]ranches");
-      --
-      nnmap("<leader>gC", telescope.git_commits, "[C]ommit all");
-      nnmap("<leader>gc", telescope.git_bcommits, "[c]urrent commit"); --
-      nnmap("<leader>gs", telescope.git_status, "[S]atus");
-      nnmap("<leader>gS", telescope.git_stash, "[s]tash");
-
-      -- merge thing
-
-      nnmap("<leader>gm", "<cmd>Gvdiffsplit!<cr>", "[M]erge current file");
-      nnmap("gl", "<cmd>diffget //3<cr>", "[G]et [N]ew")
-      nnmap("gh", "<cmd>diffget //2<cr>", "[G]et [O]ld")
-
-
-      nnmap("<leader>gp", "<cmd>!git push origin $(git branch --show-current) &<cr>", "[P]ush origin")
-    end
-  },
+    },
 }

@@ -35,9 +35,12 @@ return {
 			local kernels = {
 				python = "ipython3",
 				r = "R",
+				R = "R",
 				lua = "luajit",
 				julia = "julia",
-				rust = "rust-script"
+				rust = "rust-script",
+                sh = "bash",
+                dash = "dash",
 			}
 
 			vim.api.nvim_create_autocmd("FileType", {
