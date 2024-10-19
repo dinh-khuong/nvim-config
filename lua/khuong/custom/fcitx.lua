@@ -4,7 +4,7 @@ local on_insert = false;
 
 local function enable_ibus()
 	fcitx_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
-		pattern = { "i:nvt", "n:i" },
+		pattern = { "i:n", "n:i", "i:v" },
 		callback = function()
 			on_insert = not on_insert
 			if on_insert then
