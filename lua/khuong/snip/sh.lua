@@ -34,7 +34,7 @@ ls.add_snippets("sh", {
 
 ls.add_snippets("sh", {
 	snip("if", fmt([[
-	if [{}]; then
+	if [ {} ]; then
 		{}
 	fi
 	]], {

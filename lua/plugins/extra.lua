@@ -1,14 +1,7 @@
 return {
-	{
-		'tpope/vim-rhubarb',
-		lazy = false,
-		cmd = "GBrowse",
-	},
+	{ 'tpope/vim-rhubarb', lazy = false, cmd = "GBrowse" },
 	-- -- detect tabstop and shiftwidth automatically
-	{
-		'tpope/vim-sleuth',
-		lazy = false,
-	},
+	{ 'tpope/vim-sleuth', lazy = false },
 	{
 		"smoka7/multicursors.nvim",
 		event = "VeryLazy",
@@ -26,15 +19,16 @@ return {
 			},
 		},
 	},
-	{
-		"lervag/vimtex",
-		lazy = false,
-		init = function()
-			-- Use init for configuration, don't use the more common "config".
-		end
-	},
+	-- {
+	-- 	"lervag/vimtex",
+	-- 	lazy = false,
+	-- 	config = function()
+	-- 		-- Use init for configuration, don't use the more common "config".
+	-- 	end
+	-- },
 	{
 		"christoomey/vim-tmux-navigator",
+        lazy = false,
 		cmd = {
 			"TmuxNavigateLeft",
 			"TmuxNavigateDown",

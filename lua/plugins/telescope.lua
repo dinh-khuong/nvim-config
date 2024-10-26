@@ -99,10 +99,11 @@ return {
 				{ desc = '[F]ind current [W]ord in Git' })
 			vim.keymap.set({ 'n', 'v' }, '<leader>fC', builtin.grep_string, { desc = '[F]ind [C]urrent word' })
 
+			vim.keymap.set('n', '<leader>tf', builtin.treesitter, { desc = '[F]ind [Treesitter] Symbol' })
+
 			vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
 			vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })
 
-			vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[F]ind [Treesitter] Symbol' })
 			vim.keymap.set('n', '<leader>fj', builtin.jumplist, { desc = '[F]ind [J]ump list' })
 			vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = '[F]ind [M]arks list' })
 
@@ -113,4 +114,15 @@ return {
             vim.keymap.set('n', "<leader>gS", builtin.git_stash, { desc = "[Git] [s]tash" })
 		end
 	},
+    {
+        'LukasPietzschmann/telescope-tabs',
+        dependencies = { 'nvim-telescope/telescope.nvim' },
+        lazy = false,
+        config = function()
+            require('telescope').load_extension 'telescope-tabs'
+            require('telescope-tabs').setup {}
+
+            vim.keymap.set('n', '<leader>ft', require('telescope-tabs').list_tabs, { desc = "[F]ind [T]abs" })
+        end,
+    }
 }

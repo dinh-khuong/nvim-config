@@ -1,26 +1,14 @@
 return {
-  {
-    'oxfist/night-owl.nvim',
-    lazy = false,
-  },
-  {
+  { 'oxfist/night-owl.nvim', lazy = false, },
     -- theme inspired by atom
-    'navarasu/onedark.nvim',
-    lazy = false,
-  },
-  {
-    'akinsho/horizon.nvim',
-    lazy = false,
-  },
-  {
-    'folke/tokyonight.nvim',
-    lazy = false,
-  },
+  { 'navarasu/onedark.nvim', lazy = false, },
+  { 'akinsho/horizon.nvim', lazy = false, },
+  { 'folke/tokyonight.nvim', lazy = false, },
   {
     -- set lualine as statusline
     'nvim-lualine/lualine.nvim',
     lazy = false,
-    priority = 1000,
+    -- priority = 1000,
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     -- see `:help lualine.txt`
     opts = {

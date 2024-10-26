@@ -3,6 +3,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hidden = true
 
+-- vim.opt.compatible:remove
 -- vim.o.mouse = 'a'
 vim.o.mouse = 'v'
 vim.o.completeopt = 'menuone,noselect'
@@ -73,6 +74,10 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 	pattern = '*',
 })
 
+
+-- nvim_get_current_tabpage()
+-- tabpg = vim.api.nvim_list_tabpages()
+-- vim.print(vim.api.nvim_list_tabpages())
 
 -- vim.api.nvim_set_var
 -- vim.api.nvim_set_hl(0, "String", {

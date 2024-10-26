@@ -68,7 +68,7 @@ end
 -- 	end
 -- })
 
-vim.api.nvim_create_autocmd("ColorScheme", {
+vim.api.nvim_create_autocmd({"ColorScheme", "VimEnter"}, {
     callback = function()
         Color()
     end

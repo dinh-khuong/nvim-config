@@ -1,32 +1,32 @@
-local fcitx_auto_id = nil;
-
-local on_insert = false;
+local on_insert_auto_id = nil;
+local on_normal_auto_id = nil;
 
 local function enable_ibus()
-	fcitx_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
-		pattern = { "i:n", "n:i", "i:v" },
+	on_insert_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
+		pattern = { "*:i" },
 		callback = function()
-			on_insert = not on_insert
-			if on_insert then
-				vim.system({ 'fcitx5-remote', '-o' }, { text = false });
-			else
-				vim.system({ 'fcitx5-remote', '-c' }, { text = false });
-			end
+            vim.system({ 'fcitx5-remote', '-o' }, { text = false });
 		end
 	})
+    on_normal_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
+        pattern = { "i:*" },
+        callback = function()
+            vim.system({ 'fcitx5-remote', '-c' }, { text = false });
+        end
+    })
 end
 
 local function disable_ibus()
-	if fcitx_auto_id then
-		vim.api.nvim_del_autocmd(fcitx_auto_id)
-		fcitx_auto_id = nil
-	end
+    vim.api.nvim_del_autocmd(on_insert_auto_id)
+    on_insert_auto_id = nil
+
+    vim.api.nvim_del_autocmd(on_normal_auto_id)
+    on_normal_auto_id = nil
 end
 
 local fcitx_on = false
 
 vim.api.nvim_create_user_command("Fcitx", function()
-	on_insert = false
 	fcitx_on = not fcitx_on
 
 	if fcitx_on then
