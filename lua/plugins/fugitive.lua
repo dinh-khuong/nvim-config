@@ -13,7 +13,6 @@ return {
                 vim.keymap.set('n', key, action, { desc = newDesc });
             end
 
-
             -- merge thing
             nnmap("<leader>gm", "<cmd>Gvdiffsplit!<cr>", "[M]erge current file");
             nnmap("gl", "<cmd>diffget //3<cr>", "[G]et [N]ew")

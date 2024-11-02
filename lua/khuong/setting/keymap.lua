@@ -34,25 +34,14 @@ vim.keymap.set("i", "[", "[]<left>");
 vim.keymap.set("i", "{", "{}<left>");
 vim.keymap.set("i", "\"", "\"\"<left>");
 
-vim.keymap.set("t", "<esc>", "<cmd>bp<cr>")
+-- vim.keymap.set("t", "<esc>", "<cmd>bp<cr>")
+vim.keymap.set("t", "<C-w><C-h>", "<C-\\><C-n><C-w><C-h>")
+vim.keymap.set("t", "<C-w><C-l>", "<C-\\><C-n><C-w><C-l>")
+vim.keymap.set("t", "<C-w><C-j>", "<C-\\><C-n><C-w><C-j>")
+vim.keymap.set("t", "<C-w><C-k>", "<C-\\><C-n><C-w><C-k>")
 
--- vim.print(vim.sy(vim.fn.expand("%")))
-
--- vim.keymap.set("t", "<C-v>", "<C-\\><C-n>")
-
--- vim.keymap.set({ "n" }, "<leader>kv", function()
--- 	on_insert = false
--- 	vietnamese = not vietnamese
--- 	if vietnamese then
--- 		enable_vietnamese()
--- 	else
--- 		disable_vietnamese()
--- 	end
--- end, {
--- 	desc = "Toggle Vietnamese unikey"
--- })
-
--- vim.opt.keymap = "vietnamese-telex_utf-8"
+-- vim.keymap.set("n", "gc", "gcc")
+-- vim.keymap.set("v", "", "gc")
 
 local function dyn_split()
 	local winum = vim.api.nvim_get_current_win()
@@ -95,19 +84,19 @@ vim.keymap.set('n', '<leader>gx', function()
 	end
 end, { desc = "Open default app" });
 
-vim.api.nvim_create_user_command("SourceConfig", [[so /home/khuong/.config/nvim/lua/khuong/init.lua]],
-	{ desc = "Source config" })
+vim.api.nvim_create_user_command(
+    "SourceConfig", 
+    [[so /home/khuong/.config/nvim/lua/khuong/init.lua]],
+    { desc = "Source config" }
+)
 
 -- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
 -- vim.keymap.set("v", '"', [[l:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })
-
 -- vim.keymap.set("v", '<leader><', [[l:s/\%V\(.*\)\%V/<\1>/ <CR>]], { desc = 'Surround selection with <>' })
 -- vim.keymap.set("v", "<leader>(", [[l:s/\%V\(.*\)\%V/(\1)/ <CR>]], { desc = "Surround selection with ()" })
 -- vim.keymap.set("v", "<leader>{", [[l:s/\%V\(.*\)\%V/{\1}/ <CR>]], { desc = "Surround selection with {}" })
 -- vim.keymap.set("v", "<leader>[", [[l:s/\%V\(.*\)\%V/{\1}/ <CR>]], { desc = "Surround selection with []" })
-
 -- vim.keymap.set("v", '*', [[:s/\%V\(.*\)\%V/*\1*/ <CR>]], { desc = "Surround selection with *" })
-
 -- vim.keymap.set("n", '<leader>s*', [[:s/\<<C-r><C-w>\>/*<C-r><C-w>\*/ <CR>]], { desc = "Surround word with *" })
 -- vim.keymap.set("n", '<leader>s"', [[:s/\<<C-r><C-w>\>/"<C-r><C-w>\"/ <CR>]], { desc = 'Surround word with "' })
 -- vim.keymap.set("n", "<leader>s'", [[:s/\<<C-r><C-w>\>/'<C-r><C-w>\'/ <CR>]], { desc = "Surround word with '" })

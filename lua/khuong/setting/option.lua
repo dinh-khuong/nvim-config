@@ -3,10 +3,9 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 vim.o.hidden = true
 
--- vim.opt.compatible:remove
--- vim.o.mouse = 'a'
 vim.o.mouse = 'v'
 vim.o.completeopt = 'menuone,noselect'
+-- vim.o.completeopt = 'menuone,preview,popup'
 vim.opt.inccommand = "split"
 
 vim.o.breakindent = true
@@ -16,17 +15,12 @@ vim.o.conceallevel = 2
 
 vim.wo.signcolumn = 'yes'
 
--- vim.o.updatetime = 250
+vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
--- vim.o.termguicolors = true
+vim.o.termguicolors = false
 vim.o.rnu = true
 vim.opt.number = true
-
--- vim.opt.shiftwidth = 0
--- vim.opt.softtabstop = 2
--- vim.opt.tabstop = 4
--- vim.opt.shiftwidth = 4
 
 vim.o.scrolloff = 12
 vim.o.laststatus = 3
@@ -36,7 +30,9 @@ vim.opt.lz = true
 -- vim.o.winbar = "%f %m"
 -- print(vim.fn.expand("%f"))
 
-vim.g.netrw_liststyle = 3
+vim.g.netrw_liststyle = 1
+vim.g.netrw_sort_by = "exten"
+
 -- vim.g.netrw_keepdir = 0
 -- vim.g.netrw_preview = 1
 -- vim.g.netrw_fastbrowse = 0
@@ -48,7 +44,6 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.listchars:append("tab:>.")
 vim.opt.listchars:append("extends:-")
--- vim.opt.listchars:append("eol: ")
 vim.opt.listchars:append("nbsp:.")
 vim.opt.listchars:append("lead:.")
 vim.opt.listchars:append("trail:.")

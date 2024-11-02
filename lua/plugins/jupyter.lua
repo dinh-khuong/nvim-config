@@ -17,11 +17,12 @@ return {
 		config = function()
 			-- vim.g.jukit_ueberzug_pos_noout = { 0.7, 0.7, 0.4, 0.6 }
 			-- vim.g.jukit_hist_use_ueberzug = 1
-			vim.g.jukit_terminal = 'tmux'
+			-- vim.g.jukit_terminal = 'tmux'
+			vim.g.jukit_terminal = 'nvimterm'
 			-- vim.g.jukit_terminal = 'kitty'
 			vim.g.jukit_layout = {
 				split = "vertical",
-				p1 = 0.3,
+				p1 = 0.7,
 				val = {
 					'file_content',
 					{

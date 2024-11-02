@@ -13,12 +13,16 @@ return {
 		config = function()
 			-- [[ Configure Telescope ]]
 			-- See `:help telescope` and `:help telescope.setup()`
+            local actions = require('telescope.actions');
 			require('telescope').setup {
 				defaults = {
 					mappings = {
 						i = {
-							-- ["<esc>"] = require('telescope.actions').close,
+							["<tab>"] = actions.select_tab,
 						},
+                        n = {
+                            ["d"] = actions.delete_buffer,
+                        }
 					},
 				},
 			}

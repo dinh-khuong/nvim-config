@@ -1,1 +1,1 @@
-autocmd FileType json set tabstop=4
+" autocmd FileType json set tabstop=2

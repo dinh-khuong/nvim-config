@@ -5,13 +5,13 @@ local function enable_ibus()
 	on_insert_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
 		pattern = { "*:i" },
 		callback = function()
-            vim.system({ 'fcitx5-remote', '-o' }, { text = false });
+            vim.system({ 'fcitx5-remote', '-o' }, { text = false, detach = true });
 		end
 	})
     on_normal_auto_id = vim.api.nvim_create_autocmd({ "ModeChanged" }, {
         pattern = { "i:*" },
         callback = function()
-            vim.system({ 'fcitx5-remote', '-c' }, { text = false });
+            vim.system({ 'fcitx5-remote', '-c' }, { text = false, detach = true });
         end
     })
 end

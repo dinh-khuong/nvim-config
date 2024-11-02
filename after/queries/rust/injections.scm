@@ -1,7 +1,7 @@
 ; extends
 
-((string_content) @string.rust (#set! "priority" 90))
-((raw_string_literal) @string.rust (#set! "priority" 90))
+((string_content) @string.rust (#set! "priority" 20))
+((raw_string_literal) @string.rust (#set! "priority" 20))
 
 (
  macro_invocation
@@ -13,6 +13,7 @@
 		(raw_string_literal
 			(string_content) @injection.content
 			(#set! injection.language "glsl")
+			(#set! injection.combined)
 			) 
 		)
  ) 

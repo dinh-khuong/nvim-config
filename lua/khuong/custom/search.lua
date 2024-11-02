@@ -1,21 +1,23 @@
-function CNext()
+
+
+vim.api.nvim_create_user_command('CNext', function ()
 	if not pcall(vim.cmd.cnext) then
 		if not pcall(vim.cmd.cfirst) then
 			print("not found")
 		end
 	end
-end
+end, { desc = "Next Search" })
 
-function CPrevious()
-	if not pcall(vim.cmd.cprevious) then
-		if not pcall(vim.cmd.clast) then
-			print("not found")
-		end
-	end
-end
+vim.api.nvim_create_user_command('CPrevious', function ()
+    if not pcall(vim.cmd.cprevious) then
+        if not pcall(vim.cmd.clast) then
+            print("not found")
+        end
+    end
+end, { desc = "Previous Search" })
 
-vim.keymap.set("n", "<C-n>", "<cmd>lua CNext()<cr>zz")
-vim.keymap.set("n", "<C-p>", "<cmd>lua CPrevious()<cr>zz")
+vim.keymap.set("n", "<C-n>", "<cmd>CNext<cr>zz")
+vim.keymap.set("n", "<C-p>", "<cmd>CPrevious<cr>zz")
 
 vim.opt.gp = "rg -n"
 
