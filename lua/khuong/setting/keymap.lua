@@ -44,50 +44,50 @@ vim.keymap.set("t", "<C-w><C-k>", "<C-\\><C-n><C-w><C-k>")
 -- vim.keymap.set("v", "", "gc")
 
 local function dyn_split()
-	local winum = vim.api.nvim_get_current_win()
-	local width = vim.api.nvim_win_get_width(winum)
-	local height = vim.api.nvim_win_get_height(winum)
+  local winum = vim.api.nvim_get_current_win()
+  local width = vim.api.nvim_win_get_width(winum)
+  local height = vim.api.nvim_win_get_height(winum)
 
-	local sorted = vim.fn.sort({ width, height })
-	local half_max = sorted[1] / 2
-	local full_min = sorted[2]
-	if half_max > full_min then
-		vim.cmd("vertical :split")
-	else
-		vim.cmd("horizontal :split")
-	end
+  local sorted = vim.fn.sort({ width, height })
+  local half_max = sorted[1] / 2
+  local full_min = sorted[2]
+  if half_max > full_min then
+    vim.cmd("vertical :split")
+  else
+    vim.cmd("horizontal :split")
+  end
 end
 
 vim.keymap.set('n', '<C-w>d', dyn_split, { desc = "Split window dynamically" })
 
 vim.keymap.set('n', '<C-w><C-d>', dyn_split, {
-	desc = "Split window dynamically"
+  desc = "Split window dynamically"
 })
 
 vim.keymap.set({ 'n', 'v' }, '<leader>q', vim.cmd.bd, { desc = "Quit buffer" })
 -- local regex_markdown_path = vim.regex("(/.*)+")
 
 vim.keymap.set('n', '<leader>gx', function()
-	local arg = vim.fn.expand("<cWORD>")
+  local arg = vim.fn.expand("<cWORD>")
 
-	if string.sub(arg, -1) == "@" then -- check symbolic link
-		arg = string.sub(arg, 1, -2)
-	end
+  if string.sub(arg, -1) == "@" then -- check symbolic link
+    arg = string.sub(arg, 1, -2)
+  end
 
-	if vim.bo.filetype == 'markdown' then
-		arg = string.sub(arg, 2, -1);
-	end
+  if vim.bo.filetype == 'markdown' then
+    arg = string.sub(arg, 2, -1);
+  end
 
-	local path = RealPath(arg)
-	if vim.loop.fs_statfs(path) then
-		vim.system({ 'xdg-open', path }, { text = false })
-	end
+  local path = RealPath(arg)
+  if vim.loop.fs_statfs(path) then
+    vim.system({ 'xdg-open', path }, { text = false })
+  end
 end, { desc = "Open default app" });
 
 vim.api.nvim_create_user_command(
-    "SourceConfig", 
-    [[so /home/khuong/.config/nvim/lua/khuong/init.lua]],
-    { desc = "Source config" }
+  "SourceConfig", 
+  [[so /home/khuong/.config/nvim/lua/khuong/init.lua]],
+  { desc = "Source config" }
 )
 
 -- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })

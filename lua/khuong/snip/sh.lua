@@ -13,32 +13,32 @@ local rep = extras.rep
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("sh", {
-	snip("for", fmt([[
-		for {} in {}; do
-			{}
-		done
-	]], {
-		i(1), i(2), i(3),
-	}
-	))
+  snip("for", fmt([[
+    for {} in {}; do
+      {}
+    done
+  ]], {
+      i(1), i(2), i(3),
+    }
+  ))
 })
 
 ls.add_snippets("sh", {
-	snip("fun", fmt([[
-	function {}() {{
-		{}
-	}}
-	]], { i(1), i(2) }))
+  snip("fun", fmt([[
+  function {}() {{
+    {}
+  }}
+  ]], { i(1), i(2) }))
 
 })
 
 ls.add_snippets("sh", {
-	snip("if", fmt([[
-	if [ {} ]; then
-		{}
-	fi
-	]], {
-		i(1), i(2),
-	}
-	))
+  snip("if", fmt([[
+  if [ {} ]; then
+    {}
+  fi
+  ]], {
+      i(1), i(2),
+    }
+  ))
 })

@@ -33,8 +33,8 @@ vim.opt.lz = true
 vim.g.netrw_liststyle = 1
 vim.g.netrw_sort_by = "exten"
 
--- vim.g.netrw_keepdir = 0
--- vim.g.netrw_preview = 1
+vim.g.netrw_keepdir = 1
+vim.g.netrw_preview = 3
 -- vim.g.netrw_fastbrowse = 0
 -- vim.b.netrw_col = 3
 
@@ -60,13 +60,13 @@ vim.opt.foldlevel = 99
 
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
-	callback = function()
-		vim.highlight.on_yank({
-			timeout = 100,
-		})
-	end,
-	group = highlight_group,
-	pattern = '*',
+  callback = function()
+    vim.highlight.on_yank({
+      timeout = 100,
+    })
+  end,
+  group = highlight_group,
+  pattern = '*',
 })
 
 

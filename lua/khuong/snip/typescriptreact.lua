@@ -13,37 +13,37 @@ local rep = extras.rep
 local fmt = require("luasnip.extras.fmt").fmt
 
 ls.add_snippets("typescriptreact", {
-	snip("init", fmt([[
-	import React from 'react';
+  snip("init", fmt([[
+  import React from 'react';
 
-	function {}() {{
-		return (<>{}</>);
-	}}
+  function {}() {{
+    return (<>{}</>);
+  }}
 
-	export default {};
-	]], {
-		d(1, function()
-			return sn(1, i(1, vim.fn.expand("%:t:r")))
-		end),
-		i(2),
-		rep(1),
-	}))
+  export default {};
+  ]], {
+      d(1, function()
+        return sn(1, i(1, vim.fn.expand("%:t:r")))
+      end),
+      i(2),
+      rep(1),
+    }))
 })
 
 ls.add_snippets("typescriptreact", {
-	snip("if", fmt([[
-	if ({}) {{
-		{}
-	}}
-	]], { i(1), rep(1) }))
+  snip("if", fmt([[
+  if ({}) {{
+    {}
+  }}
+  ]], { i(1), rep(1) }))
 })
 
 ls.add_snippets("typescriptreact", {
-	snip("else", fmt([[
-	else {{
-		{}
-	}}
-	]], {i(1)}))
+  snip("else", fmt([[
+  else {{
+    {}
+  }}
+  ]], {i(1)}))
 })
 
 
