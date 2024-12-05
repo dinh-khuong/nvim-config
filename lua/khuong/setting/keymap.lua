@@ -84,12 +84,6 @@ vim.keymap.set('n', '<leader>gx', function()
   end
 end, { desc = "Open default app" });
 
-vim.api.nvim_create_user_command(
-  "SourceConfig", 
-  [[so /home/khuong/.config/nvim/lua/khuong/init.lua]],
-  { desc = "Source config" }
-)
-
 -- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
 -- vim.keymap.set("v", '"', [[l:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })
 -- vim.keymap.set("v", '<leader><', [[l:s/\%V\(.*\)\%V/<\1>/ <CR>]], { desc = 'Surround selection with <>' })

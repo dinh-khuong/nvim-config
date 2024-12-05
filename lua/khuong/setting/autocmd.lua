@@ -11,38 +11,6 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
   end
 })
 
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "netrw",
-  callback = function()
-    vim.cmd("set number")
-    vim.cmd("set rnu")
-  end,
-})
-
--- -- fix ident
--- local Four_Space_Ident = {
--- 	"python", "zig", "rust",
--- }
-
--- local function contain(array, value)
--- 	for index, cvalue in ipairs(array) do
--- 		if cvalue == value then
--- 			return index;
--- 		end
--- 	end
--- 	return nil
--- end
--- vim.api.nvim_create_autocmd("BufEnter", {
--- 	callback = function()
--- 		vim.opt.shiftwidth = 0
--- 		if contain(Four_Space_Ident, vim.bo.filetype) then
--- 			vim.opt.tabstop = 4
--- 		else
--- 			vim.opt.tabstop = 2
--- 		end
--- 	end,
--- })
-
 function Color()
   vim.api.nvim_set_hl(0, "Normal", {
     bg = "none",
@@ -81,25 +49,11 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
   end
 })
 
-vim.api.nvim_create_autocmd({ "TermOpen" }, {
-  pattern = { "*" },
-  callback = function()
-    vim.cmd("setlocal norelativenumber")
-    vim.cmd("setlocal nonumber")
-  end
-})
+-- vim.api.nvim_create_autocmd({ "TermOpen" }, {
+--   pattern = { "*" },
+--   callback = function()
+--     vim.cmd("setlocal norelativenumber")
+--     vim.cmd("setlocal nonumber")
+--   end
+-- })
 
-vim.api.nvim_create_autocmd({ "BufEnter", "BufRead" }, {
-  -- pattern = { "*.json" },
-  callback = function()
-    local filename = vim.fn.expand("%")
-    local file_stat = vim.uv.fs_stat(filename)
-    -- string.format("stat --printf='%%s' %s", filename);
-    if file_stat then
-      local file_size = file_stat.size
-      if file_size > 100000 then
-        vim.cmd("TSBufDisable highlight")
-      end
-    end
-  end
-})

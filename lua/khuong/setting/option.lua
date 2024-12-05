@@ -26,6 +26,7 @@ vim.o.scrolloff = 12
 vim.o.laststatus = 3
 vim.opt.lz = true
 
+
 -- vim.o.statusline = "%f"
 -- vim.o.winbar = "%f %m"
 -- print(vim.fn.expand("%f"))
@@ -33,6 +34,9 @@ vim.opt.lz = true
 vim.g.netrw_liststyle = 1
 vim.g.netrw_sort_by = "exten"
 
+vim.g.netrw_sizestyle = "H"
+
+-- vim.g.netrw_list_cmd = "eza -la"
 vim.g.netrw_keepdir = 1
 vim.g.netrw_preview = 3
 -- vim.g.netrw_fastbrowse = 0
@@ -78,3 +82,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- vim.api.nvim_set_hl(0, "String", {
 -- 	priority = 90
 -- });
+
+
+

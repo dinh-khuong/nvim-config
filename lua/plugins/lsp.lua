@@ -18,8 +18,10 @@ local on_attach = function(ev, bufnr)
   nmap('gr', builtin.lsp_references, '[G]oto [R]eferences')
 
   -- nmap('', vim.lsp.buf.hover, 'Hover Documentation')
-  -- nmap('K', vim.lsp.buf.signature_help, 'Signature Documentation')
-  nmap('<C-k>', vim.lsp.buf.hover, 'Hover Documentation')
+  -- nmap('K', vim.lsp.buf.hover, 'Signature Documentation')
+  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+  -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
 
   nmap('<leader>lw', builtin.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
@@ -56,11 +58,15 @@ end
 
 return {
   {
-    'folke/neodev.nvim',
-    filetypes = "lua",
-    config = function()
-      require('neodev').setup({})
-    end,
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+      },
+    },
   },
   {
     -- lsp configuration & plugins
@@ -103,12 +109,19 @@ return {
                 reportUnknownVariableType = "none",
                 reportUnknownArgumentType = "none",
                 reportUnknownLambdaType = "none",
-                reportMissingTypeStubs = "information",
+                reportMissingTypeStubs = "none",
+                reportMissingTypeArgument = "none",
+                reportCallIssue = "info",
+                reportArgumentType = "info",
                 reportAttributeAccessIssue = "information",
                 reportUnusedExpression = "information",
                 reportIndexIssue = "none",
                 reportGeneralTypeIssues = "none",
                 reportUnusedCallResult = "information",
+                reportImplicitStringConcatenation = "none",
+                reportImplicitRelativeImport = "information",
+                reportUninitializedInstanceVariable = "none",
+                reportOptionalMemberAccess = "none",
               },
             },
           },

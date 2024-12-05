@@ -7,3 +7,6 @@
 
 -- print(cusor_hl);
 
+-- local bufnr = vim.api.nvim_get_current_buf()
+-- local filename = vim.api.nvim_buf_get_name(bufnr)
+-- vim.print(filename)
