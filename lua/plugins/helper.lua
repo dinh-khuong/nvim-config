@@ -11,12 +11,12 @@ return {
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
-    init = function ()
+    init = function()
       vim.o.sessionoptions = "blank,buffers,curdir,help,tabpages,winsize,winpos,terminal,localoptions"
     end,
     config = function()
       require("auto-session").setup {
-        suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/", "/bin", "/usr/bin", "/@/" },
+        suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/", "/bin", "/usr/bin", "/@/", "~/Documents", "~/AppImage", "~/Camera" },
       }
       vim.keymap.set("n", '<leader>op', require("auto-session.session-lens").search_session, {
         noremap = true,

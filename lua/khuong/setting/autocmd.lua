@@ -48,12 +48,3 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     vim.bo.filetype = "sh"
   end
 })
-
--- vim.api.nvim_create_autocmd({ "TermOpen" }, {
---   pattern = { "*" },
---   callback = function()
---     vim.cmd("setlocal norelativenumber")
---     vim.cmd("setlocal nonumber")
---   end
--- })
-

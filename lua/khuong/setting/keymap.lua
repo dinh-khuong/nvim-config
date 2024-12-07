@@ -79,7 +79,7 @@ vim.keymap.set('n', '<leader>gx', function()
   end
 
   local path = RealPath(arg)
-  if vim.loop.fs_statfs(path) then
+  if vim.uv.fs_statfs(path) then
     vim.system({ 'xdg-open', path }, { text = false })
   end
 end, { desc = "Open default app" });
