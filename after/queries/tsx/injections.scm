@@ -7,8 +7,7 @@
     (string_fragment) @css)
   (#eq? @styled "styled")) 
 
-((string_fragment) @css
-		   (#match? @css "[a-zA-Z]+: [a-zA-Z0-9]+;"))
+((string_fragment) @css (#match? @css "[a-zA-Z]+: [a-zA-Z0-9]+;"))
 
 (variable_declarator
   name: (identifier) @var

@@ -4,7 +4,7 @@ return {
     lazy = true,
     cmd = "VimBeGood",
     enable = false,
-    init = function ()
+    init = function()
     end,
   }
 }

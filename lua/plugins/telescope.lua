@@ -112,7 +112,7 @@ return {
       vim.keymap.set('n', '<leader>fm', builtin.marks, { desc = '[F]ind [M]arks list' })
 
       vim.keymap.set('n', "<leader>gb", builtin.git_branches, { desc = "[Git] [B]ranches", })
-      vim.keymap.set('n', "<leader>gC", builtin.git_commits, { desc = "[Git] [C]ommit all"})
+      vim.keymap.set('n', "<leader>gC", builtin.git_commits, { desc = "[Git] [C]ommit all" })
       vim.keymap.set('n', "<leader>gc", builtin.git_bcommits, { desc = "[Git] [c]urrent commit" })
       vim.keymap.set('n', "<leader>gs", builtin.git_status, { desc = "[Git] [S]atus" })
       vim.keymap.set('n', "<leader>gS", builtin.git_stash, { desc = "[Git] [s]tash" })

@@ -22,11 +22,19 @@ require('lazy').setup("plugins", {
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
+  ui = {
+    icons = {
+      ft = "",
+      lazy = "󰂠 ",
+      loaded = "",
+      not_loaded = "",
+    },
+  },
   checker = {
     enabled = true,
     concurrency = 20, ---@type number? set to 1 to check for updates very slowly
-    notify = false,        -- get a notification when new updates are found
-    frequency = 604800,   -- check for updates every day 
+    notify = false,       -- get a notification when new updates are found
+    frequency = 604800,   -- check for updates every day
     check_pinned = false, -- check for pinned packages that can't be updated
   },                      -- automatically check for plugin updates
   install = {
@@ -37,17 +45,17 @@ require('lazy').setup("plugins", {
     rtp = {
       -- disable some rtp plugins
       disabled_plugins = {
-        -- "sql-completion",
-        -- "sql-completion-static",
-        -- "omni-sql-completion",
-        -- "gzip",
-        -- "matchit",
-        -- "matchparen",
+        "sql-completion",
+        "sql-completion-static",
+        "omni-sql-completion",
+        "gzip",
+        "matchit",
+        "matchparen",
         -- "netrwPlugin",
-        -- "tarPlugin",
-        -- "tohtml",
-        -- "tutor",
-        -- "zipPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
       },
     },
   },

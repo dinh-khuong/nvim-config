@@ -1,7 +1,7 @@
 return {
   { 'tpope/vim-rhubarb', lazy = false, cmd = "GBrowse" },
   -- -- detect tabstop and shiftwidth automatically
-  { 'tpope/vim-sleuth', lazy = false },
+  { 'tpope/vim-sleuth',  lazy = false },
   -- {
   -- 	"smoka7/multicursors.nvim",
   -- 	event = "VeryLazy",
@@ -37,10 +37,10 @@ return {
       "TmuxNavigatePrevious",
     },
     keys = {
-      { "<c-w><c-h>", "<cmd>TmuxNavigateLeft<cr>" },
-      { "<c-w><c-j>", "<cmd>TmuxNavigateDown<cr>" },
-      { "<c-w><c-k>", "<cmd>TmuxNavigateUp<cr>" },
-      { "<c-w><c-l>", "<cmd>TmuxNavigateRight<cr>" },
+      { "<c-w><c-h>",  "<cmd>TmuxNavigateLeft<cr>" },
+      { "<c-w><c-j>",  "<cmd>TmuxNavigateDown<cr>" },
+      { "<c-w><c-k>",  "<cmd>TmuxNavigateUp<cr>" },
+      { "<c-w><c-l>",  "<cmd>TmuxNavigateRight<cr>" },
       { "<c-w><c-\\>", "<cmd>TmuxNavigatePrevious<cr>" },
     },
   }

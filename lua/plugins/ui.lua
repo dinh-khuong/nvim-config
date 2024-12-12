@@ -2,7 +2,7 @@ return {
   { 'oxfist/night-owl.nvim', lazy = false, },
   -- theme inspired by atom
   { 'navarasu/onedark.nvim', lazy = false, },
-  { 'akinsho/horizon.nvim', lazy = false, },
+  { 'akinsho/horizon.nvim',  lazy = false, },
   { 'folke/tokyonight.nvim', lazy = false, },
   {
     -- set lualine as statusline
@@ -18,12 +18,12 @@ return {
         section_separators = '',
       },
       sections = {
-        lualine_a = {'mode'},
-        lualine_b = {'branch', 'diff', 'diagnostics'},
-        lualine_c = {'filename'}, -- 'FugitiveHead'},
-        lualine_x = {'encoding', 'fileformat', 'filetype'},
-        lualine_y = {'progress'},
-        lualine_z = {'location'}
+        lualine_a = { 'mode' },
+        lualine_b = { 'branch', 'diff', 'diagnostics' },
+        lualine_c = { 'filename' }, -- 'FugitiveHead'},
+        lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'progress' },
+        lualine_z = { 'location' }
       },
       inactive_sections = {},
     },
@@ -31,7 +31,7 @@ return {
   {
     'preservim/nerdtree',
     lazy = true,
-    cmd = {"NERDTree"}
+    cmd = { "NERDTree" }
   },
   {
     'folke/which-key.nvim',

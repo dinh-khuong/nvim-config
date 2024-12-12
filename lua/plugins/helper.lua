@@ -4,7 +4,7 @@ return {
   { 'kshenoy/vim-signature', lazy = false, },
   -- detect tabstop and shiftwidth automatically
   { 'tpope/vim-sleuth',      lazy = false, },
-  { 'tpope/vim-commentary',  lazy = false, },
+  -- { 'tpope/vim-commentary',  lazy = false, },
   {
     'rmagatti/auto-session',
     lazy = false,

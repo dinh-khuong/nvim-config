@@ -41,11 +41,10 @@ require("khuong.setting.highlight")
 -- ]]
 
 -- (call_expression
--- 	function: 
+-- 	function:
 -- 	(member_expression
 -- 		object: (identifier) @styled
 -- 		(#eq? @styled "styled")
--- 		) 
+-- 		)
 -- 	arguments: template_string (string_fragment) @css
 -- 	) @hello
-

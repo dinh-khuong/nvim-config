@@ -1,4 +1,4 @@
-local on_attach = function(ev, bufnr)
+local on_attach = function(_, bufnr)
   local builtin = require('telescope.builtin');
   local nmap = function(keys, func, desc)
     if desc then
@@ -44,10 +44,6 @@ local on_attach = function(ev, bufnr)
       -- end,
     })
   end, { desc = 'Format current buffer with LSP' })
-
-  -- vim.api.nvim_create_autocmd({"BufWritePre"}, {
-  -- 	command = "Format"
-  -- })
 
   -- Diagnostic keymaps
   nmap('[d', vim.diagnostic.goto_prev, 'Go to previous diagnostic message')
@@ -147,16 +143,11 @@ return {
 
       mason_lspconfig.setup_handlers {
         function(server_name)
-          -- local file = io.open("/home/khuong/.config/nvim/test", "a")
           require('lspconfig')[server_name].setup {
             capabilities = capabilities,
             on_attach = on_attach,
             settings = servers[server_name],
           }
-          -- if file then
-          -- 	file:write(server_name .. "\n")
-          -- 	file:close()
-          -- g:netrw_liststyle=end
         end,
       }
 

@@ -82,6 +82,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- vim.api.nvim_set_hl(0, "String", {
 -- 	priority = 90
 -- });
-
-
-
