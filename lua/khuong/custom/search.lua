@@ -16,8 +16,8 @@ vim.api.nvim_create_user_command('CPrevious', function ()
   end
 end, { desc = "Previous Search" })
 
-vim.keymap.set("n", "<C-n>", "<cmd>CNext<cr>zz")
-vim.keymap.set("n", "<C-p>", "<cmd>CPrevious<cr>zz")
+vim.keymap.set("n", "<A-n>", "<cmd>CNext<cr>zz")
+vim.keymap.set("n", "<A-p>", "<cmd>CPrevious<cr>zz")
 
 vim.opt.gp = "rg -n"
 
