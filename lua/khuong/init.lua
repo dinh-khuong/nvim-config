@@ -5,6 +5,10 @@ require("khuong.setting.command")
 require("khuong.custom.init")
 require("khuong.setting.highlight")
 
+-- print(
+--   vim.fn.argv()[1]
+-- )
+
 -- local a = vim.treesitter.query.parse("lua", [[
 -- 	(function_call)
 -- ]]);

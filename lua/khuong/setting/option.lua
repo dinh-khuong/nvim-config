@@ -24,8 +24,7 @@ vim.opt.number = true
 
 vim.o.scrolloff = 12
 vim.o.laststatus = 3
-vim.opt.lz = true
-
+vim.o.lz = true
 
 -- vim.o.statusline = "%f"
 -- vim.o.winbar = "%f %m"
@@ -63,7 +62,8 @@ vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 vim.opt.foldlevel = 99
 
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
+
+local _ = vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank({
       timeout = 100,
