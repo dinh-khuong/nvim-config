@@ -52,10 +52,10 @@ vim.api.nvim_create_user_command("Ibus", function(a)
     disable_ibus()
   end
 end, {
-    desc = "Set ibus engine",
-    nargs = 1,
-    count = 2,
-    complete = function()
-      return { "vi", "en" }
-    end,
-  })
+  desc = "Set ibus engine",
+  nargs = 1,
+  count = 2,
+  complete = function()
+    return { "vi", "en" }
+  end,
+})

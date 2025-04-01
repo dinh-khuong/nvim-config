@@ -55,7 +55,7 @@ return {
       'nvim-telescope/telescope.nvim',
     },
     init = function()
-      vim.o.sessionoptions = "folds,blank,buffers,curdir,help,tabpages,winsize,winpos,terminal,localoptions"
+      vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
     end,
     config = function()
       require("auto-session").setup {

@@ -73,6 +73,7 @@ return {
     init = function()
       vim.g.jukit_mappings = 2
       vim.g.jukit_convert_open_detach = 1
+      vim.g.jukit_terminal = 'tmux'
 
       vim.g.jukit_layout = {
         split = "vertical",
@@ -156,7 +157,7 @@ return {
         vim.keymap.set('n', '<leader>rht', '<cmd>call jukit#convert#save_nb_to_file(1,1,\'html\')<cr>', { buffer = true })
         vim.keymap.set('n', '<leader>rpd', '<cmd>call jukit#convert#save_nb_to_file(1,1,\'pdf\')<cr>', { buffer = true })
       end
-      vim.g.jukit_terminal = 'kiity'
+
       vim.g.jukit_notebook_viewer = 'jupyter-notebook'
       vim.api.nvim_create_autocmd("FileType", {
         pattern = vim.tbl_keys(kernels),
