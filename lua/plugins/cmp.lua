@@ -3,6 +3,7 @@ return {
     -- autocompletion
     'hrsh7th/nvim-cmp',
     lazy = false,
+    version = "*",
     dependencies = {
       -- snippet engine & its associated nvim-cmp source
       'saadparwaiz1/cmp_luasnip',
