@@ -47,22 +47,22 @@ return {
   --     kitty_method = "normal",
   --   },
   -- },
-  -- {
-  --   -- 'dccsillag/magma-nvim',
-  --   'benlubas/molten-nvim',
-  --   lazy = false,
-  --   build = ':UpdateRemotePlugins',
-  --   dependencies = {
-  --     { '3rd/image.nvim' }
-  --   },
-  --   -- cmd = { "MagmaInit" },
-  --   init = function()
-  --     vim.g.magma_image_provider = "kitty"
-  --   end,
-  --   config = function()
-  --     vim.g.magma_image_provider = "kitty"
-  --   end
-  -- },
+  {
+    -- 'dccsillag/magma-nvim',
+    'benlubas/molten-nvim',
+    lazy = false,
+    build = ':UpdateRemotePlugins',
+    dependencies = {
+      { '3rd/image.nvim' }
+    },
+    -- cmd = { "MagmaInit" },
+    init = function()
+      vim.g.magma_image_provider = "kitty"
+    end,
+    config = function()
+      vim.g.magma_image_provider = "kitty"
+    end
+  },
   {
     'dinh-khuong/vim-jukit',
     lazy = true,
