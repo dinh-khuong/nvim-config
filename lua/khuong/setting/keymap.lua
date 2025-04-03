@@ -1,4 +1,4 @@
--- require("khuong.helper")
+require("khuong.helper")
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '

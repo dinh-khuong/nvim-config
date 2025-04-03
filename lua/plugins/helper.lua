@@ -12,6 +12,9 @@ return {
     ---@type oil.SetupOpts
     opts = {},
     lazy = false,
+    keymap = {
+      ["g."] = { "actions.toggle_hidden", mode = "n" },
+    },
     -- Optional dependencies
     dependencies = { { "echasnovski/mini.icons", opts = {} } },
     config = function()
@@ -34,6 +37,8 @@ return {
         }
       })
       vim.keymap.set('n', '<leader>pv', "<cmd>Oil<cr>")
+      vim.keymap.set('n', '[f', "<cmd>Oil<cr>")
+      vim.keymap.set('n', ']f', "<cmd>Oil<cr>")
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "oil" },

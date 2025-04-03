@@ -29,14 +29,15 @@ return {
     },
     opts = {
       backend = "kitty",
-      processor = "magick_rock", -- or "magick_cli"
+      -- processor = "magick_rock", -- or "magick_cli"
+      processor = "magick_cli",
       integrations = {
         markdown = {
           enabled = true,
-          clear_in_insert_mode = false,
+          clear_in_insert_mode = true,
           download_remote_images = true,
           only_render_image_at_cursor = false,
-          floating_windows = false,              -- if true, images will be rendered in floating markdown windows
+          floating_windows = true,               -- if true, images will be rendered in floating markdown windows
           filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
         },
         neorg = {
@@ -56,13 +57,13 @@ return {
       },
       max_width = nil,
       max_height = nil,
-      max_width_window_percentage = 50,
-      max_height_window_percentage = 50,
-      window_overlap_clear_enabled = false,                                               -- toggles images when windows are overlapped
+      max_width_window_percentage = 100,
+      max_height_window_percentage = 80,
+      window_overlap_clear_enabled = true,                                                -- toggles images when windows are overlapped
       window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "snacks_notif", "scrollview", "scrollview_sign" },
-      editor_only_render_when_focused = false,                                            -- auto show/hide images when the editor gains/looses focus
-      tmux_show_only_in_active_window = false,                                            -- auto show/hide images in the correct Tmux window (needs visual-activity off)
-      hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
+      editor_only_render_when_focused = true,                                             -- auto show/hide images when the editor gains/looses focus
+      tmux_show_only_in_active_window = true,                                             -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+      hijack_file_patterns = { "*.pdf", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
     },
   },
   {
@@ -80,31 +81,26 @@ return {
       vim.g.molten_open_cmd = vim.g.netrw_browsex_viewer
       -- vim.g.molten_split_size = 60
       vim.g.molten_wrap_output = false
-      vim.g.molten_cover_empty_lines = true
+      vim.g.molten_cover_empty_lines = false
+      vim.g.molten_virt_lines_off_by_1 = true
     end,
     config = function()
-      vim.keymap.set('n', ']f', '<cmd>MoltenNext<cr>')
-      vim.keymap.set('n', '[f', '<cmd>MoltenPrev<cr>')
-      -- vim.o.scrolloff = 2
-      -- vim.keymap.set('v', '<space>', '<cmd>MoltenEvaluateVisual<cr>')
-      -- vim.keymap.set('v', '<space>', '<cmd>MoltenEvaluate<cr>')
-
-      -- vim.keymap.set("n", "<leader>e", ":MoltenEvaluateOperator<CR>",
-      --   { silent = true, desc = "run operator selection" })
-      -- vim.keymap.set("n", "<leader>rl", ":MoltenEvaluateLine<CR>",
-      --   { silent = true, desc = "evaluate line" })
-      vim.keymap.set("n", "<leader><leader>", ":MoltenReevaluateCell<CR>",
-        { silent = true, desc = "re-evaluate cell" })
-      vim.keymap.set("v", "<leader><leader>", ":<C-u>MoltenEvaluateVisual<CR>",
-        { silent = true, desc = "evaluate visual selection" })
-      vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR>",
-        { silent = true, desc = "show/enter output" })
-      vim.keymap.set("n", "<leader>oh", "<cmd>MoltenHideOutput<CR>",
-        { silent = true, desc = "show/enter output" })
+      local function set_keymaps()
+        vim.keymap.set('n', ']f', '<cmd>MoltenNext<cr>', { buffer = true })
+        vim.keymap.set('n', '[f', '<cmd>MoltenPrev<cr>', { buffer = true })
+        vim.keymap.set("n", "<leader><leader>", ":MoltenReevaluateCell<CR>",
+          { silent = true, desc = "re-evaluate cell", buffer = true })
+        vim.keymap.set("v", "<leader><leader>", "<cmd>MoltenEvaluateVisual<CR>",
+          { silent = true, desc = "evaluate visual selection", buffer = true })
+        vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR>",
+          { silent = true, desc = "show/enter output", buffer = true })
+        vim.keymap.set("n", "<leader>oh", "<cmd>MoltenHideOutput<CR>",
+          { silent = true, desc = "show/enter output", buffer = true })
+      end
 
       vim.api.nvim_create_autocmd("BufReadPost", {
-        callback = function (ev)
-           -- /home/khuong/.local/share/nvim/molten/
+        callback = function(ev)
+          -- /home/khuong/.local/share/nvim/molten/
           local bufn = ev.buf
           local buf = vim.api.nvim_buf_get_name(bufn)
           local buf_key = buf_keyfile(buf)
@@ -115,6 +111,7 @@ return {
             if buf_key == value and not vim.list_contains(files, value) then
               vim.cmd("MoltenLoad")
               table.insert(files, buf_key)
+              set_keymaps()
               break
             end
           end
@@ -133,7 +130,7 @@ return {
 
       vim.api.nvim_create_autocmd("User", {
         pattern = { "MoltenDeinitPost" },
-        callback = function (ev)
+        callback = function(ev)
           local bufn = ev.buf
           local buf = vim.api.nvim_buf_get_name(bufn)
           vim.cmd("MoltenSave")
