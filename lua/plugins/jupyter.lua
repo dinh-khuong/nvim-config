@@ -3,7 +3,7 @@ local kernels = {
   r = "R",
   lua = "luajit",
   julia = "julia",
-  rust = "rust-script",
+  -- rust = "rust-script",
 }
 
 local files = {}
@@ -59,10 +59,10 @@ return {
       max_height = nil,
       max_width_window_percentage = 100,
       max_height_window_percentage = 80,
-      window_overlap_clear_enabled = true,                                                -- toggles images when windows are overlapped
+      window_overlap_clear_enabled = true,                                                         -- toggles images when windows are overlapped
       window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "snacks_notif", "scrollview", "scrollview_sign" },
-      editor_only_render_when_focused = true,                                             -- auto show/hide images when the editor gains/looses focus
-      tmux_show_only_in_active_window = true,                                             -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+      editor_only_render_when_focused = true,                                                      -- auto show/hide images when the editor gains/looses focus
+      tmux_show_only_in_active_window = true,                                                      -- auto show/hide images in the correct Tmux window (needs visual-activity off)
       hijack_file_patterns = { "*.pdf", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp", "*.avif" }, -- render image files as images when opened
     },
   },
@@ -90,7 +90,7 @@ return {
         vim.keymap.set('n', '[f', '<cmd>MoltenPrev<cr>', { buffer = true })
         vim.keymap.set("n", "<leader><leader>", ":MoltenReevaluateCell<CR>",
           { silent = true, desc = "re-evaluate cell", buffer = true })
-        vim.keymap.set("v", "<leader><leader>", "<cmd>MoltenEvaluateVisual<CR>",
+        vim.keymap.set("v", "<leader><leader>", ":<C-u>MoltenEvaluateVisual<CR>",
           { silent = true, desc = "evaluate visual selection", buffer = true })
         vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR>",
           { silent = true, desc = "show/enter output", buffer = true })
@@ -104,18 +104,13 @@ return {
           local bufn = ev.buf
           local buf = vim.api.nvim_buf_get_name(bufn)
           local buf_key = buf_keyfile(buf)
-          -- file  = io.open("hello.txt", "a")
-          -- file:write(buf_key)
+
           for _, value in pairs(vim.fn.systemlist("ls /home/khuong/.local/share/nvim/molten/")) do
-            -- file:write(value)
             if buf_key == value and not vim.list_contains(files, value) then
-              vim.cmd("MoltenLoad")
-              table.insert(files, buf_key)
-              set_keymaps()
+              vim.cmd("slient MoltenLoad")
               break
             end
           end
-          -- file:flush()
         end
       })
 
@@ -124,20 +119,31 @@ return {
         callback = function(ev)
           local bufn = ev.buf
           local buf = vim.api.nvim_buf_get_name(bufn)
-          table.insert(files, buf_keyfile(buf))
+          local kernel_id = ev.data.kernel_id
+
+          table.insert(files, {
+            key = buf_keyfile(buf),
+            name = buf,
+            kernel_id = kernel_id
+          })
+
+          set_keymaps()
         end
       })
 
       vim.api.nvim_create_autocmd("User", {
         pattern = { "MoltenDeinitPost" },
         callback = function(ev)
-          local bufn = ev.buf
-          local buf = vim.api.nvim_buf_get_name(bufn)
-          vim.cmd("MoltenSave")
-          for index, value in ipairs(files) do
-            if value == buf then
+          -- local file = io.open("hello.txt", 'a')
+          -- assert(file ~= nil)
+          -- file:write(vim.inspect(ev))
+          local kernel_id = ev.data.kernel_id
+
+          for index, value in ipairs(vim.tbl_values(files)) do
+            if value.kernel_id == kernel_id then
+              vim.cmd("e " .. value.name)
+              vim.cmd("slient MoltenSave")
               table.remove(files, index)
-              break;
             end
           end
         end
