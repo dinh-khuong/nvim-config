@@ -6,6 +6,16 @@ local kernels = {
   -- rust = "rust-script",
 }
 
+local function index_of(t, value)
+  for i, v in ipairs(t) do
+    if v == value then
+      return i
+    end
+  end
+  return nil
+end
+
+local molten_kernels = {}
 local files = {}
 
 local function buf_keyfile(buf_name)
@@ -98,56 +108,86 @@ return {
           { silent = true, desc = "show/enter output", buffer = true })
       end
 
+      local function auto_loaded(bufn)
+        local buf_name = vim.api.nvim_buf_get_name(bufn)
+        local buf_key = buf_keyfile(buf_name)
+
+        for _, value in pairs(vim.fn.systemlist("ls " .. vim.fn.stdpath('data') .. "/molten")) do
+          if buf_key == value and not vim.list_contains(files, value) then
+            vim.cmd("silent MoltenLoad")
+            return true
+          end
+        end
+        return false
+      end
+
+      local function save_buffer(ev)
+        local bufn = ev.buf
+        local buf = vim.api.nvim_buf_get_name(bufn)
+        local kernel_id = ev.data.kernel_id
+
+        local new_buffer = {
+          key = buf_keyfile(buf),
+          name = buf,
+        }
+
+        table.insert(files, new_buffer['key'])
+        if molten_kernels[kernel_id] == nil then
+          molten_kernels[kernel_id] = { new_buffer }
+        else
+          table.insert(molten_kernels[kernel_id], new_buffer)
+        end
+
+        set_keymaps()
+      end
+
+      vim.api.nvim_create_user_command("MInit", function()
+        local bufn = vim.api.nvim_get_current_buf();
+        if not auto_loaded(bufn) then
+          vim.cmd("silent MoltenInit")
+        end
+
+        set_keymaps()
+      end, {})
+
       vim.api.nvim_create_autocmd("BufReadPost", {
         callback = function(ev)
-          -- /home/khuong/.local/share/nvim/molten/
           local bufn = ev.buf
-          local buf = vim.api.nvim_buf_get_name(bufn)
-          local buf_key = buf_keyfile(buf)
-
-          for _, value in pairs(vim.fn.systemlist("ls /home/khuong/.local/share/nvim/molten/")) do
-            if buf_key == value and not vim.list_contains(files, value) then
-              vim.cmd("slient MoltenLoad")
-              break
-            end
-          end
+          auto_loaded(bufn)
         end
       })
 
       vim.api.nvim_create_autocmd("User", {
         pattern = { "MoltenInitPost" },
-        callback = function(ev)
-          local bufn = ev.buf
-          local buf = vim.api.nvim_buf_get_name(bufn)
-          local kernel_id = ev.data.kernel_id
-
-          table.insert(files, {
-            key = buf_keyfile(buf),
-            name = buf,
-            kernel_id = kernel_id
-          })
-
-          set_keymaps()
-        end
+        callback = save_buffer,
       })
 
       vim.api.nvim_create_autocmd("User", {
-        pattern = { "MoltenDeinitPost" },
+        pattern = { "MoltenDeinitPre" },
         callback = function(ev)
-          -- local file = io.open("hello.txt", 'a')
-          -- assert(file ~= nil)
+          -- local file = io.open('kernel_id.txt', 'a')
+          local current_kernel_id = ev.data.kernel_id
           -- file:write(vim.inspect(ev))
-          local kernel_id = ev.data.kernel_id
 
-          for index, value in ipairs(vim.tbl_values(files)) do
-            if value.kernel_id == kernel_id then
-              vim.cmd("e " .. value.name)
-              vim.cmd("slient MoltenSave")
-              table.remove(files, index)
+          for _, value in ipairs(molten_kernels[current_kernel_id]) do
+            vim.cmd("e " .. value.name)
+            local remove_index = index_of(files, value.key)
+            if remove_index then
+              table.remove(files, remove_index)
             end
+            vim.cmd("silent MoltenSave")
           end
+          molten_kernels[current_kernel_id] = {}
         end
       })
+
+      -- vim.api.nvim_create_autocmd("ExitPre", {
+      --   callback = function (_)
+      --     for _, _ in pairs(molten_kernels) do
+      --       vim.cmd("silent MoltenDeinit")
+      --     end
+      --   end
+      -- })
     end
   },
   -- {

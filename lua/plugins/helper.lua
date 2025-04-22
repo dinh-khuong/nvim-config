@@ -55,12 +55,13 @@ return {
   {
     'rmagatti/auto-session',
     lazy = false,
-    priority = 120,
+    priority = 90,
     dependencies = {
       'nvim-telescope/telescope.nvim',
     },
     init = function()
-      vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
+      -- vim.o.sessionoptions = "buffers,curdir,folds,tabpages,localoptions"
+      vim.o.sessionoptions = "buffers,curdir,tabpages,localoptions"
     end,
     config = function()
       require("auto-session").setup {
@@ -68,8 +69,13 @@ return {
         auto_save = true,
         enabled = true,
         lazy_support = true,
+        auto_create =  true,
         close_unsupported_windows = true,
+        auto_restore_last_session = false,
+        use_git_branch = true,
+        continue_restore_on_error = true,
         auto_restore = true,
+        log_level = "error",
       }
       vim.keymap.set("n", '<leader>op', require("auto-session.session-lens").search_session, {
         noremap = true,
