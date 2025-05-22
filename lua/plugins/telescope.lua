@@ -85,7 +85,6 @@ return {
       vim.keymap.set('n', '<leader>of', builtin.oldfiles, { desc = 'Find recently opened files' })
       vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = 'Find registers' })
       -- builtin.current_buffer_tags
-
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffer' })
       -- vim.keymap.set('n', '<leader>ft', require("telescope.actions").select_tab, { desc = '[F]ind [B]uffer' })
 
@@ -126,7 +125,7 @@ return {
       require('telescope').load_extension 'telescope-tabs'
       require('telescope-tabs').setup {}
 
-      vim.keymap.set('n', '<leader>ft', require('telescope-tabs').list_tabs, { desc = "[F]ind [T]abs" })
+      vim.keymap.set('n', '<leader>fn', require('telescope-tabs').list_tabs, { desc = "[F]ind [T]abs" })
     end,
   }
 }

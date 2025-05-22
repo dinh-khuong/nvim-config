@@ -22,9 +22,8 @@ return {
         default_file_explorer = false,
         columns = {
           "icon",
-          -- "name",
-          -- "permissions",
-          -- "size",
+          "permissions",
+          "size",
           -- "mtime",
         },
         buf_options = {
@@ -34,6 +33,11 @@ return {
         view_options = {
           -- Show files and directories that start with "."
           show_hidden = true,
+          is_hidden_file = function(name, bufnr)
+            -- local m = name:match("^%.")
+            return false
+              -- m ~= nil
+          end,
         }
       })
       vim.keymap.set('n', '<leader>pv', "<cmd>Oil<cr>")
@@ -68,7 +72,7 @@ return {
         suppressed_dirs = { "~/", "~/Projects", "~/Downloads", "/", "/bin", "/usr/bin", "/@/", "~/Documents", "~/AppImage", "~/Camera" },
         auto_save = true,
         enabled = true,
-        lazy_support = true,
+        lazy_support = false,
         auto_create =  true,
         close_unsupported_windows = true,
         auto_restore_last_session = false,

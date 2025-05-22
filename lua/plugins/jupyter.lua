@@ -96,11 +96,11 @@ return {
     end,
     config = function()
       local function set_keymaps()
-        vim.keymap.set('n', ']f', '<cmd>MoltenNext<cr>', { buffer = true })
-        vim.keymap.set('n', '[f', '<cmd>MoltenPrev<cr>', { buffer = true })
+        vim.keymap.set('n', ']f', '<cmd>MoltenNext<cr>zz', { buffer = true })
+        vim.keymap.set('n', '[f', '<cmd>MoltenPrev<cr>zz', { buffer = true })
         vim.keymap.set("n", "<leader><leader>", ":MoltenReevaluateCell<CR>",
           { silent = true, desc = "re-evaluate cell", buffer = true })
-        vim.keymap.set("v", "<leader><leader>", ":<C-u>MoltenEvaluateVisual<CR>",
+        vim.keymap.set("v", "<leader><leader>", ":<C-u>MoltenEvaluateVisual<CR>gv<esc>",
           { silent = true, desc = "evaluate visual selection", buffer = true })
         vim.keymap.set("n", "<leader>os", ":noautocmd MoltenEnterOutput<CR>",
           { silent = true, desc = "show/enter output", buffer = true })

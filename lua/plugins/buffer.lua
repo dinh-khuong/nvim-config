@@ -11,10 +11,15 @@ return {
         truncate_names = false,
         name_formatter = function(buf)
           local cwd = vim.fn.getcwd()
-          if string.find(buf.path, "^" .. cwd) then
+          if string.find(buf.path, "^" .. string.gsub(cwd, "%-", "\\-")) then
             return string.sub(buf.path, #cwd + 2, -1)
           end
-          return buf.name
+
+          if string.find(buf.path, "^oil://") then
+            return string.gsub(buf.path, "^oil://" .. os.getenv("HOME"), "oil://~")
+          end
+
+          return string.gsub(buf.path, "^" .. os.getenv("HOME"), "~")
         end,
       },
     }

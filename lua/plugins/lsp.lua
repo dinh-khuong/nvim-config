@@ -95,7 +95,16 @@ return {
       require('mason').setup()
       require('mason-lspconfig').setup()
 
+      -- local ruff_lsp  = require('lspconfig.configs').ruff
+      -- ruff_lsp.setup()
       local servers = {
+        ruff = {
+          ruff = {
+            init_options = {
+              settings = {}
+            }
+          }
+        },
         basedpyright = {
           basedpyright = {
             analysis = {
@@ -105,6 +114,7 @@ return {
                 reportUnknownVariableType = "none",
                 reportUnknownArgumentType = "none",
                 reportUnknownLambdaType = "none",
+                reportSelfClsParameterName = "none",
                 reportMissingTypeStubs = "none",
                 reportMissingTypeArgument = "none",
                 reportCallIssue = "info",
