@@ -11,11 +11,12 @@ return {
         truncate_names = false,
         name_formatter = function(buf)
           local cwd = vim.fn.getcwd()
-          if string.find(buf.path, "^" .. string.gsub(cwd, "%-", "\\-")) then
+          -- if string.find(buf.path, "^" .. string.gsub(cwd, "-", "%-")) then
+          if string.find(buf.path, cwd, 1, true) == 1 then
             return string.sub(buf.path, #cwd + 2, -1)
           end
 
-          if string.find(buf.path, "^oil://") then
+          if string.find(buf.path, "oil://", 1, true) == 1 then
             return string.gsub(buf.path, "^oil://" .. os.getenv("HOME"), "oil://~")
           end
 
@@ -24,7 +25,7 @@ return {
       },
     }
 
-    vim.keymap.set({ 'n', 'v' }, '	', '<cmd>BufferLineCycleNext<cr>', { desc = "Next Buffer" })
+    vim.keymap.set({ 'n', 'v' }, '<S-bs>', '<cmd>BufferLineCycleNext<cr>', { desc = "Next Buffer" })
     vim.keymap.set({ 'n', 'v' }, '<bs>', '<cmd>BufferLineCyclePrev<cr>', { desc = "Previous Buffer" })
     -- vim.keymap.set({ 'n', 'v' }, '<S-	>', '<cmd>BufferLineCyclePrev<cr>', { desc = "Previous Buffer" })
 

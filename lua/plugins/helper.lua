@@ -84,14 +84,15 @@ return {
       vim.keymap.set("n", '<leader>op', require("auto-session.session-lens").search_session, {
         noremap = true,
       })
-      -- vim.api.nvim_create_autocmd({"VimEnter"}, {
-      --   pattern = "*",
-      --   callback = function ()
-      --     if vim.fn.argv()[1] == '.' then
-      --       vim.cmd("SessionRestore")
-      --     end
-      --   end
-      -- })
+
+      vim.api.nvim_create_autocmd({"VimEnter"}, {
+        pattern = "*",
+        callback = function ()
+          if vim.fn.argv()[1] == '.' then
+            vim.cmd("SessionRestore")
+          end
+        end
+      })
 
       -- require("auto-session").AutoRestoreSession
       -- vim.cmd("SessionRestore")
@@ -101,6 +102,10 @@ return {
     'mg979/vim-visual-multi',
     -- lazy = false,
   },
+  {
+    'vimwiki/vimwiki',
+    lazy = false
+  }
   -- {
   --   'chipsenkbeil/distant.nvim',
   --   branch = 'v0.3',

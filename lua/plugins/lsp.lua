@@ -105,6 +105,14 @@ return {
             }
           }
         },
+        ['rust_analyzer'] = {
+          ['rust_analyzer'] = {
+            cargo = {
+              allFeatures = true,
+              features = {"wasm", "worklet"}
+            }
+          }
+        },
         basedpyright = {
           basedpyright = {
             analysis = {
