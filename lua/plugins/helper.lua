@@ -65,7 +65,7 @@ return {
     },
     init = function()
       -- vim.o.sessionoptions = "buffers,curdir,folds,tabpages,localoptions"
-      vim.o.sessionoptions = "buffers,curdir,tabpages,localoptions"
+      vim.o.sessionoptions = "buffers,curdir,tabpages,localoptions,folds"
     end,
     config = function()
       require("auto-session").setup {
@@ -81,18 +81,18 @@ return {
         auto_restore = true,
         log_level = "error",
       }
-      vim.keymap.set("n", '<leader>op', require("auto-session.session-lens").search_session, {
-        noremap = true,
-      })
+      -- vim.keymap.set("n", '<leader>op', require("auto-session.session-lens").search_session, {
+      --   noremap = true,
+      -- })
 
-      vim.api.nvim_create_autocmd({"VimEnter"}, {
-        pattern = "*",
-        callback = function ()
-          if vim.fn.argv()[1] == '.' then
-            vim.cmd("SessionRestore")
-          end
-        end
-      })
+      -- vim.api.nvim_create_autocmd({"VimEnter"}, {
+      --   pattern = "*",
+      --   callback = function ()
+      --     if vim.fn.argv()[1] == '.' then
+      --       vim.cmd("SessionRestore")
+      --     end
+      --   end
+      -- })
 
       -- require("auto-session").AutoRestoreSession
       -- vim.cmd("SessionRestore")

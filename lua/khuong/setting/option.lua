@@ -18,7 +18,7 @@ vim.wo.signcolumn = 'yes'
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
-vim.o.termguicolors = false
+vim.opt.termguicolors = true
 vim.o.rnu = true
 vim.opt.number = true
 
@@ -74,6 +74,7 @@ local _ = vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 
+-- vim.print(vim.lsp.config)
 -- nvim_get_current_tabpage()
 -- tabpg = vim.api.nvim_list_tabpages()
 -- vim.print(vim.api.nvim_list_tabpages())

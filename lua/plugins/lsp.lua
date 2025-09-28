@@ -68,10 +68,18 @@ return {
     -- lsp configuration & plugins
     'neovim/nvim-lspconfig',
     lazy = false,
+    commit = "f4ed656e876e45cf914d7beb972830561178e232",
+    -- version = "*",
     priority = 10,
     dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
+      {
+        'williamboman/mason.nvim',
+        commit = "e2f7f9044ec30067bc11800a9e266664b88cda22"
+      },
+      {
+        'williamboman/mason-lspconfig.nvim',
+        commit = "c6c686781f9841d855bf1b926e10aa5e19430a38"
+      },
       'folke/neodev.nvim',
       'nvim-telescope/telescope.nvim',
       -- useful status updates for lsp
@@ -109,7 +117,7 @@ return {
           ['rust_analyzer'] = {
             cargo = {
               allFeatures = true,
-              features = {"wasm", "worklet"}
+              features = { "wasm", "worklet" }
             }
           }
         },
@@ -158,6 +166,22 @@ return {
       mason_lspconfig.setup {
         ensure_installed = vim.tbl_keys(servers),
       }
+
+      require("lspconfig").dartls.setup({
+        cmd = { "dart", "language-server", "--protocol=lsp" },
+      })
+
+      vim.api.nvim_create_autocmd({"BufEnter"}, {
+        pattern = {"*.dart"},
+        callback = function (e)
+          vim.api.nvim_buf_create_user_command(e.buf, "Format", function ()
+            -- local jobid = vim.fn.jobstart({"dart", "format", vim.fn.expand("%")})
+            vim.cmd("silent !dart format %")
+            vim.cmd("edit")
+            end
+            , {})
+        end
+      })
 
       mason_lspconfig.setup_handlers {
         function(server_name)

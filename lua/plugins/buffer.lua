@@ -4,8 +4,15 @@ return {
   dependencies = 'nvim-tree/nvim-web-devicons',
   lazy = false,
   config = function()
-    require("bufferline").setup {
+    local bufferline = require('bufferline')
+
+    bufferline.setup {
       options = {
+        -- or you can combine these e.g.
+        style_preset = {
+            bufferline.style_preset.no_italic,
+            bufferline.style_preset.no_bold
+        },
         mode = 'tabs',
         max_name_length=70,
         truncate_names = false,
@@ -25,8 +32,8 @@ return {
       },
     }
 
-    vim.keymap.set({ 'n', 'v' }, '<S-bs>', '<cmd>BufferLineCycleNext<cr>', { desc = "Next Buffer" })
-    vim.keymap.set({ 'n', 'v' }, '<bs>', '<cmd>BufferLineCyclePrev<cr>', { desc = "Previous Buffer" })
+    -- vim.keymap.set({ 'n', 'v' }, '<S-bs>', '<cmd>BufferLineCycleNext<cr>', { desc = "Next Buffer" })
+    -- vim.keymap.set({ 'n', 'v' }, '<bs>', '<cmd>BufferLineCyclePrev<cr>', { desc = "Previous Buffer" })
     -- vim.keymap.set({ 'n', 'v' }, '<S-	>', '<cmd>BufferLineCyclePrev<cr>', { desc = "Previous Buffer" })
 
     -- vim.keymap.set({ 'n', 'v' }, '<leader>bb', vim.cmd.BufferLinePick, { desc = "Choose Buffer" })

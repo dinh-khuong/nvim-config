@@ -11,6 +11,14 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
   end
 })
 
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = {"dart"},
+--   callback = function ()
+--     -- vim.opt_local.commentstring
+--   end
+-- })
+
+-- vim.print(vim.opt_local.commentstring)
 function Color()
   vim.api.nvim_set_hl(0, "Normal", {
     bg = "none",

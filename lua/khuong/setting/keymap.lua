@@ -33,6 +33,7 @@ vim.keymap.set("i", "(", "()<left>");
 vim.keymap.set("i", "[", "[]<left>");
 vim.keymap.set("i", "{", "{}<left>");
 vim.keymap.set("i", "\"", "\"\"<left>");
+vim.keymap.set("i", "'", "''<left>");
 
 -- vim.keymap.set("t", "<esc>", "<cmd>bp<cr>")
 vim.keymap.set("t", "<C-w><C-h>", "<C-\\><C-n><C-w><C-h>")
@@ -84,6 +85,9 @@ vim.keymap.set('n', '<leader>gx', function()
     vim.system({ 'xdg-open', path }, { text = false })
   end
 end, { desc = "Open default app" });
+
+vim.keymap.set({ 'n', 'v' }, '<S-bs>', '<cmd>tabnext<cr>', { desc = "Next Buffer" })
+vim.keymap.set({ 'n', 'v' }, '<bs>', '<cmd>tabprevious<cr>', { desc = "Previous Buffer" })
 
 -- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
 -- vim.keymap.set("v", '"', [[l:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })
