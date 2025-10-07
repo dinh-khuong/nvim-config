@@ -86,8 +86,15 @@ vim.keymap.set('n', '<leader>gx', function()
   end
 end, { desc = "Open default app" });
 
-vim.keymap.set({ 'n', 'v' }, '<S-bs>', '<cmd>tabnext<cr>', { desc = "Next Buffer" })
+vim.keymap.set({ 'n', 'v' }, '<tab>', '<cmd>tabnext<cr>', { desc = "Next Buffer" })
 vim.keymap.set({ 'n', 'v' }, '<bs>', '<cmd>tabprevious<cr>', { desc = "Previous Buffer" })
+
+-- vim.keymap.set({'n'}, '<leader><leader>v', function ()
+--   local node = Select_smallest_node("selector")
+--   if node then
+--     Select_node_visual(node)
+--   end
+-- end)
 
 -- vim.keymap.set("v", "'", [[l:s/\%V\(.*\)\%V/'\1'/ <CR>]], { desc = "Surround selection with '" })
 -- vim.keymap.set("v", '"', [[l:s/\%V\(.*\)\%V/"\1"/ <CR>]], { desc = 'Surround selection with "' })

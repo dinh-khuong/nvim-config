@@ -1,3 +1,4 @@
+---@return string
 function Find_git_root()
   -- Use the current buffer's path as the starting point for the git search
   local current_file = vim.api.nvim_buf_get_name(0)
@@ -49,4 +50,52 @@ function RealPath(arg)
 
   return "/" .. table.concat(currentCells, "/")
 end
+
+---@param target_type string
+---@return TSNode|nil
+function Select_smallest_node(target_type)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local parser = vim.treesitter.get_parser(bufnr)
+  if not parser then
+    print("No Tree-sitter parser available for this filetype.")
+    return nil
+  end
+
+  local root = parser:parse()[1]:root()
+  local node = vim.treesitter.get_node()
+
+  local current_node = node
+
+  while current_node do
+    local node_type = current_node:type()
+
+    if node_type and node_type:find(target_type) then
+      return current_node;
+    end
+
+    if current_node:parent() == root then
+      return nil
+    end
+    current_node = current_node:parent()
+  end
+
+  return nil
+end
+
+---@param node TSNode
+function Select_node_visual(node)
+    local srow, scol, erow, ecol = node:range()
+    vim.api.nvim_win_set_cursor(0, {srow + 1, scol + 1})
+    vim.cmd("normal v")
+    vim.api.nvim_win_set_cursor(0, {erow + 1, ecol + 1})
+end
+
+-- Call the function
+-- local node = select_smallest_node("function_call")
+-- if node then
+--   select_node(0, node)
+-- end
+
+
+
 

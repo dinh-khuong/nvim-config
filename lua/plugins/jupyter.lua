@@ -31,6 +31,10 @@ return {
         build = ":TSUpdate",
         config = function()
           require("nvim-treesitter.configs").setup({
+            ignore_install = {},
+            modules = {},
+            sync_install = true,
+            auto_install = true,
             ensure_installed = { "markdown" },
             highlight = { enable = true },
           })
@@ -122,21 +126,21 @@ return {
       end
 
       local function save_buffer(ev)
-        local bufn = ev.buf
-        local buf = vim.api.nvim_buf_get_name(bufn)
-        local kernel_id = ev.data.kernel_id
-
-        local new_buffer = {
-          key = buf_keyfile(buf),
-          name = buf,
-        }
-
-        table.insert(files, new_buffer['key'])
-        if molten_kernels[kernel_id] == nil then
-          molten_kernels[kernel_id] = { new_buffer }
-        else
-          table.insert(molten_kernels[kernel_id], new_buffer)
-        end
+        -- local bufn = ev.buf
+        -- local buf = vim.api.nvim_buf_get_name(bufn)
+        -- local kernel_id = ev.data.kernel_id
+        --
+        -- local new_buffer = {
+        --   key = buf_keyfile(buf),
+        --   name = buf,
+        -- }
+        --
+        -- table.insert(files, new_buffer['key'])
+        -- if molten_kernels[kernel_id] == nil then
+        --   molten_kernels[kernel_id] = { new_buffer }
+        -- else
+        --   table.insert(molten_kernels[kernel_id], new_buffer)
+        -- end
 
         set_keymaps()
       end
@@ -150,36 +154,38 @@ return {
         set_keymaps()
       end, {})
 
-      vim.api.nvim_create_autocmd("BufReadPost", {
-        callback = function(ev)
-          local bufn = ev.buf
-          auto_loaded(bufn)
-        end
-      })
+      -- vim.api.nvim_create_autocmd("BufReadPost", {
+      --   callback = function(ev)
+      --     local bufn = ev.buf
+      --     auto_loaded(bufn)
+      --   end
+      -- })
 
       vim.api.nvim_create_autocmd("User", {
         pattern = { "MoltenInitPost" },
         callback = save_buffer,
       })
 
-      vim.api.nvim_create_autocmd("User", {
-        pattern = { "MoltenDeinitPre" },
-        callback = function(ev)
-          -- local file = io.open('kernel_id.txt', 'a')
-          local current_kernel_id = ev.data.kernel_id
-          -- file:write(vim.inspect(ev))
-
-          for _, value in ipairs(molten_kernels[current_kernel_id]) do
-            vim.cmd("e " .. value.name)
-            local remove_index = index_of(files, value.key)
-            if remove_index then
-              table.remove(files, remove_index)
-            end
-            vim.cmd("silent MoltenSave")
-          end
-          molten_kernels[current_kernel_id] = {}
-        end
-      })
+      -- vim.api.nvim_create_autocmd("User", {
+      --   pattern = { "MoltenDeinitPre" },
+      --   callback = function(ev)
+      --     local file = io.open('kernel_id.txt', 'a')
+      --     file:write(vim.inspect(ev))
+      --     file:close();
+      --
+      --     local current_kernel_id = ev.data.kernel_id
+      --
+      --     for _, value in ipairs(molten_kernels[current_kernel_id]) do
+      --       vim.cmd("e " .. value.name)
+      --       local remove_index = index_of(files, value.key)
+      --       if remove_index then
+      --         table.remove(files, remove_index)
+      --       end
+      --       vim.cmd("silent MoltenSave")
+      --     end
+      --     molten_kernels[current_kernel_id] = {}
+      --   end
+      -- })
 
       -- vim.api.nvim_create_autocmd("ExitPre", {
       --   callback = function (_)

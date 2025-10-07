@@ -1,16 +1,28 @@
+-- "cmp-nvim-lsp": { "branch": "main", "commit": "99290b3ec1322070bcfb9e846450a46f6efa50f0" },
+-- "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
+-- "nvim-cmp": { "branch": "main", "commit": "b555203ce4bd7ff6192e759af3362f9d217e8c89" },
 return {
   {
     -- autocompletion
     'hrsh7th/nvim-cmp',
     lazy = false,
-    version = "*",
+    commit = "b555203ce4bd7ff6192e759af3362f9d217e8c89",
+    -- version = "*",
+
+
     dependencies = {
       -- snippet engine & its associated nvim-cmp source
-      'saadparwaiz1/cmp_luasnip',
+      {
+        'saadparwaiz1/cmp_luasnip',
+        commit = "98d9cb5c2c38532bd9bdb481067b20fea8f32e90",
+      },
 
       "L3MON4D3/LuaSnip",
       -- adds lsp completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
+      {
+        'hrsh7th/cmp-nvim-lsp',
+        commit = "99290b3ec1322070bcfb9e846450a46f6efa50f0",
+      },
 
       -- adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',

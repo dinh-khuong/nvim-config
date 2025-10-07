@@ -171,8 +171,8 @@ return {
         cmd = { "dart", "language-server", "--protocol=lsp" },
       })
 
-      vim.api.nvim_create_autocmd({"BufEnter"}, {
-        pattern = {"*.dart"},
+      vim.api.nvim_create_autocmd({"FileType"}, {
+        pattern = {"dart"},
         callback = function (e)
           vim.api.nvim_buf_create_user_command(e.buf, "Format", function ()
             -- local jobid = vim.fn.jobstart({"dart", "format", vim.fn.expand("%")})
