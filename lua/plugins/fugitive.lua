@@ -18,9 +18,10 @@ return {
       nnmap("gl", "<cmd>diffget //3<cr>", "[G]et [N]ew")
       nnmap("gh", "<cmd>diffget //2<cr>", "[G]et [O]ld")
 
+
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "fugitive",
-        callback = function (_e)
+        callback = function ()
           local remote_origin = vim.fn.systemlist("git remote")[1]
 
           vim.keymap.set("n", "<leader>gp", function ()

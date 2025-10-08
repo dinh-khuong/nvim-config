@@ -41,14 +41,14 @@ return {
         }
       })
       vim.keymap.set('n', '<leader>pv', "<cmd>Oil<cr>")
-      vim.keymap.set('n', '[f', "<cmd>Oil<cr>")
-      vim.keymap.set('n', ']f', "<cmd>Oil<cr>")
+      -- vim.keymap.set('n', '[f', "<cmd>Oil<cr>")
+      -- vim.keymap.set('n', ']f', "<cmd>Oil<cr>")
 
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "oil" },
         callback = function()
           vim.api.nvim_buf_create_user_command(0, "Open", function()
-            vim.fn.jobstart("xdg-open " .. string.sub(vim.fn.expand("%:p"), 6)
+            vim.fn.jobstart(vim.g.netrw_browsex_viewer .. " " .. string.sub(vim.fn.expand("%:p"), 6)
             )
           end, {})
         end
