@@ -33,7 +33,7 @@ vim.keymap.set("i", "(", "()<left>");
 vim.keymap.set("i", "[", "[]<left>");
 vim.keymap.set("i", "{", "{}<left>");
 vim.keymap.set("i", "\"", "\"\"<left>");
-vim.keymap.set("i", "'", "''<left>");
+-- vim.keymap.set("i", "'", "''<left>");
 
 -- vim.keymap.set("t", "<esc>", "<cmd>bp<cr>")
 vim.keymap.set("t", "<C-w><C-h>", "<C-\\><C-n><C-w><C-h>")

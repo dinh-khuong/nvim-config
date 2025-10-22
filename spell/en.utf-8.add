@@ -5,3 +5,10 @@ def
 list
 TensorFlow
 scikit
+GRU
+DF
+STFT
+ERB
+RNNoise
+LSNR
+htbp
