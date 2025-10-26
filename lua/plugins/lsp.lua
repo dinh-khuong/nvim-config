@@ -66,19 +66,14 @@ return {
   },
   {
     -- lsp configuration & plugins
-    'neovim/nvim-lspconfig',
+    'williamboman/mason.nvim',
     lazy = false,
-    commit = "f4ed656e876e45cf914d7beb972830561178e232",
-    -- version = "*",
+    version = "*",
     priority = 10,
     dependencies = {
-      {
-        'williamboman/mason.nvim',
-        commit = "e2f7f9044ec30067bc11800a9e266664b88cda22"
-      },
+      'neovim/nvim-lspconfig',
       {
         'williamboman/mason-lspconfig.nvim',
-        commit = "c6c686781f9841d855bf1b926e10aa5e19430a38"
       },
       'folke/neodev.nvim',
       'nvim-telescope/telescope.nvim',
@@ -101,7 +96,7 @@ return {
     },
     config = function()
       require('mason').setup()
-      require('mason-lspconfig').setup()
+      -- require('mason-lspconfig').setup()
 
       -- local ruff_lsp  = require('lspconfig.configs').ruff
       -- ruff_lsp.setup()
@@ -160,14 +155,7 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-      -- Ensure the servers above are installed
-      local mason_lspconfig = require 'mason-lspconfig'
-
-      mason_lspconfig.setup {
-        ensure_installed = vim.tbl_keys(servers),
-      }
-
-      require("lspconfig").dartls.setup({
+      vim.lsp.config("dartls", {
         cmd = { "dart", "language-server", "--protocol=lsp" },
       })
 
@@ -183,19 +171,19 @@ return {
         end
       })
 
-      mason_lspconfig.setup_handlers {
-        function(server_name)
-          require('lspconfig')[server_name].setup {
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-          }
-        end,
-      }
+      for server, config in pairs(servers) do
+        vim.lsp.config(server, {
+          capabilities = capabilities,
+          settings = config,
+        })
+      end
+
+      vim.lsp.enable(vim.tbl_keys(servers))
 
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(ev)
+          on_attach(ev, ev.buf)
           vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
           local client = vim.lsp.get_client_by_id(ev.data.client_id)
           if client then

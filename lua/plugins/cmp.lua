@@ -6,22 +6,20 @@ return {
     -- autocompletion
     'hrsh7th/nvim-cmp',
     lazy = false,
-    commit = "b555203ce4bd7ff6192e759af3362f9d217e8c89",
-    -- version = "*",
-
-
+    -- commit = "b555203ce4bd7ff6192e759af3362f9d217e8c89",
+    version = "*",
     dependencies = {
       -- snippet engine & its associated nvim-cmp source
       {
         'saadparwaiz1/cmp_luasnip',
-        commit = "98d9cb5c2c38532bd9bdb481067b20fea8f32e90",
+        -- commit = "98d9cb5c2c38532bd9bdb481067b20fea8f32e90",
       },
 
       "L3MON4D3/LuaSnip",
       -- adds lsp completion capabilities
       {
         'hrsh7th/cmp-nvim-lsp',
-        commit = "99290b3ec1322070bcfb9e846450a46f6efa50f0",
+        -- commit = "99290b3ec1322070bcfb9e846450a46f6efa50f0",
       },
 
       -- adds a number of user-friendly snippets
