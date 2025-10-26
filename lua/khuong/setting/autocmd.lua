@@ -11,14 +11,6 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufNewFile" }, {
   end
 })
 
--- vim.api.nvim_create_autocmd("FileType", {
---   pattern = {"dart"},
---   callback = function ()
---     -- vim.opt_local.commentstring
---   end
--- })
-
--- vim.print(vim.opt_local.commentstring)
 function Color()
   vim.api.nvim_set_hl(0, "Normal", {
     bg = "none",
@@ -35,6 +27,35 @@ function Color()
   vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", {
     link = "Comment"
   })
+
+  vim.api.nvim_set_hl(0, "BufferLineTab", {
+    fg = "#ffffff",
+    bg = "#000000",
+  })
+  -- vim.api.nvim_set_hl(0, "BufferLineFill", {
+  --   fg = "#ffffff",
+  --   bg = "#000000",
+  -- })
+  -- vim.api.nvim_set_hl(0, "BufferLineBuffer", {
+  --   fg = "#ffffff",
+  --   bg = "#000000",
+  -- })
+  -- vim.api.nvim_set_hl(0, "BufferLinePickVisible", {
+  --   fg = "#ffffff",
+  --   bg = "#000000",
+  -- })
+  -- vim.api.nvim_set_hl(0, "BufferLinePickSelected", {
+  --   fg = "#ffffff",
+  --   bg = "#000000",
+  -- })
+  -- vim.api.nvim_set_hl(0, "BufferLineBackground", {
+  --   fg = "#ffffff",
+  --   bg = "#000000",
+  -- })
+  -- vim.api.nvim_set_hl(0, "BufferLineTabSelected", {
+  --   fg = "#ffffff",
+  --   bg = "#000000",
+  -- })
 end
 
 -- vim.api.nvim_create_autocmd("VimEnter", {
@@ -45,9 +66,7 @@ end
 -- })
 
 vim.api.nvim_create_autocmd({ "ColorScheme", "VimEnter" }, {
-  callback = function()
-    Color()
-  end
+  callback = Color
 })
 
 vim.api.nvim_create_autocmd({ "BufEnter" }, {
