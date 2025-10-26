@@ -6,54 +6,43 @@ return {
   config = function()
     local bufferline = require('bufferline')
 
+    local selected = {
+      fg = {
+        attribute = "fg",
+        highlight = "Keyword",
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "Visual"
+      },
+    }
+
+    local buffer_visible = {
+      fg = {
+        attribute = "fg",
+        highlight = "Comment"
+      },
+      bg = {
+        attribute = "bg",
+        highlight = "Visual"
+      },
+    }
+
     bufferline.setup {
       highlights = {
-        buffer_selected = {
-          fg = {
-            attribute = "fg",
-            highlight = "Keyword",
-          },
-          bg = {
-            attribute = "bg",
-            highlight = "Visual"
-          },
-          -- bold = true,
-          -- italic = true,
-        },
+        buffer_selected = selected,
         modified_selected = {
           bg = {
             attribute = "bg",
             highlight = "Visual"
           },
         },
-        close_button_selected = {
-          fg = {
-            attribute = "fg",
-            highlight = "Keyword",
-          },
-          bg = {
-            attribute = "bg",
-            highlight = "Visual"
-          },
-        },
-        separator_selected = {
-          fg = {
-            attribute = "fg",
-            highlight = "Comment"
-          },
-          bg = {
-            attribute = "bg",
-            highlight = "Visual"
-          },
-        },
+        close_button_selected = selected,
+        separator_selected = selected,
         separator_visible = {
           fg = {
             attribute = "fg",
             highlight = "Comment"
-          },
-          bg = {
-            attribute = "bg",
-            highlight = "Visual"
           },
         },
         separator = {
@@ -62,63 +51,8 @@ return {
             highlight = "Comment"
           },
         },
-        indicator_visible = {
-          bg = {
-            attribute = "bg",
-            highlight = "Visual"
-          },
-        },
-        indicator_selected = {
-          bg = {
-            attribute = "bg",
-            highlight = "Visual"
-          },
-        },
-
-        offset_separator = {
-          bg = {
-            attribute = "bg",
-            highlight = "Visual"
-          },
-        },
-        -- tab_separator = {
-        --   fg = {
-        --     attribute = "bg",
-        --     highlight = "Visual"
-        --   },
-        --   bg = {
-        --     attribute = "bg",
-        --     highlight = "Visual"
-        --   },
-        -- },
-        -- tab_separator_selected = {
-        --   fg = {
-        --     attribute = "bg",
-        --     highlight = "Visual"
-        --   },
-        --   bg = {
-        --     attribute = "bg",
-        --     highlight = "Visual"
-        --   },
-        --   -- sp = '<colour-value-here>',
-        --   -- underline = '<colour-value-here>',
-        -- },
-        -- offset_separator = {
-        --   fg = {
-        --     attribute = "fg",
-        --     highlight = "Keyword",
-        --   },
-        --   bg = {
-        --     attribute = "bg",
-        --     highlight = "Visual"
-        --   },
-        -- },
-        -- fill = {
-        --   bg = {
-        --     attribute = "bg",
-        --     highlight = "Visual"
-        --   },
-        -- },
+        indicator_visible = buffer_visible,
+        indicator_selected = buffer_visible,
       },
       options = {
         -- or you can combine these e.g.
