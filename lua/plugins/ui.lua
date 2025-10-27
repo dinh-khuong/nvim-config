@@ -4,6 +4,7 @@ return {
   { 'navarasu/onedark.nvim', lazy = false, },
   { 'akinsho/horizon.nvim',  lazy = false, },
   { 'folke/tokyonight.nvim', lazy = false, },
+  { 'rose-pine/neovim', lazy = false, },
   {
     -- set lualine as statusline
     'nvim-lualine/lualine.nvim',

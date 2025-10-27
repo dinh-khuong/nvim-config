@@ -69,7 +69,7 @@ return {
     'williamboman/mason.nvim',
     lazy = false,
     version = "*",
-    priority = 10,
+    -- priority = 10,
     dependencies = {
       'neovim/nvim-lspconfig',
       {
