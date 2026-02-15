@@ -9,7 +9,6 @@ return {
       'nvim-lua/plenary.nvim',
     },
     lazy = false,
-    priority = 500,
     config = function()
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`

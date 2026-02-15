@@ -155,22 +155,24 @@ return {
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-      vim.lsp.config("dartls", {
-        cmd = { "dart", "language-server", "--protocol=lsp" },
-      })
+      -- vim.lsp.config("dartls", {
+      --   cmd = { "dart", "language-server", "--protocol=lsp" },
+      -- })
+      -- vim.lsp.enable("dartls")
+      --
+      -- vim.api.nvim_create_autocmd({"FileType"}, {
+      --   pattern = {"dart"},
+      --   callback = function (e)
+      --     vim.api.nvim_buf_create_user_command(e.buf, "Format", function ()
+      --       -- local jobid = vim.fn.jobstart({"dart", "format", vim.fn.expand("%")})
+      --       vim.cmd("silent !dart format %")
+      --       vim.cmd("edit")
+      --       end
+      --       , {})
+      --   end
+      -- })
 
-      vim.api.nvim_create_autocmd({"FileType"}, {
-        pattern = {"dart"},
-        callback = function (e)
-          vim.api.nvim_buf_create_user_command(e.buf, "Format", function ()
-            -- local jobid = vim.fn.jobstart({"dart", "format", vim.fn.expand("%")})
-            vim.cmd("silent !dart format %")
-            vim.cmd("edit")
-            end
-            , {})
-        end
-      })
-
+      local manson_config = require("mason-lspconfig")
       for server, config in pairs(servers) do
         vim.lsp.config(server, {
           capabilities = capabilities,
@@ -178,18 +180,27 @@ return {
         })
       end
 
-      vim.lsp.enable(vim.tbl_keys(servers))
+      local configed_servers = vim.tbl_keys(servers)
+      for _, server in pairs(manson_config.get_available_servers()) do
+        if not vim.tbl_contains(configed_servers, server) then
+          vim.lsp.config(server, {
+            capabilities = capabilities,
+          })
+        end
+      end
+
+      vim.lsp.enable(manson_config.get_available_servers())
 
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(ev)
           on_attach(ev, ev.buf)
           vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-          local client = vim.lsp.get_client_by_id(ev.data.client_id)
-          if client then
-            client.server_capabilities.semanticTokensProvider = nil
-            client.server_capabilities.documentHighlightProvider = nil
-          end
+          -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          -- if client then
+          --   client.server_capabilities.semanticTokensProvider = nil
+          --   client.server_capabilities.documentHighlightProvider = nil
+          -- end
         end,
       })
     end
