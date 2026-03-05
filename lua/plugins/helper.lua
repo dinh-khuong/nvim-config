@@ -48,7 +48,7 @@ return {
   {
     'rmagatti/auto-session',
     lazy = false,
-    priority = 10,
+    priority = 100,
     -- dependencies = {
     --   'nvim-telescope/telescope.nvim',
     -- },

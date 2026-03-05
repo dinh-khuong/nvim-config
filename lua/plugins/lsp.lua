@@ -181,7 +181,7 @@ return {
       end
 
       local configed_servers = vim.tbl_keys(servers)
-      for _, server in pairs(manson_config.get_available_servers()) do
+      for _, server in pairs(manson_config.get_installed_servers()) do
         if not vim.tbl_contains(configed_servers, server) then
           vim.lsp.config(server, {
             capabilities = capabilities,
@@ -189,7 +189,7 @@ return {
         end
       end
 
-      vim.lsp.enable(manson_config.get_available_servers())
+      vim.lsp.enable(manson_config.get_installed_servers())
 
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
