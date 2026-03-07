@@ -54,14 +54,32 @@ end
 
 return {
   {
-    "folke/lazydev.nvim",
-    ft = "lua", -- only load on lua files
-    opts = {
-      library = {
-        -- See the configuration section for more details
-        -- Load luvit types when the `vim.uv` word is found
-        { path = "luvit-meta/library", words = { "vim%.uv" } },
+    {
+      "folke/lazydev.nvim",
+      ft = "lua", -- only load on lua files
+      opts = {
+        library = {
+          'williamboman/mason.nvim',
+          -- See the configuration section for more details
+          "lazy.nvim",
+          -- It can also be a table with trigger words / mods
+          -- Only load luvit types when the `vim.uv` word is found
+          { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          -- always load the LazyVim library
+          -- "LazyVim",
+          -- Only load the lazyvim library when the `LazyVim` global is found
+          { path = "LazyVim", words = { "LazyVim" } },
+          -- Load the wezterm types when the `wezterm` module is required
+          -- Needs `DrKJeff16/wezterm-types` to be installed
+          -- { path = "wezterm-types", mods = { "wezterm" } },
+          -- Load the xmake types when opening file named `xmake.lua`
+          -- Needs `LelouchHe/xmake-luals-addon` to be installed
+          -- { path = "xmake-luals-addon/library", files = { "xmake.lua" } },
+        },
       },
+      enabled = function(root_dir)
+        return vim.g.lazydev_enabled == nil and true or vim.g.lazydev_enabled
+      end,
     },
   },
   {
@@ -75,7 +93,7 @@ return {
       {
         'williamboman/mason-lspconfig.nvim',
       },
-      'folke/neodev.nvim',
+      -- 'folke/neodev.nvim',
       'nvim-telescope/telescope.nvim',
       -- useful status updates for lsp
       -- note: `opts = {}` is the same as calling `require('fidget').setup({})`
