@@ -85,7 +85,7 @@ return {
       vim.keymap.set('n', '<leader>fr', builtin.registers, { desc = 'Find registers' })
       -- builtin.current_buffer_tags
       vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = '[F]ind [B]uffer' })
-      -- vim.keymap.set('n', '<leader>ft', require("telescope.actions").select_tab, { desc = '[F]ind [B]uffer' })
+      -- vim.keymap.set('n', '<leader>ft', builtin.select_tab, { desc = '[F]ind [B]uffer' })
 
       vim.keymap.set('n', '<leader>ff', function()
         if not pcall(builtin.git_files) then
@@ -101,7 +101,7 @@ return {
         { desc = '[F]ind current [W]ord in Git' })
       vim.keymap.set({ 'n', 'v' }, '<leader>fC', builtin.grep_string, { desc = '[F]ind [C]urrent word' })
 
-      vim.keymap.set('n', '<leader>tf', builtin.treesitter, { desc = '[F]ind [Treesitter] Symbol' })
+      vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[F]ind [Treesitter] Symbol' })
 
       vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]ind [D]iagnostics' })
       vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = '[F]ind [H]elp' })

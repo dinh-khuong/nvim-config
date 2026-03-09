@@ -13,9 +13,9 @@ local on_attach = function(_, bufnr)
   nmap('<leader>lca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', builtin.lsp_definitions, '[G]oto [D]efinition')
-  nmap('gt', builtin.lsp_type_definitions, '[G]oto [T]ype [D]efinition')
-  nmap('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('gr', builtin.lsp_references, '[G]oto [R]eferences')
+  nmap('<leader>gt', builtin.lsp_type_definitions, '[G]oto [T]ype [D]efinition')
+  nmap('<leader>gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  nmap('<leader>gr', builtin.lsp_references, '[G]oto [R]eferences')
 
   -- nmap('', vim.lsp.buf.hover, 'Hover Documentation')
   -- nmap('K', vim.lsp.buf.hover, 'Signature Documentation')
@@ -61,14 +61,14 @@ return {
         library = {
           'williamboman/mason.nvim',
           -- See the configuration section for more details
-          "lazy.nvim",
+          -- "lazy.nvim",
           -- It can also be a table with trigger words / mods
           -- Only load luvit types when the `vim.uv` word is found
           { path = "${3rd}/luv/library", words = { "vim%.uv" } },
           -- always load the LazyVim library
           -- "LazyVim",
           -- Only load the lazyvim library when the `LazyVim` global is found
-          { path = "LazyVim", words = { "LazyVim" } },
+          -- { path = "LazyVim", words = { "LazyVim" } },
           -- Load the wezterm types when the `wezterm` module is required
           -- Needs `DrKJeff16/wezterm-types` to be installed
           -- { path = "wezterm-types", mods = { "wezterm" } },
@@ -77,9 +77,9 @@ return {
           -- { path = "xmake-luals-addon/library", files = { "xmake.lua" } },
         },
       },
-      enabled = function(root_dir)
-        return vim.g.lazydev_enabled == nil and true or vim.g.lazydev_enabled
-      end,
+      -- enabled = function(root_dir)
+      --   return vim.g.lazydev_enabled == nil and true or vim.g.lazydev_enabled
+      -- end,
     },
   },
   {
