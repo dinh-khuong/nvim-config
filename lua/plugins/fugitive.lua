@@ -15,8 +15,8 @@ return {
 
       -- merge thing
       nnmap("<leader>gm", "<cmd>Gvdiffsplit!<cr>", "[M]erge current file");
-      nnmap("gl", "<cmd>diffget //3<cr>", "[G]et [N]ew")
-      nnmap("gh", "<cmd>diffget //2<cr>", "[G]et [O]ld")
+      nnmap("gl", "<cmd>diffget //3<cr>", "[G]et new")
+      nnmap("gh", "<cmd>diffget //2<cr>", "[G]et old")
 
 
       vim.api.nvim_create_autocmd("FileType", {

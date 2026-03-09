@@ -43,8 +43,9 @@ vim.g.netrw_preview = 3
 
 vim.opt.modeline = true
 vim.opt.modelineexpr = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
 vim.opt.listchars:append("tab:>.")
 vim.opt.listchars:append("extends:-")
 vim.opt.listchars:append("nbsp:.")
