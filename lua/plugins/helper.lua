@@ -6,6 +6,7 @@ return {
   { 'tpope/vim-sleuth', lazy = false },
   {
     'stevearc/oil.nvim',
+    lazy = false,
     keys = {
       { '<leader>pv', '<cmd>Oil<cr>', mode = 'n' },
     },
@@ -13,15 +14,19 @@ return {
       ['g.'] = { 'actions.toggle_hidden', mode = 'n' },
     },
     -- Optional dependencies
-    dependencies = { { 'nvim-tree/nvim-web-devicons', opts = {} } },
+    dependencies = {
+      { 'nvim-tree/nvim-web-devicons', opts = {} },
+      'rmagatti/auto-session'
+    },
     config = function()
-      require('oil').setup {
-        default_file_explorer = false,
+      local oil = require('oil')
+      oil.setup {
+        default_file_explorer = true,
         columns = {
           'icon',
           'permissions',
           'size',
-          -- "mtime",
+          "mtime",
         },
         buf_options = {
           buflisted = true,
@@ -29,18 +34,14 @@ return {
         },
         view_options = {
           show_hidden = true,
-          is_hidden_file = function(name, bufnr)
-            return false
-          end,
         },
       }
 
       vim.api.nvim_create_autocmd('FileType', {
         pattern = { 'oil' },
         callback = function()
-          vim.api.nvim_buf_create_user_command(0, 'Open', function()
-            vim.fn.execute { vim.g.netrw_browsex_viewer, string.sub(vim.fn.expand '%:p', 6) }
-          end, {})
+          vim.keymap.set('n', '<C-j>', oil.toggle_hidden)
+          -- vim.api.nvim_buf_create_user_command(0, "T", oil.toggle_hidden, {})
         end,
       })
     end,
@@ -72,11 +73,11 @@ return {
     end,
   },
   {
-    -- 'dinh-khuong/csscolor.nvim',
-    -- 'dinh-khuong/csscolor.nvim',
-    -- branch = "nvim-plugin",
     dir = "/mnt/new/Documents/code/lua/csscolor.nvim/",
     lazy = false,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter'
+    }
   },
   {
     'lambdalisue/suda.vim',
