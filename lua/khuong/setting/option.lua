@@ -11,7 +11,7 @@ vim.opt.inccommand = "split"
 vim.o.breakindent = true
 
 vim.o.undofile = true
-vim.o.conceallevel = 2
+vim.o.conceallevel = 0
 
 vim.wo.signcolumn = 'yes'
 

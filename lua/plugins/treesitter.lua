@@ -125,6 +125,9 @@ return {
                 ['if'] = '@function.inner',
                 ['ac'] = '@class.outer',
                 ['ic'] = '@class.inner',
+
+                -- markdown .ipynb
+                ['ii'] = '@code.inner',
               },
             },
             move = {

@@ -81,11 +81,118 @@ return {
     },
   },
   {
+    'GCBallesteros/jupytext.nvim',
+    init = function()
+      vim.g.jupytext_enable = 1
+      vim.g.jupytext_command = 'jupytext'
+      vim.g.jupytext_fmt = 'py:percent'
+    end,
+    config = function ()
+      vim.api.nvim_create_autocmd({"FileType"}, {
+        pattern = "oil",
+        callback = function (args)
+          vim.api.nvim_buf_create_user_command(0, "JupyterFile", function ()
+            file_name = vim.fn.input("File: ", "", "file") .. ".ipynb"
+            file = io.open(file_name, 'w')
+            file:write([[{
+ "cells": [],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "name": "python",
+   "version": "3.10.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}]])
+            file:close()
+            vim.cmd("e %")
+          end, {})
+        end
+      })
+
+      require("jupytext").setup {
+        custom_language_formatting = {
+          python = {
+            extension = "md",
+            style = "markdown",
+            force_ft = "markdown",
+          },
+      }
+      }
+    end,
+  },
+  {
+    'jmbuhr/otter.nvim',
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter',
+    },
+    opts = {
+      lsp = {
+        -- `:h events` that cause the diagnostics to update. Set to:
+        -- { "BufWritePost", "InsertLeave", "TextChanged" } for less performant
+        -- but more instant diagnostic updates
+        diagnostic_update_events = { "BufWritePost" },
+        -- function to find the root dir where the otter-ls is started
+        root_dir = function(_, bufnr)
+          return vim.fs.root(bufnr or 0, {
+            ".git",
+            "_quarto.yml",
+            "package.json",
+            "main.py",
+          }) or vim.fn.getcwd(0)
+        end,
+      },
+      -- options related to the otter buffers
+      buffers = {
+        -- if set to true, the filetype of the otterbuffers will be set.
+        -- otherwise only the autocommand of lspconfig that attaches
+        -- the language server will be executed without setting the filetype
+        --- this setting is deprecated and will default to true in the future
+        set_filetype = true,
+        -- write <path>.otter.<embedded language extension> files
+        -- to disk on save of main buffer.
+        -- usefule for some linters that require actual files.
+        -- otter files are deleted on quit or main buffer close
+        write_to_disk = false,
+        -- a table of preambles for each language. The key is the language and the value is a table of strings that will be written to the otter buffer starting on the first line.
+        preambles = {},
+        -- a table of postambles for each language. The key is the language and the value is a table of strings that will be written to the end of the otter buffer.
+        postambles = {},
+        -- A table of patterns to ignore for each language. The key is the language and the value is a lua match pattern to ignore.
+        -- lua patterns: https://www.lua.org/pil/20.2.html
+        ignore_pattern = {
+          -- ipython cell magic (lines starting with %) and shell commands (lines starting with !)
+          python = "^(%s*[%%!].*)",
+        },
+      },
+      -- remove whitespace from the beginning of the code chunks when writing to the otter buffers
+      -- and calculate it back in when handling lsp requests
+      handle_leading_whitespace = true,
+      -- mapping of filetypes to extensions for those not already included in otter.tools.extensions
+      -- e.g. ["bash"] = "sh"
+      extensions = {
+      },
+      -- add event listeners for LSP events for debugging
+      debug = false,
+      verbose = {         -- set to false to disable all verbose messages
+        no_code_found = false -- warn if otter.activate is called, but no injected code was found
+      },
+    },
+  },
+  {
     'benlubas/molten-nvim',
     lazy = false,
     build = ':UpdateRemotePlugins',
     dependencies = {
-      { '3rd/image.nvim' }
+      { '3rd/image.nvim' },
+      { 'GCBallesteros/jupytext.nvim' },
+      { 'jmbuhr/otter.nvim' },
     },
     cmd = { "MoltenInit", "MoltenLoad" },
     init = function()
@@ -96,6 +203,7 @@ return {
       -- vim.g.molten_split_size = 60
       vim.g.molten_wrap_output = false
       vim.g.molten_cover_empty_lines = false
+      vim.g.molten_auto_open_output = true
       vim.g.molten_virt_lines_off_by_1 = true
     end,
     config = function()
@@ -110,90 +218,41 @@ return {
           { silent = true, desc = "show/enter output", buffer = true })
         vim.keymap.set("n", "<leader>oh", "<cmd>MoltenHideOutput<CR>",
           { silent = true, desc = "show/enter output", buffer = true })
+        -- vim.keymap.set("n", "<leader>vip")
       end
 
-      local function auto_loaded(bufn)
-        local buf_name = vim.api.nvim_buf_get_name(bufn)
-        local buf_key = buf_keyfile(buf_name)
-
-        for _, value in pairs(vim.fn.systemlist("ls " .. vim.fn.stdpath('data') .. "/molten")) do
-          if buf_key == value and not vim.list_contains(files, value) then
-            vim.cmd("silent MoltenLoad")
-            return true
-          end
-        end
-        return false
-      end
-
-      local function save_buffer(ev)
+      local function setup_molten(ev)
         -- local bufn = ev.buf
-        -- local buf = vim.api.nvim_buf_get_name(bufn)
-        -- local kernel_id = ev.data.kernel_id
-        --
-        -- local new_buffer = {
-        --   key = buf_keyfile(buf),
-        --   name = buf,
-        -- }
-        --
-        -- table.insert(files, new_buffer['key'])
-        -- if molten_kernels[kernel_id] == nil then
-        --   molten_kernels[kernel_id] = { new_buffer }
-        -- else
-        --   table.insert(molten_kernels[kernel_id], new_buffer)
-        -- end
-
         set_keymaps()
-      end
-
-      vim.api.nvim_create_user_command("MInit", function()
-        local bufn = vim.api.nvim_get_current_buf();
-        if not auto_loaded(bufn) then
-          vim.cmd("silent MoltenInit")
+        require("otter").activate()
+        require('molten.status').initialized() -- "Molten" or "" based on initialization information
+        require('molten.status').kernels()     -- "kernel1 kernel2" list of kernels attached to buffer or ""
+        require('molten.status').all_kernels() -- same as kernels, but will show all kernels
+        if string.match(vim.api.nvim_buf_get_name(0), '*.ipynb') then
+          vim.cmd('MoltenImportOutput')
         end
 
-        set_keymaps()
-      end, {})
+        vim.api.nvim_create_autocmd('BufWritePost', {
+          pattern = '*.ipynb',
+          callback = function ()
+            vim.cmd("MoltenExportOutput!")
+          end
+        })
+      end
 
-      -- vim.api.nvim_create_autocmd("BufReadPost", {
-      --   callback = function(ev)
-      --     local bufn = ev.buf
-      --     auto_loaded(bufn)
+      -- vim.api.nvim_create_autocmd("FileType", {
+      --   pattern = {"markdown"},
+      --   callback = function (args)
+      --     if string.match(args.file, '*.ipynb$') then
+      --       setup_molten()
+      --     end
       --   end
       -- })
 
       vim.api.nvim_create_autocmd("User", {
         pattern = { "MoltenInitPost" },
-        callback = save_buffer,
+        callback = setup_molten
       })
-
-      -- vim.api.nvim_create_autocmd("User", {
-      --   pattern = { "MoltenDeinitPre" },
-      --   callback = function(ev)
-      --     local file = io.open('kernel_id.txt', 'a')
-      --     file:write(vim.inspect(ev))
-      --     file:close();
-      --
-      --     local current_kernel_id = ev.data.kernel_id
-      --
-      --     for _, value in ipairs(molten_kernels[current_kernel_id]) do
-      --       vim.cmd("e " .. value.name)
-      --       local remove_index = index_of(files, value.key)
-      --       if remove_index then
-      --         table.remove(files, remove_index)
-      --       end
-      --       vim.cmd("silent MoltenSave")
-      --     end
-      --     molten_kernels[current_kernel_id] = {}
-      --   end
-      -- })
-
-      -- vim.api.nvim_create_autocmd("ExitPre", {
-      --   callback = function (_)
-      --     for _, _ in pairs(molten_kernels) do
-      --       vim.cmd("silent MoltenDeinit")
-      --     end
-      --   end
-      -- })
     end
   },
   -- {
