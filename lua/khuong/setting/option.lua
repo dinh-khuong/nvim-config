@@ -11,7 +11,14 @@ vim.opt.inccommand = "split"
 vim.o.breakindent = true
 
 vim.o.undofile = true
-vim.o.conceallevel = 0
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function ()
+    vim.o.conceallevel = 0
+  end
+})
+
+vim.o.conceallevel = 2
 
 vim.wo.signcolumn = 'yes'
 
@@ -22,7 +29,7 @@ vim.opt.termguicolors = true
 vim.o.rnu = true
 vim.opt.number = true
 
-vim.o.scrolloff = 12
+vim.o.scrolloff = 8
 vim.o.laststatus = 3
 vim.o.lz = true
 

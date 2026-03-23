@@ -201,7 +201,8 @@ return {
       vim.g.molten_virt_text_max_lines = 50
       vim.g.molten_open_cmd = vim.g.netrw_browsex_viewer
       -- vim.g.molten_split_size = 60
-      vim.g.molten_wrap_output = false
+      -- vim.g.molten_virt_text_output = true
+      vim.g.molten_wrap_output = true
       vim.g.molten_cover_empty_lines = false
       vim.g.molten_auto_open_output = true
       vim.g.molten_virt_lines_off_by_1 = true
@@ -210,6 +211,13 @@ return {
       local function set_keymaps()
         vim.keymap.set('n', ']f', '<cmd>MoltenNext<cr>zz', { buffer = true })
         vim.keymap.set('n', '[f', '<cmd>MoltenPrev<cr>zz', { buffer = true })
+
+        vim.keymap.set("n", "<leader>jn", [[o
+```python
+```<esc>v<up>=o]], { silent = true, desc = "New Cell", buffer = true })
+
+        vim.keymap.set("n", "<leader>jm", "o### <esc>==i", { silent = true, desc = "New Markdown Cell", buffer = true })
+
         vim.keymap.set("n", "<leader><leader>", ":MoltenReevaluateCell<CR>",
           { silent = true, desc = "re-evaluate cell", buffer = true })
         vim.keymap.set("v", "<leader><leader>", ":<C-u>MoltenEvaluateVisual<CR>gv<esc>",
@@ -218,7 +226,6 @@ return {
           { silent = true, desc = "show/enter output", buffer = true })
         vim.keymap.set("n", "<leader>oh", "<cmd>MoltenHideOutput<CR>",
           { silent = true, desc = "show/enter output", buffer = true })
-        -- vim.keymap.set("n", "<leader>vip")
       end
 
       local function setup_molten(ev)
@@ -228,26 +235,28 @@ return {
         require('molten.status').initialized() -- "Molten" or "" based on initialization information
         require('molten.status').kernels()     -- "kernel1 kernel2" list of kernels attached to buffer or ""
         require('molten.status').all_kernels() -- same as kernels, but will show all kernels
-        if string.match(vim.api.nvim_buf_get_name(0), '*.ipynb') then
+        vim.keymap.set('n', 'K', require("otter").ask_hover, { desc = "Otter Hover" })
+        if string.find(vim.api.nvim_buf_get_name(0), '%.ipynb$') then
           vim.cmd('MoltenImportOutput')
         end
 
+        -- vim.api.nvim_create_autocmd("CursorHold", {
+        --   buffer = 0,
+        --   callback = function()
+        --     -- This checks if Molten is active and tries to show output
+        --     vim.cmd("silent! noautocmd MoltenShowOutput")
+        --   end,
+        -- })
+
         vim.api.nvim_create_autocmd('BufWritePost', {
-          pattern = '*.ipynb',
+          pattern = "*.ipynb",
           callback = function ()
-            vim.cmd("MoltenExportOutput!")
-          end
+            if require('molten.status').kernels() ~= "" then
+              vim.cmd("MoltenExportOutput!")
+            end
+          end,
         })
       end
-
-      -- vim.api.nvim_create_autocmd("FileType", {
-      --   pattern = {"markdown"},
-      --   callback = function (args)
-      --     if string.match(args.file, '*.ipynb$') then
-      --       setup_molten()
-      --     end
-      --   end
-      -- })
 
       vim.api.nvim_create_autocmd("User", {
         pattern = { "MoltenInitPost" },
@@ -255,112 +264,4 @@ return {
       })
     end
   },
-  -- {
-  --   'dinh-khuong/vim-jukit',
-  --   lazy = true,
-  --   cmd = { "JukitOut", "JukitOutHist" },
-  --   -- commit = "73214c9",
-  --   -- version = true,
-  --   keys = { "<leader>np" }, --, "<leader>os", "<leader>hs" },
-  --   init = function()
-  --     vim.g.jukit_mappings = 2
-  --     vim.g.jukit_convert_open_detach = 1
-  --     vim.g.jukit_terminal = 'tmux'
-  --
-  --     vim.g.jukit_layout = {
-  --       split = "vertical",
-  --       p1 = 0.7,
-  --       val = {
-  --         'file_content',
-  --         {
-  --           split = "horizontal",
-  --           p1 = 0.3,
-  --           val = { 'output', 'output_history' }
-  --         }
-  --       }
-  --     }
-  --
-  --     vim.api.nvim_create_autocmd("FileType", {
-  --       pattern = vim.tbl_keys(kernels),
-  --       callback = function(ev)
-  --         local filetype = ev.match
-  --         if kernels[filetype] then
-  --           vim.g.jukit_shell_cmd = kernels[filetype]
-  --         end
-  --       end
-  --     })
-  --   end,
-  --   config = function()
-  --     vim.g.jukit_mappings = 0
-  --     local function set_jukit_keymap()
-  --       vim.keymap.set('n', '<leader>ts', '<cmd>call jukit#splits#term()<cr>', { buffer = true })
-  --
-  --       vim.keymap.set("n", '<leader>os', '<cmd>call jukit#splits#output()<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>hs', '<cmd>call jukit#splits#history()<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>od', '<cmd>call jukit#splits#close_output_split()<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>hd', '<cmd>call jukit#splits#close_history()<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>ohs', '<cmd>call jukit#splits#output_and_history()<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>ah', '<cmd>call jukit#splits#toggle_auto_hist()<cr>', { buffer = true })
-  --       -- vim.keymap.set('n', '<leader>ohd', '<cmd>call jukit#splits#close_output_and_history(1)<cr>', { buffer = true })
-  --
-  --       vim.keymap.set('n', '<leader>k', '<cmd>call jukit#splits#out_hist_scroll(0)<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>j', '<cmd>call jukit#splits#out_hist_scroll(1)<cr>', { buffer = true })
-  --
-  --       vim.keymap.set('n', ']f', '<cmd>call jukit#cells#jump_to_next_cell()<cr>zz', { buffer = true })
-  --       vim.keymap.set('n', '[f', '<cmd>call jukit#cells#jump_to_previous_cell()<cr>zz', { buffer = true })
-  --       vim.keymap.set('n', '<leader>ck', '<cmd>call jukit#cells#move_up()<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>cj', '<cmd>call jukit#cells#move_down()<cr>', { buffer = true })
-  --
-  --       vim.keymap.set('n', '<leader><leader>', '<cmd>call jukit#send#section(0)<cr>', { buffer = true })
-  --       -- vim.keymap.set('n', '<cr>', '<cmd>call jukit#send#line()<cr>', { buffer=true })
-  --       -- vim.keymap.set('v', '<cr>', '<cmd>call jukit#send#selection()<cr>', { buffer=true })
-  --       -- local bufn = vim.api.nvim_get_current_buf()
-  --       -- vim.api.nvim_buf_create_user_command(bufn, "JukitCurrent", '<cmd>call jukit#send#until_current_section()<cr>')
-  --       -- vim.api.nvim_buf_create_user_command(bufn, "JukitAll", '<cmd>call jukit#send#all()<cr>')
-  --
-  --       vim.keymap.set('n', '<leader>cc', '<cmd>call jukit#send#until_current_section()<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>all', '<cmd>call jukit#send#all()<cr>', { buffer = true })
-  --
-  --       -- vim.keymap.set('n', '<leader>sl', '<cmd>call jukit#layouts#set_layout()<cr>', { buffer = true })
-  --
-  --       vim.keymap.set('n', '<leader>so', '<cmd>call jukit#splits#show_last_cell_output(1)<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>cs', '<cmd>call jukit#cells#split()<cr>', { buffer = true })
-  --
-  --       vim.keymap.set('n', '<leader>co', '<cmd>call jukit#cells#create_below(0)<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>cO', '<cmd>call jukit#cells#create_above(0)<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>ct', '<cmd>call jukit#cells#create_below(1)<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>cT', '<cmd>call jukit#cells#create_above(1)<cr>', { buffer = true })
-  --
-  --       -- vim.keymap.set('n', '<leader>cM', '<cmd>call jukit#cells#merge_above()<cr>', { buffer = true })
-  --       -- vim.keymap.set('n', '<leader>cm', '<cmd>call jukit#cells#merge_below()<cr>', { buffer = true })
-  --
-  --       -- vim.keymap.set('n', '<leader>ddo', '<cmd>call jukit#cells#delete_outputs(0)<cr>', { buffer = true })
-  --       -- vim.keymap.set('n', '<leader>dda', '<cmd>call jukit#cells#delete_outputs(1)<cr>', { buffer = true })
-  --       -- vim.keymap.set('n', '<leader>cd', '<cmd>call jukit#cells#delete()<cr>', { buffer = true })
-  --
-  --       -- view
-  --       vim.keymap.set('n', '<leader>pos', '<cmd>call jukit#ueberzug#set_default_pos()<cr>', { buffer = true })
-  --
-  --       -- convert
-  --       vim.keymap.set('n', '<leader>np', '<cmd>call jukit#convert#notebook_convert(g:jukit_notebook_viewer)<cr>',
-  --         { buffer = true })
-  --       vim.keymap.set('n', '<leader>ht', '<cmd>call jukit#convert#save_nb_to_file(0,1,\'html\')<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>pd', '<cmd>call jukit#convert#save_nb_to_file(0,1,\'pdf\')<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>rht', '<cmd>call jukit#convert#save_nb_to_file(1,1,\'html\')<cr>', { buffer = true })
-  --       vim.keymap.set('n', '<leader>rpd', '<cmd>call jukit#convert#save_nb_to_file(1,1,\'pdf\')<cr>', { buffer = true })
-  --     end
-  --
-  --     vim.g.jukit_notebook_viewer = 'jupyter-notebook'
-  --     vim.api.nvim_create_autocmd("FileType", {
-  --       pattern = vim.tbl_keys(kernels),
-  --       callback = function(ev)
-  --         local filetype = ev.match
-  --         if kernels[filetype] then
-  --           set_jukit_keymap()
-  --         end
-  --       end
-  --     })
-  --     set_jukit_keymap()
-  --   end
-  -- }
 }
