@@ -1,26 +1,3 @@
-local kernels = {
-  python = "ipython3",
-  r = "R",
-  lua = "luajit",
-  julia = "julia",
-  -- rust = "rust-script",
-}
-
-local function index_of(t, value)
-  for i, v in ipairs(t) do
-    if v == value then
-      return i
-    end
-  end
-  return nil
-end
-
-local molten_kernels = {}
-local files = {}
-
-local function buf_keyfile(buf_name)
-  return string.gsub(buf_name, "/", "%%") .. ".json"
-end
 return {
   {
     "3rd/image.nvim",
@@ -87,14 +64,23 @@ return {
       vim.g.jupytext_command = 'jupytext'
       vim.g.jupytext_fmt = 'py:percent'
     end,
-    config = function ()
-      vim.api.nvim_create_autocmd({"FileType"}, {
+    config = function()
+      vim.api.nvim_create_autocmd({ "FileType" }, {
         pattern = "oil",
-        callback = function (args)
-          vim.api.nvim_buf_create_user_command(0, "JupyterFile", function ()
-            file_name = vim.fn.input("File: ", "", "file") .. ".ipynb"
-            file = io.open(file_name, 'w')
-            file:write([[{
+        callback = function(args)
+          vim.api.nvim_buf_create_user_command(0, "JupyterFile", function()
+            local py_version_cmd = vim.system({ "python", "--version" }):wait()
+            local py_version = py_version_cmd.stdout
+            if py_version then
+              py_version = string.sub(py_version, 7, #py_version-1)
+            else
+              py_version = "3.10.0"
+            end
+            file_path_default = string.sub(vim.fn.expand('%:p'), 7) .. "new file.ipynb"
+            file_path = vim.fn.input("File: ", file_path_default, "file")
+            file = io.open(file_path, 'w')
+            file:write(string.format([[
+{
  "cells": [],
  "metadata": {
   "kernelspec": {
@@ -104,12 +90,14 @@ return {
   },
   "language_info": {
    "name": "python",
-   "version": "3.10.0"
+   "version": %q 
   }
  },
  "nbformat": 4,
  "nbformat_minor": 5
-}]])
+}]], py_version
+            )
+            )
             file:close()
             vim.cmd("e %")
           end, {})
@@ -123,7 +111,7 @@ return {
             style = "markdown",
             force_ft = "markdown",
           },
-      }
+        }
       }
     end,
   },
@@ -180,7 +168,7 @@ return {
       },
       -- add event listeners for LSP events for debugging
       debug = false,
-      verbose = {         -- set to false to disable all verbose messages
+      verbose = {             -- set to false to disable all verbose messages
         no_code_found = false -- warn if otter.activate is called, but no injected code was found
       },
     },
@@ -204,7 +192,7 @@ return {
       -- vim.g.molten_virt_text_output = true
       vim.g.molten_wrap_output = true
       vim.g.molten_cover_empty_lines = false
-      vim.g.molten_auto_open_output = true
+      vim.g.molten_auto_open_output = false
       vim.g.molten_virt_lines_off_by_1 = true
     end,
     config = function()
@@ -232,25 +220,17 @@ return {
         -- local bufn = ev.buf
         set_keymaps()
         require("otter").activate()
-        require('molten.status').initialized() -- "Molten" or "" based on initialization information
-        require('molten.status').kernels()     -- "kernel1 kernel2" list of kernels attached to buffer or ""
-        require('molten.status').all_kernels() -- same as kernels, but will show all kernels
+        -- require('molten.status').initialized() -- "Molten" or "" based on initialization information
+        -- require('molten.status').kernels()     -- "kernel1 kernel2" list of kernels attached to buffer or ""
+        -- require('molten.status').all_kernels() -- same as kernels, but will show all kernels
         vim.keymap.set('n', 'K', require("otter").ask_hover, { desc = "Otter Hover" })
         if string.find(vim.api.nvim_buf_get_name(0), '%.ipynb$') then
           vim.cmd('MoltenImportOutput')
         end
 
-        -- vim.api.nvim_create_autocmd("CursorHold", {
-        --   buffer = 0,
-        --   callback = function()
-        --     -- This checks if Molten is active and tries to show output
-        --     vim.cmd("silent! noautocmd MoltenShowOutput")
-        --   end,
-        -- })
-
         vim.api.nvim_create_autocmd('BufWritePost', {
           pattern = "*.ipynb",
-          callback = function ()
+          callback = function()
             if require('molten.status').kernels() ~= "" then
               vim.cmd("MoltenExportOutput!")
             end
