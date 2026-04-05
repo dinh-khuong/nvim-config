@@ -7,6 +7,7 @@ return {
   {
     'stevearc/oil.nvim',
     lazy = false,
+    priority = 120,
     keys = {
       { '<leader>pv', '<cmd>Oil<cr>', mode = 'n' },
     },
@@ -16,7 +17,6 @@ return {
     -- Optional dependencies
     dependencies = {
       { 'nvim-tree/nvim-web-devicons', opts = {} },
-      'rmagatti/auto-session'
     },
     config = function()
       local oil = require('oil')
@@ -28,6 +28,7 @@ return {
           'size',
           "mtime",
         },
+        watch_for_changes = true,
         buf_options = {
           buflisted = true,
           bufhidden = 'hide',
@@ -49,9 +50,9 @@ return {
   {
     'rmagatti/auto-session',
     lazy = false,
-    -- priority = 100,
     dependencies = {
       'nvim-telescope/telescope.nvim',
+      'stevearc/oil.nvim',
     },
     init = function()
       vim.o.sessionoptions = 'buffers,curdir,tabpages,localoptions,folds'
@@ -65,7 +66,7 @@ return {
         auto_create = true,
         close_unsupported_windows = true,
         auto_restore_last_session = false,
-        use_git_branch = true,
+        use_git_branch = false,
         continue_restore_on_error = true,
         auto_restore = true,
         log_level = 'error',

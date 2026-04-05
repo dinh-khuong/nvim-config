@@ -99,7 +99,7 @@ return {
             )
             )
             file:close()
-            vim.cmd("e %")
+            -- vim.cmd("e %")
           end, {})
         end
       })
@@ -217,13 +217,13 @@ return {
       end
 
       local function setup_molten(ev)
-        -- local bufn = ev.buf
+        local bufn = ev.buf
         set_keymaps()
         require("otter").activate()
         -- require('molten.status').initialized() -- "Molten" or "" based on initialization information
         -- require('molten.status').kernels()     -- "kernel1 kernel2" list of kernels attached to buffer or ""
         -- require('molten.status').all_kernels() -- same as kernels, but will show all kernels
-        vim.keymap.set('n', 'K', require("otter").ask_hover, { desc = "Otter Hover" })
+        -- vim.keymap.set('n', 'K', require("otter").ask_hover, { desc = "Otter Hover" })
         if string.find(vim.api.nvim_buf_get_name(0), '%.ipynb$') then
           vim.cmd('MoltenImportOutput')
         end
