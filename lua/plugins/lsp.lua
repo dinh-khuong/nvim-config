@@ -116,8 +116,6 @@ return {
       require('mason').setup()
       -- require('mason-lspconfig').setup()
 
-      -- local ruff_lsp  = require('lspconfig.configs').ruff
-      -- ruff_lsp.setup()
       local servers = {
         ruff = {
           ruff = {
@@ -197,6 +195,10 @@ return {
           settings = config,
         })
       end
+
+      vim.lsp.config("glint", {
+        cmd = { "glint-language-server" },
+      })
 
       local configed_servers = vim.tbl_keys(servers)
       for _, server in pairs(manson_config.get_installed_servers()) do

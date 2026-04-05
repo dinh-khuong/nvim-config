@@ -18,7 +18,6 @@ return {
       nnmap("gl", "<cmd>diffget //3<cr>", "[G]et new")
       nnmap("gh", "<cmd>diffget //2<cr>", "[G]et old")
 
-
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "fugitive",
         callback = function ()

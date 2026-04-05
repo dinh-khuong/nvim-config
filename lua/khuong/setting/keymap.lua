@@ -59,7 +59,7 @@ local function dyn_split()
   end
 end
 
-vim.keymap.set('n', '<C-w>d', dyn_split, { desc = "Split window dynamically" })
+vim.keymap.set('n', '<C-w>;', dyn_split, { desc = "Split window dynamically" })
 
 vim.keymap.set('n', '<C-w><C-d>', dyn_split, {
   desc = "Split window dynamically"
