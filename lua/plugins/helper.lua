@@ -7,7 +7,6 @@ return {
   {
     'stevearc/oil.nvim',
     lazy = false,
-    priority = 120,
     keys = {
       { '<leader>pv', '<cmd>Oil<cr>', mode = 'n' },
     },
@@ -21,7 +20,7 @@ return {
     config = function()
       local oil = require('oil')
       oil.setup {
-        default_file_explorer = true,
+        default_file_explorer = false,
         columns = {
           'icon',
           'permissions',
@@ -37,25 +36,18 @@ return {
           show_hidden = true,
         },
       }
-
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'oil' },
-        callback = function()
-          vim.keymap.set('n', '<C-j>', oil.toggle_hidden)
-          -- vim.api.nvim_buf_create_user_command(0, "T", oil.toggle_hidden, {})
-        end,
-      })
     end,
   },
   {
     'rmagatti/auto-session',
     lazy = false,
     dependencies = {
-      'nvim-telescope/telescope.nvim',
       'stevearc/oil.nvim',
+      'nvim-telescope/telescope.nvim',
     },
+    -- priority =  80,
     init = function()
-      vim.o.sessionoptions = 'buffers,curdir,tabpages,localoptions,folds'
+      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize'
     end,
     config = function()
       require('auto-session').setup {
@@ -67,9 +59,11 @@ return {
         close_unsupported_windows = true,
         auto_restore_last_session = false,
         use_git_branch = false,
-        continue_restore_on_error = true,
+        continue_restore_on_error = false,
         auto_restore = true,
         log_level = 'error',
+
+        bypass_session_save_file_types = { "oil" },
       }
     end,
   },
