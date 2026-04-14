@@ -159,6 +159,48 @@ return {
     end
   },
   {
+    "quarto-dev/quarto-nvim",
+    ft = "quarto",
+    config = function ()
+      local quarto = require('quarto')
+      quarto.setup{
+        debug = false,
+        closePreviewOnExit = true,
+        lspFeatures = {
+          enabled = true,
+          chunks = "curly",
+          languages = { "r", "python", "julia", "bash", "html" },
+          diagnostics = {
+            enabled = true,
+            triggers = { "BufWritePost" },
+          },
+          completion = {
+            enabled = true,
+          },
+        },
+        codeRunner = {
+          enabled = true,
+          default_method = "molten", -- "molten", "slime", "iron" or <function>
+          ft_runners = { python = "molten" }, -- filetype to runner, ie. `{ python = "molten" }`.
+          -- Takes precedence over `default_method`
+          never_run = { 'yaml' }, -- filetypes which are never sent to a code runner
+        },
+      }
+      vim.api.nvim_create_autocmd({"FileType"}, {
+        pattern = {"quarto"},
+        callback = function (_)
+          vim.o.conceallevel = 0
+          vim.o.commentstring = "# %s"
+          vim.keymap.set('n', '<leader>qp', quarto.quartoPreview, { silent = true, noremap = true })
+        end
+      })
+    end,
+    dependencies = {
+      "jmbuhr/otter.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
+  },
+  {
     "theRealCarneiro/hyprland-vim-syntax",
     dependencies = { "nvim-treesitter/nvim-treesitter" },
     ft = "hypr",

@@ -6,6 +6,7 @@ return {
   { 'tpope/vim-sleuth', lazy = false },
   {
     'stevearc/oil.nvim',
+    priority = 80,
     lazy = false,
     keys = {
       { '<leader>pv', '<cmd>Oil<cr>', mode = 'n' },
@@ -42,10 +43,10 @@ return {
     'rmagatti/auto-session',
     lazy = false,
     dependencies = {
-      'stevearc/oil.nvim',
+      -- 'stevearc/oil.nvim',
       'nvim-telescope/telescope.nvim',
     },
-    -- priority =  80,
+    priority =  120,
     init = function()
       vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize'
     end,

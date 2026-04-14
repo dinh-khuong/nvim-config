@@ -159,6 +159,16 @@ return {
             },
           },
         },
+        pyright = {
+          python = {
+            analysis = {
+              diagnosticSeverityOverrides = {
+                reportIncompatibleVariableOverride = "none",
+                reportUnusedExpression = "none",
+              },
+            },
+          },
+        },
         lua_ls = {
           lua_ls = {
             workspace = { checkThirdParty = false },
