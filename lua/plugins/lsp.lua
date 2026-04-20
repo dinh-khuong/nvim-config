@@ -179,24 +179,8 @@ return {
 
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
       local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
-      -- vim.lsp.config("dartls", {
-      --   cmd = { "dart", "language-server", "--protocol=lsp" },
-      -- })
-      -- vim.lsp.enable("dartls")
-      --
-      -- vim.api.nvim_create_autocmd({"FileType"}, {
-      --   pattern = {"dart"},
-      --   callback = function (e)
-      --     vim.api.nvim_buf_create_user_command(e.buf, "Format", function ()
-      --       -- local jobid = vim.fn.jobstart({"dart", "format", vim.fn.expand("%")})
-      --       vim.cmd("silent !dart format %")
-      --       vim.cmd("edit")
-      --       end
-      --       , {})
-      --   end
-      -- })
 
       local manson_config = require("mason-lspconfig")
       for server, config in pairs(servers) do
@@ -206,9 +190,16 @@ return {
         })
       end
 
+      vim.lsp.config("django_template_lsp", {
+        -- Ensure the path points to your 3.9-compatible installation
+        cmd = { "djlsp" },
+        filetypes = { "htmldjango", "djangohtml" },
+      })
+
       vim.lsp.config("glint", {
         cmd = { "glint-language-server" },
       })
+      vim.lsp.enable({"glint", "djlsp"})
 
       local configed_servers = vim.tbl_keys(servers)
       for _, server in pairs(manson_config.get_installed_servers()) do

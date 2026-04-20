@@ -46,20 +46,23 @@ return {
     end,
     config = function()
       -- Command to create new notebooks from Oil or standard buffers
-      vim.api.nvim_create_user_command("JupyterFile", function()
-        local py_version = "3.10.0"
-        local ok, py_version_cmd = pcall(function() return vim.system({ "python", "--version" }):wait() end)
-        if ok and py_version_cmd.stdout then
-          py_version = string.sub(py_version_cmd.stdout, 8, -2) -- Strips "Python " and newline
-        end
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "oil",
+        callback = function (args)
+          vim.api.nvim_create_user_command("JupyterFile", function()
+            local py_version = "3.10.0"
+            local ok, py_version_cmd = pcall(function() return vim.system({ "python", "--version" }):wait() end)
+            if ok and py_version_cmd.stdout then
+              py_version = string.sub(py_version_cmd.stdout, 8, -2) -- Strips "Python " and newline
+            end
 
-        local file_path_default = vim.fn.expand('%:p:h') .. "/new_file.ipynb"
-        local file_path = vim.fn.input("New Notebook Path: ", file_path_default, "file")
+            local file_path_default = string.sub(vim.fn.expand('%:p:h'), 5) .. "/new_file.ipynb"
+            local file_path = vim.fn.input("New Notebook Path: ", file_path_default, "file")
 
-        if file_path ~= "" then
-          local file = io.open(file_path, 'w')
-          if file then
-            local json = [[
+            if file_path ~= "" then
+              local file = io.open(file_path, 'w')
+              if file then
+                local json = [[
 {
  "cells": [],
  "metadata": {
@@ -69,25 +72,29 @@ return {
  "nbformat": 4,
  "nbformat_minor": 5
 }]]
-            file:write(string.format(json, py_version))
-            file:close()
-            print("\nCreated: " .. file_path)
-          end
+                file:write(string.format(json, py_version))
+                file:close()
+                print("\nCreated: " .. file_path)
+              end
+            end
+          end, {})
         end
-      end, {})
+      })
 
       require("jupytext").setup({
         custom_language_formatting = {
           -- python = { extension = "md", style = "markdown", force_ft = "markdown" },
           python = { extension = "qmd", style = "quarto", force_ft = "quarto" },
+          callback = function ()
+            require("otter").activate()
+          end
         }
       })
 
       vim.api.nvim_create_autocmd({"FileType"}, {
         pattern = {"quarto"},
-        callback = function (args)
-          vim.keymap.set("n", "<leader>jn", [[o```{python}
-```<esc>O]], { buffer = 0 })
+        callback = function (_)
+          vim.keymap.set("n", "<leader>jn", "o```{python}\n```<esc>O", { buffer = 0 })
         end
       })
     end,
@@ -134,7 +141,6 @@ return {
         pattern = "MoltenInitPost",
         callback = function()
           set_molten_keys()
-          require("otter").activate()
           if string.find(vim.api.nvim_buf_get_name(0), '%.ipynb$') then
             vim.cmd('MoltenImportOutput')
           end
