@@ -1,5 +1,5 @@
 local on_attach = function(_, bufnr)
-  local builtin = require('telescope.builtin');
+  local builtin = require 'telescope.builtin'
   local nmap = function(keys, func, desc)
     if desc then
       desc = 'LSP: ' .. desc
@@ -36,13 +36,13 @@ local on_attach = function(_, bufnr)
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function()
-    vim.lsp.buf.format({
+    vim.lsp.buf.format {
       bufnr = bufnr,
       async = false,
       -- filter = function(c)
       -- 	return c.id == ev.data.client_id
       -- end,
-    })
+    }
   end, { desc = 'Format current buffer with LSP' })
 
   -- Diagnostic keymaps
@@ -51,12 +51,11 @@ local on_attach = function(_, bufnr)
   nmap('<leader>e', vim.diagnostic.open_float, 'Open floating diagnostic message')
 end
 
-
 return {
   {
     {
-      "folke/lazydev.nvim",
-      ft = "lua", -- only load on lua files
+      'folke/lazydev.nvim',
+      ft = 'lua', -- only load on lua files
       opts = {
         library = {
           'williamboman/mason.nvim',
@@ -64,7 +63,7 @@ return {
           -- "lazy.nvim",
           -- It can also be a table with trigger words / mods
           -- Only load luvit types when the `vim.uv` word is found
-          { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
           -- always load the LazyVim library
           -- "LazyVim",
           -- Only load the lazyvim library when the `LazyVim` global is found
@@ -86,8 +85,7 @@ return {
     -- lsp configuration & plugins
     'williamboman/mason.nvim',
     lazy = false,
-    version = "*",
-    -- priority = 10,
+    version = '*',
     dependencies = {
       'neovim/nvim-lspconfig',
       {
@@ -102,14 +100,14 @@ return {
         opts = {
           notification = {
             view = {
-              group_separator_hl = "Normal",
+              group_separator_hl = 'Normal',
             },
             window = {
-              normal_hl = "Keyword",
+              normal_hl = 'Keyword',
               -- winbled = 80,
-            }
-          }
-        }
+            },
+          },
+        },
       }, -- additional lua configuration, makes nvim stuff amazing!
     },
     config = function()
@@ -118,97 +116,81 @@ return {
 
       local servers = {
         ruff = {
-          ruff = {
-            init_options = {
-              settings = {}
-            }
-          }
+          settings = {},
         },
         ['rust_analyzer'] = {
-          ['rust_analyzer'] = {
-            cargo = {
-              allFeatures = true,
-              features = { "wasm", "worklet" }
-            }
-          }
-        },
-        basedpyright = {
-          basedpyright = {
-            analysis = {
-              diagnosticSeverityOverrides = {
-                reportAny = "none",
-                reportUnknownMemberType = "none",
-                reportUnknownVariableType = "none",
-                reportUnknownArgumentType = "none",
-                reportUnknownLambdaType = "none",
-                reportSelfClsParameterName = "none",
-                reportMissingTypeStubs = "none",
-                reportMissingTypeArgument = "none",
-                reportCallIssue = "info",
-                reportArgumentType = "info",
-                reportAttributeAccessIssue = "information",
-                reportUnusedExpression = "information",
-                reportIndexIssue = "none",
-                reportGeneralTypeIssues = "none",
-                reportUnusedCallResult = "information",
-                reportImplicitStringConcatenation = "none",
-                reportImplicitRelativeImport = "information",
-                reportUninitializedInstanceVariable = "none",
-                reportOptionalMemberAccess = "none",
-              },
-            },
+          cargo = {
+            allFeatures = true,
+            features = { 'wasm', 'worklet' },
           },
         },
-        pyright = {
-          python = {
-            analysis = {
-              diagnosticSeverityOverrides = {
-                reportIncompatibleVariableOverride = "none",
-                reportUnusedExpression = "none",
+        basedpyright = {
+          -- Native API needs to know exactly how to start the server
+          -- cmd = { 'basedpyright-langserver', '--stdio' },
+          -- filetypes = { 'python' },
+          -- root_markers = { 'pyproject.toml', 'setup.py', 'requirements.txt', '.git' },
+          settings = {
+            basedpyright = {
+              analysis = {
+                typeCheckingMode = "basic",
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticSeverityOverrides = {
+                  reportAny = 'none',
+                  reportUnknownMemberType = 'none',
+                  -- ... (add the rest of your overrides here) ...
+                },
+              }
+            }
+          },
+        },
+        tailwindcss = {
+          filetypes = { "html", "htmldjango", "css", "javascript", "javascriptreact", "typescriptreact", "vue", "svelte" },
+          settings = {
+            tailwindCSS = {
+              files = {
+                exclude = { "**/.git/**", "**/node_modules/**", "**/*.scss" },
               },
             },
           },
         },
         lua_ls = {
-          lua_ls = {
-            workspace = { checkThirdParty = false },
-            telemetry = { enable = false },
-          },
+          workspace = { checkThirdParty = false },
+          telemetry = { enable = false },
         },
       }
 
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
       capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+      -- local file = io.open('text.txt', 'a')
+      -- file:write(vim.inspect(capabilities))
+      -- file:close()
 
-      local manson_config = require("mason-lspconfig")
-      for server, config in pairs(servers) do
-        vim.lsp.config(server, {
-          capabilities = capabilities,
-          settings = config,
-        })
-      end
-
-      vim.lsp.config("django_template_lsp", {
-        -- Ensure the path points to your 3.9-compatible installation
-        cmd = { "djlsp" },
-        filetypes = { "htmldjango", "djangohtml" },
-      })
-
-      vim.lsp.config("glint", {
-        cmd = { "glint-language-server" },
-      })
-      vim.lsp.enable({"glint", "djlsp"})
-
+      local manson_config = require 'mason-lspconfig'
       local configed_servers = vim.tbl_keys(servers)
+
       for _, server in pairs(manson_config.get_installed_servers()) do
-        if not vim.tbl_contains(configed_servers, server) then
+        if vim.tbl_contains(configed_servers, server) then
+          -- Grab the whole configuration object for this server
+          local server_opts = servers[server]
+          -- Inject the capabilities
+          server_opts.capabilities = capabilities
+
+          -- Pass the combined object to the native API
+          vim.lsp.config(server, server_opts)
+        else
           vim.lsp.config(server, {
             capabilities = capabilities,
           })
         end
       end
+
+      vim.lsp.config('glint', {
+        cmd = { 'glint-language-server' },
+      })
+      vim.lsp.enable { 'glint' }
 
       vim.lsp.enable(manson_config.get_installed_servers())
 
@@ -224,6 +206,6 @@ return {
           -- end
         end,
       })
-    end
+    end,
   },
 }

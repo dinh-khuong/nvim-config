@@ -47,6 +47,7 @@ return {
         mapping = cmp.mapping.preset.insert {
           ['<C-n>'] = cmp.mapping.select_next_item(),
           ['<C-p>'] = cmp.mapping.select_prev_item(),
+          ['<C-e>'] = cmp.mapping.open_docs(),
           ['<C-d>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-Space>'] = cmp.mapping.complete {},
@@ -73,10 +74,12 @@ return {
             end
           end, { 'i', 's' }),
         },
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-        },
+        sources = cmp.config.sources({
+          { name = 'nvim_lsp' }, -- This tells the UI to fetch data from basedpyright
+          { name = 'luasnip' },  -- (If you use snippets)
+        }, {
+            { name = 'buffer' },
+          })
       }
     end
   },

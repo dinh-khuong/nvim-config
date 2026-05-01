@@ -75,3 +75,14 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     vim.bo.filetype = "sh"
   end
 })
+
+vim.filetype.add({
+  extension = {
+    html = function(path, bufnr)
+      if path:match("templates") then
+        return "htmldjango"
+      end
+      return "html"
+    end,
+  },
+})

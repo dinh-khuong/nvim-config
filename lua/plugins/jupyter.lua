@@ -32,6 +32,15 @@ return {
       window_overlap_clear_enabled = true,
       editor_only_render_when_focused = true,
       hijack_file_patterns = { "*.pdf", "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" },
+      max_width = 100,
+      max_height = 50,
+
+      -- IMPORTANT for Molten: Set these to math.huge
+      -- Otherwise, images get squished/resized when the output window is partially off-screen
+      max_height_window_percentage = math.huge,
+      max_width_window_percentage = math.huge,
+
+      window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
     },
   },
 
@@ -119,9 +128,10 @@ return {
     dependencies = { "3rd/image.nvim", "jmbuhr/otter.nvim" },
     init = function()
       vim.g.molten_image_provider = "image.nvim"
-      vim.g.molten_output_win_max_height = 20
+      vim.g.molten_auto_image_popup = false
+      vim.g.molten_output_win_max_height = 40
       vim.g.molten_auto_open_output = false
-      vim.g.molten_virt_text_output = true
+      vim.g.molten_virt_text_output = false
       vim.g.molten_virt_lines_off_by_1 = true
     end,
     config = function()

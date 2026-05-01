@@ -5,6 +5,14 @@ return {
   -- detect tabstop and shiftwidth automatically
   { 'tpope/vim-sleuth', lazy = false },
   {
+    "refractalize/oil-git-status.nvim",
+    lazy = false,
+    dependencies = {
+      "stevearc/oil.nvim",
+    },
+    config = true,
+  },
+  {
     'stevearc/oil.nvim',
     priority = 80,
     lazy = false,
@@ -33,10 +41,20 @@ return {
           buflisted = true,
           bufhidden = 'hide',
         },
+        win_options = {
+          signcolumn = "yes:2", -- Ensures the signcolumn stays open for symbols
+        },
         view_options = {
           show_hidden = true,
         },
       }
+      -- for _, hl_group in pairs(require("oil-git-status").highlight_groups) do
+      --   if hl_group.index then
+      --     vim.api.nvim_set_hl(0, hl_group.hl_group, { fg = "#ff0000" })
+      --   else
+      --     vim.api.nvim_set_hl(0, hl_group.hl_group, { fg = "#00ff00" })
+      --   end
+      -- end
     end,
   },
   {
