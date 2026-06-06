@@ -103,14 +103,32 @@ return {
   },
   {
     'vimwiki/vimwiki',
+    init = function()
+      -- vim.g.vimwiki_list = {{
+      --   path = '~/vimwiki/',
+      --   syntax = 'markdown',
+      --   ext = 'md'
+      -- }}
+      -- vim.g.vimwiki_list = {
+      --   {
+      --     path = '~/vimwiki/',
+      --     syntax = 'default', -- or 'markdown'
+      --     ext = '.wiki',
+      --     custom_wiki2html = 'vimwiki_markdown', -- (If using markdown)
+      --     template_default = 'def_template',
+      --     template_ext = '.html',
+      --     html_header = 'mathjax' -- CRITICAL: This tells Vimwiki to inject MathJax
+      --   }
+      -- }
+    end,
     lazy = false,
   },
-  -- {
-  --   'chipsenkbeil/distant.nvim',
-  --   branch = 'v0.3',
-  --   lazy = false,
-  --   config = function()
-  --     require('distant'):setup()
-  --   end
-  -- }
+  {
+    'chipsenkbeil/distant.nvim',
+    branch = 'v0.3',
+    lazy = false,
+    config = function()
+      require('distant'):setup()
+    end
+  }
 }

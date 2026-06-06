@@ -5,8 +5,8 @@ local on_attach = function(_, bufnr)
       desc = 'LSP: ' .. desc
     end
 
-    -- vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-    vim.keymap.set('n', keys, func, { desc = desc })
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+    -- vim.keymap.set('n', keys, func, { desc = desc })
   end
 
   -- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
