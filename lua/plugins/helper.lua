@@ -27,6 +27,37 @@ return {
     },
     config = function()
       local oil = require('oil')
+      local files_adapter = require('oil.adapters.files')
+      local cache = require('oil.cache')
+      local constants = require('oil.constants')
+      local util = require('oil.util')
+      local uv = vim.uv or vim.loop
+
+      if not files_adapter._khuong_show_current_dir then
+        files_adapter._khuong_show_current_dir = true
+        local original_list = files_adapter.list
+        files_adapter.list = function(url, column_defs, cb)
+          local injected_current_dir = false
+
+          original_list(url, column_defs, function(err, entries, fetch_more)
+            if not err and entries and not injected_current_dir then
+              injected_current_dir = true
+
+              local current_dir = cache.create_entry(url, '.', 'directory')
+              local _, path = util.parse_url(url)
+              if path then
+                current_dir[constants.FIELD_META] = {
+                  stat = uv.fs_stat(path),
+                }
+              end
+              table.insert(entries, current_dir)
+            end
+
+            cb(err, entries, fetch_more)
+          end)
+        end
+      end
+
       oil.setup {
         default_file_explorer = false,
         columns = {
@@ -47,13 +78,6 @@ return {
           show_hidden = true,
         },
       }
-      -- for _, hl_group in pairs(require("oil-git-status").highlight_groups) do
-      --   if hl_group.index then
-      --     vim.api.nvim_set_hl(0, hl_group.hl_group, { fg = "#ff0000" })
-      --   else
-      --     vim.api.nvim_set_hl(0, hl_group.hl_group, { fg = "#00ff00" })
-      --   end
-      -- end
     end,
   },
   {
