@@ -14,7 +14,6 @@ return {
   },
   {
     'stevearc/oil.nvim',
-    priority = 80,
     lazy = false,
     keys = {
       { '<leader>pv', '<cmd>Oil<cr>', mode = 'n' },
@@ -61,16 +60,16 @@ return {
     'rmagatti/auto-session',
     lazy = false,
     dependencies = {
-      -- 'stevearc/oil.nvim',
+      'stevearc/oil.nvim',
       'nvim-telescope/telescope.nvim',
     },
-    priority =  120,
     init = function()
       vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize'
     end,
     config = function()
+      local suppressed_dirs = { '~', '~/Projects', '~/Downloads', '/', '/bin', '/usr/bin', '/@/', '~/Documents', '~/AppImage', '~/Camera' }
       require('auto-session').setup {
-        suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/', '/bin', '/usr/bin', '/@/', '~/Documents', '~/AppImage', '~/Camera' },
+        suppressed_dirs = suppressed_dirs,
         auto_save = true,
         enabled = true,
         lazy_support = true,
@@ -78,12 +77,19 @@ return {
         close_unsupported_windows = true,
         auto_restore_last_session = false,
         use_git_branch = false,
-        continue_restore_on_error = false,
+        continue_restore_on_error = true,
         auto_restore = true,
         log_level = 'error',
-
-        bypass_session_save_file_types = { "oil" },
       }
+
+      vim.api.nvim_create_autocmd({"VimEnter"}, {
+        pattern = vim.tbl_map(vim.fn.expand, suppressed_dirs),
+        callback = function ()
+          vim.schedule(function ()
+            vim.cmd("Oil")
+          end)
+        end
+      })
     end,
   },
   {
