@@ -76,13 +76,43 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
   end
 })
 
-vim.filetype.add({
-  extension = {
-    html = function(path, bufnr)
-      if path:match("templates") then
-        return "htmldjango"
+
+local cmp_restore_group = vim.api.nvim_create_augroup("RestoreCwdAfterCmp", { clear = true })
+
+vim.keymap.set("i", "<C-x><C-f>", function()
+  local current_file = vim.fn.expand("%:p")
+  local templates_dir = nil
+
+  if current_file:match("%.html$") or current_file:match("%.jinja$") or current_file:match("%.j2$") then
+    templates_dir = current_file:match("^(.*[/\\]templates)")
+  elseif current_file:match("%.py$") then
+    local current_dir = vim.fn.expand("%:p:h")
+    local found = vim.fs.find("templates", { upward = true, path = current_dir, type = "directory" })
+    if found and #found > 0 then
+      templates_dir = found[1]
+    end
+  end
+
+  if templates_dir then
+    vim.w.saved_cwd = vim.fn.getcwd(0)
+    pcall(vim.cmd.lcd, templates_dir)
+
+    vim.api.nvim_create_autocmd({ "CompleteDone", "InsertLeave" }, {
+      group = cmp_restore_group,
+      once = true,
+      callback = function()
+        if vim.w.saved_cwd then
+          pcall(vim.cmd.lcd, vim.w.saved_cwd)
+          vim.w.saved_cwd = nil
+        end
       end
-      return "html"
-    end,
-  },
+    })
+  end
+
+  return "<C-x><C-f>"
+end, {
+  expr = true,
+  replace_keycodes = true,
+  desc = "Smart Template Path Completion"
 })
+

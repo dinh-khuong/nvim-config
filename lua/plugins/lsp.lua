@@ -154,6 +154,27 @@ return {
             },
           },
         },
+        jinja_lsp = {
+          cmd = { 'jinja-lsp' },
+          filetypes = { 'jinja', 'html', 'htmldjango', 'css' },
+          root_markers = { '.git', 'pyproject.toml', 'requirements.txt', 'Cargo.toml' },
+          init_options = {
+            templates = './templates', 
+            backend = { '.' }, -- Tìm code python ở thư mục hiện tại
+            lang = "python",
+          },
+        },
+        -- djls = {
+        --   cmd = { 'djls' },
+        --   filetypes = { 'html', 'htmldjango' },
+        --   root_dir = require('lspconfig.util').root_pattern('manage.py', '.git'),
+        --   init_options = {
+        --     -- -- Nó cần biết môi trường ảo (venv) đang nằm ở đâu để chạy code Python
+        --     -- -- Ví dụ: dùng thư mục .venv trong project
+        --     -- venvPath = ".", 
+        --     -- venv = ".venv",
+        --   }
+        -- },
         lua_ls = {
           workspace = { checkThirdParty = false },
           telemetry = { enable = false },
@@ -192,6 +213,17 @@ return {
       })
       vim.lsp.enable { 'glint' }
 
+      vim.filetype.add({
+        extension = {
+          jinja = 'jinja',
+          j2 = 'jinja',
+        },
+        pattern = {
+          ['.*%.html'] = 'htmldjango', -- Biến toàn bộ file html thành htmldjango để jinja_lsp nhận tốt hơn
+        }
+      })
+
+      -- vim.print(manson_config.get_installed_servers())
       vim.lsp.enable(manson_config.get_installed_servers())
 
       vim.api.nvim_create_autocmd('LspAttach', {

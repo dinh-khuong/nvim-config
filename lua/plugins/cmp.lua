@@ -24,13 +24,14 @@ return {
 
       -- adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
+      'lukas-reineke/cmp-rg',
     },
     config = function()
       -- [[ Configure nvim-cmp ]]
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
-      -- require('luasnip.loaders.from_vscode').lazy_load()
+      require('luasnip.loaders.from_vscode').lazy_load()
 
       -- cmp.register_source
 
@@ -79,6 +80,7 @@ return {
           { name = 'luasnip' },  -- (If you use snippets)
         }, {
             { name = 'buffer' },
+            { name = 'rg', keyword_length = 4 },
           })
       }
     end
