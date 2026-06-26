@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 
 local cmp_restore_group = vim.api.nvim_create_augroup("RestoreCwdAfterCmp", { clear = true })
 
-vim.keymap.set("i", "<C-x><C-f>", function()
+function get_templates_dir()
   local current_file = vim.fn.expand("%:p")
   local templates_dir = nil
 
@@ -92,6 +92,12 @@ vim.keymap.set("i", "<C-x><C-f>", function()
       templates_dir = found[1]
     end
   end
+
+  return templates_dir
+end
+
+vim.keymap.set("i", "<C-x><C-f>", function()
+  templates_dir = get_templates_dir()
 
   if templates_dir then
     vim.w.saved_cwd = vim.fn.getcwd(0)
@@ -115,4 +121,27 @@ end, {
   replace_keycodes = true,
   desc = "Smart Template Path Completion"
 })
+
+vim.keymap.set('n', "gf", function()
+  templates_dir = get_templates_dir()
+  cfile = vim.fn.expand('<cfile>')
+
+  if not templates_dir then
+    pcall(vim.cmd, "normal! gf")
+    return
+  end
+
+  local saved_cwd = vim.fn.getcwd(0)
+  pcall(vim.cmd.lcd, templates_dir)
+
+  local success, _ = pcall(vim.cmd, "normal! gf")
+
+  pcall(vim.cmd.lcd, saved_cwd)
+
+  if not success then
+    vim.notify(string.format("E447: Can't find file %s in path", cfile) , vim.log.levels.ERROR)
+  end
+
+end, { desc = "Smart Template Goto File" })
+
 

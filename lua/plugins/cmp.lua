@@ -80,7 +80,7 @@ return {
           { name = 'luasnip' },  -- (If you use snippets)
         }, {
             { name = 'buffer' },
-            { name = 'rg', keyword_length = 4 },
+            { name = 'rg', keyword_length = 3 },
           })
       }
     end

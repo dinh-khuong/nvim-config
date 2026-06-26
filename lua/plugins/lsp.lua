@@ -144,6 +144,18 @@ return {
             }
           },
         },
+        html = {
+          -- Kích hoạt cho cả html thường và html chứa jinja
+          filetypes = { 'html', 'htmldjango', 'jinja' }, 
+          init_options = {
+            configurationSection = { "html", "css", "javascript" },
+            embeddedLanguages = {
+              css = true,
+              javascript = true
+            },
+            provideFormatter = false,
+          },
+        },
         tailwindcss = {
           filetypes = { "html", "htmldjango", "css", "javascript", "javascriptreact", "typescriptreact", "vue", "svelte" },
           settings = {

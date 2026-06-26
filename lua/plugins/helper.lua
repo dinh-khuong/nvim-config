@@ -58,7 +58,8 @@ return {
         end
       end
 
-      oil.setup {
+      ---@type oil.SetupOpts
+      local oil_opt = {
         default_file_explorer = false,
         columns = {
           'icon',
@@ -78,6 +79,15 @@ return {
           show_hidden = true,
         },
       }
+
+      oil.setup(oil_opt)
+
+      vim.schedule(function ()
+        vim.defer_fn(function()
+          oil_opt.default_file_explorer = true
+          oil.setup(oil_opt)
+        end, 100)
+      end)
     end,
   },
   {
