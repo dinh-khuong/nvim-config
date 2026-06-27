@@ -1,4 +1,5 @@
-local on_attach = function(_, bufnr)
+local on_attach = function(args)
+  local bufnr = args.buf
   local builtin = require 'telescope.builtin'
   local nmap = function(keys, func, desc)
     if desc then
@@ -132,7 +133,7 @@ return {
           settings = {
             basedpyright = {
               analysis = {
-                typeCheckingMode = "basic",
+                typeCheckingMode = 'basic',
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
                 diagnosticSeverityOverrides = {
@@ -140,28 +141,28 @@ return {
                   reportUnknownMemberType = 'none',
                   -- ... (add the rest of your overrides here) ...
                 },
-              }
-            }
+              },
+            },
           },
         },
         html = {
           -- Kích hoạt cho cả html thường và html chứa jinja
-          filetypes = { 'html', 'htmldjango', 'jinja' }, 
+          filetypes = { 'html', 'htmldjango', 'jinja' },
           init_options = {
-            configurationSection = { "html", "css", "javascript" },
+            configurationSection = { 'html', 'css', 'javascript' },
             embeddedLanguages = {
               css = true,
-              javascript = true
+              javascript = true,
             },
             provideFormatter = false,
           },
         },
         tailwindcss = {
-          filetypes = { "html", "htmldjango", "css", "javascript", "javascriptreact", "typescriptreact", "vue", "svelte" },
+          filetypes = { 'html', 'htmldjango', 'css', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'svelte' },
           settings = {
             tailwindCSS = {
               files = {
-                exclude = { "**/.git/**", "**/node_modules/**", "**/*.scss" },
+                exclude = { '**/.git/**', '**/node_modules/**', '**/*.scss' },
               },
             },
           },
@@ -171,22 +172,11 @@ return {
           filetypes = { 'jinja', 'html', 'htmldjango', 'css' },
           root_markers = { '.git', 'pyproject.toml', 'requirements.txt', 'Cargo.toml' },
           init_options = {
-            templates = './templates', 
+            templates = './templates',
             backend = { '.' }, -- Tìm code python ở thư mục hiện tại
-            lang = "python",
+            lang = 'python',
           },
         },
-        -- djls = {
-        --   cmd = { 'djls' },
-        --   filetypes = { 'html', 'htmldjango' },
-        --   root_dir = require('lspconfig.util').root_pattern('manage.py', '.git'),
-        --   init_options = {
-        --     -- -- Nó cần biết môi trường ảo (venv) đang nằm ở đâu để chạy code Python
-        --     -- -- Ví dụ: dùng thư mục .venv trong project
-        --     -- venvPath = ".", 
-        --     -- venv = ".venv",
-        --   }
-        -- },
         lua_ls = {
           workspace = { checkThirdParty = false },
           telemetry = { enable = false },
@@ -225,15 +215,15 @@ return {
       })
       vim.lsp.enable { 'glint' }
 
-      vim.filetype.add({
+      vim.filetype.add {
         extension = {
           jinja = 'jinja',
           j2 = 'jinja',
         },
         pattern = {
           ['.*%.html'] = 'htmldjango', -- Biến toàn bộ file html thành htmldjango để jinja_lsp nhận tốt hơn
-        }
-      })
+        },
+      }
 
       -- vim.print(manson_config.get_installed_servers())
       vim.lsp.enable(manson_config.get_installed_servers())
@@ -241,7 +231,7 @@ return {
       vim.api.nvim_create_autocmd('LspAttach', {
         group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(ev)
-          on_attach(ev, ev.buf)
+          on_attach(ev)
           vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
           -- local client = vim.lsp.get_client_by_id(ev.data.client_id)
           -- if client then

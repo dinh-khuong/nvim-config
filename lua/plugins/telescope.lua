@@ -93,12 +93,14 @@ return {
       end, { desc = '[F]ind [G]it [F]iles' })
       vim.keymap.set('n', '<leader>fF', builtin.find_files, { desc = '[F]ind [F]iles' })
 
-      vim.keymap.set({ 'n', 'v' }, '<leader>fw', ':LiveGrepGitRoot<cr>', { desc = '[F]ind by [G]rep on Git Root' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>fW', builtin.live_grep, { desc = '[F]ind by [G]rep' })
+      -- vim.keymap.set({ 'n', 'v' }, '<leader>fw', ':LiveGrepGitRoot<cr>', { desc = '[F]ind by [G]rep on Git Root' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>fw', builtin.live_grep, { desc = '[F]ind by [G]rep' })
 
-      vim.keymap.set({ 'n', 'v' }, '<leader>fc', ':CurrentGrepGitRoot<cr>',
-        { desc = '[F]ind current [W]ord in Git' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>fC', builtin.grep_string, { desc = '[F]ind [C]urrent word' })
+      -- vim.keymap.set({ 'n' }, '<leader>fc', ':CurrentGrepGitRoot<cr>',
+      --   { desc = '[F]ind current [W]ord in Git' })
+      -- vim.keymap.set({ 'v' }, '<leader>fc', ':<C-u>CurrentGrepGitRoot<cr>',
+      --   { desc = '[F]ind current [W]ord in Git' })
+      vim.keymap.set({ 'n', 'v' }, '<leader>fc', builtin.grep_string, { desc = '[F]ind [C]urrent word' })
 
       vim.keymap.set('n', '<leader>ft', builtin.treesitter, { desc = '[F]ind [Treesitter] Symbol' })
 

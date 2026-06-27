@@ -86,7 +86,7 @@ return {
         vim.defer_fn(function()
           oil_opt.default_file_explorer = true
           oil.setup(oil_opt)
-        end, 100)
+        end, 200)
       end)
     end,
   },
@@ -98,7 +98,7 @@ return {
       'nvim-telescope/telescope.nvim',
     },
     init = function()
-      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize'
+      vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,localoptions'
     end,
     config = function()
       local suppressed_dirs = { '~', '~/Projects', '~/Downloads', '/', '/bin', '/usr/bin', '/@/', '~/Documents', '~/AppImage', '~/Camera' }
